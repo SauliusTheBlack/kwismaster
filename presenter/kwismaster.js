@@ -1,6 +1,21 @@
 // TODO: fix the end of questions issue
 // TODO: fix going too far back
 
+
+
+(function(){
+  'use strict';  //Create a global variable and expose it to the world
+  var $myapp = {};
+  self.$myapp = $myapp;
+
+	$myapp.someFunction = function(){
+		return "Works";
+	};
+
+})();
+
+
+
 let currentRound = -1;
 let currentQuestion = -1;
 
@@ -89,12 +104,11 @@ window.addEventListener("click", (event) => {
 });
 
 window.addEventListener("keydown", (e) => {
-  console.log(e);
   if (e.key === "ArrowLeft"){
-    console.log("Left Arrow was pressed: going back");
+    // console.log("Left Arrow was pressed: going back");
     goToPreviousQuestion();
   } else if (e.key === "ArrowRight" || e.key === "Enter") {
-    console.log("Left Arrow was pressed: going forwards");
+    // console.log("Left Arrow was pressed: going forwards");
     goToNextQuestion();
   }
 });
