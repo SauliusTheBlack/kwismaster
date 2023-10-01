@@ -188,16 +188,16 @@ Geluid:
 Categorie: literatuur
 Ronde: Ronde 2
 
-Lange vraag: Holly jackson is binnen het yung adult genre een grote naam, welke boekenreeks die plaats vind in little kilton krijgt volgend jaar zijn eigen serie
+Lange vraag: Holly jackson is binnen het young adult genre een grote naam, welke boekenreeks die plaats vind in little kilton krijgt volgend jaar zijn eigen serie
 Korte vraag: Little Kilton?
-Antwoord: Moordgids voor lieve meisjes
+Antwoord: Moordgids voor lieve meisjes.
 Afbeelding:
 Geluid: 
 Categorie: literatuur
 Ronde: Ronde 3
 
 Lange vraag: Apple brengt zijn eigen VR bril op de markt, met een prijskaartje van 3500 dollar is dit niet gegeven, hoe heet hun bril?
-Korte vraag: 
+Korte vraag: Hoe heet de VR bril van Apple?
 Antwoord: Vision Pro
 Afbeelding:
 Geluid: 
@@ -247,9 +247,8 @@ Categorie: aardrijkskunde
 Ronde: Ronde 3
 
 
-Lange vraag: Welke satirische reeks door Arjan Ederveen en geregisseerd door Pieter Kramer werd op
-VPRO een echt succes in 1995?
-Korte vraag: 
+Lange vraag: Welke satirische reeks door Arjan Ederveen en geregisseerd door Pieter Kramer werd op VPRO een echt succes in 1995?
+Korte vraag: Welke satirische reeks was een succes in 1995 op VPRO?
 Antwoord: 30 minuten
 Afbeelding:
 Geluid: 

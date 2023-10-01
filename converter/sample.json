@@ -184,16 +184,16 @@
         "round": "Ronde 2"
     },
     {
-        "longQuestion": "Holly jackson is binnen het yung adult genre een grote naam, welke boekenreeks die plaats vind in little kilton krijgt volgend jaar zijn eigen serie",
+        "longQuestion": "Holly jackson is binnen het young adult genre een grote naam, welke boekenreeks die plaats vind in little kilton krijgt volgend jaar zijn eigen serie",
         "shortQuestion": "Little Kilton?",
-        "answer": "Moordgids voor lieve meisjes",
+        "answer": "Moordgids voor lieve meisjes.",
         "img": "",
         "category": "literatuur",
         "round": "Ronde 3"
     },
     {
         "longQuestion": "Apple brengt zijn eigen VR bril op de markt, met een prijskaartje van 3500 dollar is dit niet gegeven, hoe heet hun bril?",
-        "shortQuestion": "",
+        "shortQuestion": "Hoe heet de VR bril van Apple?",
         "answer": "Vision Pro",
         "img": "",
         "category": "Technologie",
@@ -240,8 +240,8 @@
         "round": "Ronde 3"
     },
     {
-        "longQuestion": "Welke satirische reeks door Arjan Ederveen en geregisseerd door Pieter Kramer werd op",
-        "shortQuestion": "",
+        "longQuestion": "Welke satirische reeks door Arjan Ederveen en geregisseerd door Pieter Kramer werd op VPRO een echt succes in 1995?",
+        "shortQuestion": "Welke satirische reeks was een succes in 1995 op VPRO?",
         "answer": "30 minuten",
         "img": "",
         "category": "Rode Draad",

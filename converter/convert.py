@@ -27,41 +27,35 @@ class Question:
     def setRound(self, txt):
         self.round = txt.strip()
 
+    def __repr__(self) -> str:
+        return self.round + " - " + self.shortQuestion
+
 allQuestions = []
 allQuestionsByRoundMap = {}
-questions = []
 
-def finaliseQuestion(question):
-    allQuestions.append(question)
-    
-    if question.round.strip() == "":
-        print("Question {" + question.shortQuestion + "} has no round assigned to it!")  
-        question.round = "Unknown"  
-    
-    if question.round not in allQuestionsByRoundMap:
-        allQuestionsByRoundMap[question.round] = len(questions)
-        questions.append({})
-        questions[allQuestionsByRoundMap[question.round]]["name"] = question.round
-        questions[allQuestionsByRoundMap[question.round]]["questions"] = []
-    questions[allQuestionsByRoundMap[question.round]]["questions"].append(question)
-    
-    
-    
-        
+            
 currentQuestion = None
-with open("../vragenEllen.txt",'r') as questionFile:
+baseInOutDir = "C:\\Users\\peter\\Projects\\kwismaster\\"
+with open(baseInOutDir + "vragenBeperkt.txt",'r', encoding='utf-8') as questionFile:
     for line in questionFile:
+        # print(line)
         if not ':' in line:
             continue
             
         key, value = line.split(':',1)
         # print(key)
         # print("- " + value)
+        if key.lower().strip() == "rondes":
+            for round in value.split(","):
+                allQuestionsByRoundMap[round.strip()] = []
+            continue
+
         if key.lower().strip() == "lange vraag":
             if(currentQuestion):
-                finaliseQuestion(currentQuestion)
+                allQuestions.append(currentQuestion)
                 
             currentQuestion = Question()
+
             currentQuestion.setLongQuestion(value)
         elif key.lower().strip() == "korte vraag":
             currentQuestion.setShortQuestion(value)
@@ -73,8 +67,9 @@ with open("../vragenEllen.txt",'r') as questionFile:
             currentQuestion.setCategory(value)
         elif key.lower().strip() == "ronde":
             currentQuestion.setRound(value)
-            
-    finaliseQuestion(currentQuestion)
+        else:
+            print(f"Skipping line {line}")
+    allQuestions.append(currentQuestion)
 
 
 
@@ -82,14 +77,42 @@ with open("../vragenEllen.txt",'r') as questionFile:
 # this should come from a file
 category_order = [
 "aardrijkskunde","fauna en flora","geschiedenis","Halloween",
-"literatuur","Media","Muziek","sport","Technologie","Wiskunde","Rode Draad"
+"kunst, cultuur en literatuur","Media","Muziek","sport","techniek en technologie","Wiskunde","Rode Draad"
 ]
 
+# print(allQuestions)
+allQuestions.sort(key=lambda question: question.round.lower())
+# print(allQuestions)
 
+questions = []
+currentRound = None
+currentRoundName = ""
+currentRoundQuestions = []
+for question in allQuestions:
+    print(currentRoundName.strip().lower())
+    print(question.round.strip().lower())
+    if currentRoundName != question.round.strip().lower():
+        print("Starting a new round")
+        if(currentRound != None):
+            print("There is a round to append now")
+            currentRound["name"] = currentRoundName
+            currentRound["questions"] = currentRoundQuestions
+            questions.append(currentRound)
+            currentRoundQuestions = []
+        currentRound = {}
+        currentRoundName = question.round.strip().lower()
+    currentRoundQuestions.append(question)
+
+currentRound["name"] = currentRoundName
+currentRound["questions"] = currentRoundQuestions
+questions.append(currentRound)
+
+# [{name,questions},{}]
 for round in questions:
+    print(round)
     round["questions"].sort(key=lambda x: [co.lower() for co in category_order].index(x.category.lower()))
     
-    with open("../presenter/presentationText_"+round["name"]+".txt", 'w') as presenterText:
+    with open(baseInOutDir + "/presenter/presentationText_"+round["name"]+".txt", 'w') as presenterText:
         presenterText.write(round["name"] + "\n")
         for questionNumber, question in enumerate(round["questions"]):
             presenterText.write(str(questionNumber + 1) + ": " + question.longQuestion + "\n\n")
@@ -107,6 +130,8 @@ round_object = json.dumps(questions, indent=4, cls=MyEncoder)
 with open("sample.json", "w") as outfile:
     outfile.write(json_object)
     
-with open("../presenter/questions.js", "w") as outfile:
+outFilename = baseInOutDir + "/revealPresenter/questions.js"
+with open(outFilename, "w") as outfile:
+    print(f'writing to {outFilename}')
     outfile.write("questions = ")
     outfile.write(round_object)

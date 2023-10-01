@@ -1,0 +1,7 @@
+nog geen 
+- Kleuren
+- Afbeeldingen werken, maar moet nog wat meer getest worden
+- geluid/video
+- een manier om scores te tonen
+- alle vragen op voorhand naar bestanden verwerken. Momenteel is alles "live", behalve de voorleesteksten
+- rode draad antwoorden moeten nog uit de presentatieteksten gehaald worden
