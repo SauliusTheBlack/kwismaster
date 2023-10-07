@@ -35,8 +35,12 @@ allQuestionsByRoundMap = {}
 
             
 currentQuestion = None
-baseInOutDir = "C:\\Users\\peter\\Projects\\kwismaster\\"
-with open(baseInOutDir + "vragenBeperkt.txt",'r', encoding='utf-8') as questionFile:
+baseInOutDir = "C:\\Users\\peter\\Projects\\kwismaster\\"    
+outFilename = baseInOutDir + "/revealPresenter/questions.js"
+# inFileName =  "vragenBeperkt.txt"
+inFileName =  "vragen.txt"
+
+with open(baseInOutDir +inFileName ,'r', encoding='utf-8') as questionFile:
     for line in questionFile:
         # print(line)
         if not ':' in line:
@@ -95,7 +99,7 @@ for question in allQuestions:
         print("Starting a new round")
         if(currentRound != None):
             print("There is a round to append now")
-            currentRound["name"] = currentRoundName
+            currentRound["name"] = currentRoundName.capitalize()
             currentRound["questions"] = currentRoundQuestions
             questions.append(currentRound)
             currentRoundQuestions = []
@@ -103,7 +107,7 @@ for question in allQuestions:
         currentRoundName = question.round.strip().lower()
     currentRoundQuestions.append(question)
 
-currentRound["name"] = currentRoundName
+currentRound["name"] = currentRoundName.capitalize()
 currentRound["questions"] = currentRoundQuestions
 questions.append(currentRound)
 
@@ -129,8 +133,7 @@ round_object = json.dumps(questions, indent=4, cls=MyEncoder)
 # Writing to sample.json
 with open("sample.json", "w") as outfile:
     outfile.write(json_object)
-    
-outFilename = baseInOutDir + "/revealPresenter/questions.js"
+
 with open(outFilename, "w") as outfile:
     print(f'writing to {outFilename}')
     outfile.write("questions = ")

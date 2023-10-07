@@ -1,26 +1,9 @@
 
-Rondes: Ronde 1, Ronde 2
 
-Lange vraag: Welke pop zangeres kreeg 19/06 een gsm in haar gezicht?
-Korte vraag: Welke pop zangeres kreeg 19/06 een gsm in haar gezicht?
-Antwoord: Bebe rexha
-Afbeelding:
-Geluid: 
-Categorie: Muziek
-Ronde: Ronde 2
-
-Lange vraag: Wat is de echte naam van artieste Miley Cyrus?
-Korte vraag: Wat is de echte naam van artieste Miley Cyrus?
-Antwoord: Hqpe
-Afbeelding:
-Geluid: 
-Categorie: Muziek
-Ronde: Ronde 1
-
-Lange vraag: Wat is de echte naam van artieste Moley Cyrus?
-Korte vraag: Wat is de echte naam van artieste Moley Cyrus?
-Antwoord: Hype
-Afbeelding:
-Geluid: 
-Categorie: aardrijkskunde
-Ronde: Ronde 2
+Lange vraag: Dit deelproject van de wikimedia foundation verzamelt citaten van bekende personen. Je denkt hierbij meteen aan historische uitspraken, maar je kan er evengoed citaten uit hedendaagse films of boeken terugvinden. Er wordt je ook telkens een citaat van de maand aangeboden. Hoe heet deze bundeling van uitspraken of vult u even de website verder aan www. … . org.
+Korte vraag: Vult u even de website verder aan www. … . org
+Antwoord: wikiquotes
+Afbeelding: wikiquote ronde 7 techniek en technologie.png
+Geluid:/
+Categorie: techniek en technologie
+Ronde: Ronde 7

@@ -17,6 +17,8 @@ function makeQuestionSlides(roundObj, questionObj) {
         var questionBodyQuestion = document.createElement('div');
         questionBodyQuestion.innerHTML = questionObj[question]["shortQuestion"];
 
+
+
         var questionBodyLongQuestion = document.createElement('aside');
         questionBodyLongQuestion.className = "notes";
         questionBodyLongQuestion.innerHTML = questionObj[question]["longQuestion"];
@@ -28,6 +30,15 @@ function makeQuestionSlides(roundObj, questionObj) {
         questionDOM.appendChild(questionTitle);
         questionDOM.appendChild(questionCategory);
         questionDOM.appendChild(questionBody);
+
+        if (questionObj[question]["img"]) {
+            console.log("Show the image (" + roundObj["name"] + "){" + questionObj[question]["img"] + "}")
+            var questionImg = document.createElement('img');
+            questionImg.src = "images/" + questionObj[question]["img"];
+            questionImg.style.height = '225px';
+            questionBody.appendChild(questionImg);
+        }
+
 
         slides.appendChild(questionDOM);
     }
@@ -59,6 +70,13 @@ function makeAnswerSlides(roundObj, questionObj, excludeQuestions = []) {
         questionBodyQuestion.innerHTML = questionObj[question]["shortQuestion"];
         questionBodyAnswer.innerHTML = questionObj[question]["answer"];
         questionBody.appendChild(questionBodyQuestion);
+        if (questionObj[question]["img"]) {
+            console.log("Show the image (" + roundObj["name"] + "){" + questionObj[question]["img"] + "}")
+            var questionImg = document.createElement('img');
+            questionImg.src = "images/" + questionObj[question]["img"];
+            questionImg.style.height = '225px';
+            questionBody.appendChild(questionImg);
+        }
         questionBody.appendChild(questionBodyAnswer);
 
         questionDOM.appendChild(questionTitle);
