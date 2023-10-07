@@ -1,5 +1,5 @@
 Ronde 3
-1: Hoelang duurde de Vietnam oorlog ?
+1: Hoelang duurde de Vietnam oorlog?
 
 2: Het instrument dat we zoeken is gebaseerd op het principe van de doorslaande tong. Het bespelen van dit instrument heeft een paar uitdrukkingen zoals: hottevotten, raspen, en zagen. Wat is een schippersklavier?
 
@@ -10,12 +10,12 @@ Ronde 3
 Antwoorden!!
 
 
-1: Hoelang duurde de Vietnam oorlog ?
+1: Hoelang duurde de Vietnam oorlog?
 	 - 20 jaar (1955 tot 1975)
 
 2: Wat is een schippersklavier?
 	 - trekharmonica/diatonische accordeon
 
-3: Wat is de afkorting voor deze remsystemen
+3: Wat is de afkorting voor deze remsystemen?
 	 - KERS (Kinetic Energy Recovery Systems)
 

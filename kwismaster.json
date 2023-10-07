@@ -1,0 +1,20 @@
+{
+    "category_order": [
+        "aardrijkskunde", "fauna en flora", "geschiedenis", "Halloween",
+        "kunst, cultuur en literatuur", "Media", "Muziek", "sport", "techniek en technologie", "Wiskunde", "Rode Draad"
+    ],
+    "input_files_full": [
+        "vragenEva.txt",
+        "vragenEllen.txt",
+        "vragenHilde.txt",
+        "vragenSara.txt",
+        "vragenVeerle.txt",
+        "vragenRodeDraad.txt"
+    ],
+    "input_files": [
+        "vragenEva.txt",
+        "vragenVeerle.txt",
+        "vragenRodeDraad.txt"
+    ]
+
+}

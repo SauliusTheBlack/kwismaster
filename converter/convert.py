@@ -1,7 +1,7 @@
-from json import JSONEncoder
+import json
 
 # this makes classes serialisable
-class MyEncoder(JSONEncoder):
+class MyEncoder(json.JSONEncoder):
     def default(self, o):
         return o.__dict__   
 
@@ -35,25 +35,36 @@ allQuestionsByRoundMap = {}
 
             
 
-baseInOutDir = "C:/Users/peter/Projects/kwismaster/" 
+baseInOutDir = ".." 
 outDir =    baseInOutDir + "/revealPresenter" 
 outFilename = outDir + "/questions.js"
 # inFileName =  "vragenBeperkt.txt"
 #inFileName =  "vragen.txt"
 
-infiles = ["vragenVeerle.txt", "vragenEva.txt", "vragenRodeDraad.txt"
-        #    "vragenEllen.txt", "vragenSara.txt", "vragenHilde.txt",
-             ]
+
+
+
+with open(baseInOutDir + "/kwismaster.json","r") as f:
+    config = json.load(f)
+
+print(config)
+category_order = config["category_order"]
+infiles = config["input_files"]
+
 
 
 def readSingleFile(filename):
     print("Reading " + filename)
     currentQuestion = None
-    with open(baseInOutDir+filename ,'r', encoding='utf-8') as questionFile:
+    with open(baseInOutDir+"/"+filename ,'r', encoding='utf-8') as questionFile:
         for line in questionFile:
             if not ':' in line:
                 continue            
             key, value = line.split(':',1)
+            if value.strip() == "/" or value.strip() == "\\":
+                print("Skipping line " + line + " because content is single forward or backward slash")
+                continue
+
             if key.lower().strip() == "rondes":
                 for round in value.split(","):
                     allQuestionsByRoundMap[round.strip()] = []
@@ -80,13 +91,6 @@ def readSingleFile(filename):
 
 for fileName in infiles:
     readSingleFile(fileName)
-
-
-# this should come from a file
-category_order = [
-"aardrijkskunde","fauna en flora","geschiedenis","Halloween",
-"kunst, cultuur en literatuur","Media","Muziek","sport","techniek en technologie","Wiskunde","Rode Draad"
-]
 
 allQuestions.sort(key=lambda question: question.round.lower())
 
@@ -124,7 +128,7 @@ for round in questions:
             presenterText.write(str(questionNumber + 1) + ": " + question.shortQuestion + "\n")
             presenterText.write("\t - " + question.answer + "\n\n")
         
-import json
+
 json_object = json.dumps(allQuestions, indent=4, cls=MyEncoder)
 round_object = json.dumps(questions, indent=4, cls=MyEncoder)
 # Writing to sample.json

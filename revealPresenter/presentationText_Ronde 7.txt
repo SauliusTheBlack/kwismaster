@@ -1,7 +1,7 @@
 Ronde 7
 1: Dit deelproject van de wikimedia foundation verzamelt citaten van bekende personen. Je denkt hierbij meteen aan historische uitspraken, maar je kan er evengoed citaten uit hedendaagse films of boeken terugvinden. Er wordt je ook telkens een citaat van de maand aangeboden. Hoe heet deze bundeling van uitspraken of vult u even de website verder aan www. … . org.
 
-2: Wat staat hier ?  \n XXI  X  MMXXIII
+2: Wat staat hier?
 
 3: orchidee, tekenfilm op vrt
 
@@ -13,8 +13,8 @@ Antwoorden!!
 1: Vult u even de website verder aan www. … . org
 	 - wikiquotes
 
-2: Wat staat hier?
-	 - 21/10/2023
+2: Wat staat hier?  <br/> XXI &emsp; X &emsp; MMXXIII
+	 - 21 &emsp; 10 &emsp; 2023
 
 3: orchidee, tekenfilm op vrt
 	 - vanille(suiker)

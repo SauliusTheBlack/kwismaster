@@ -46,7 +46,7 @@ function makeQuestionSlides(roundObj, questionObj) {
 
 function makeAnswerSlides(roundObj, questionObj, excludeQuestions = []) {
     var roundTitleDOM = document.createElement('section');
-    roundTitleDOM.innerHTML = roundObj["name"];
+    roundTitleDOM.innerHTML = roundObj["name"] + " - Antwoorden";
 
     slides.appendChild(roundTitleDOM);
     for (question in questionObj) {
@@ -68,7 +68,7 @@ function makeAnswerSlides(roundObj, questionObj, excludeQuestions = []) {
         var questionBodyAnswer = document.createElement('div');
 
         questionBodyQuestion.innerHTML = questionObj[question]["shortQuestion"];
-        questionBodyAnswer.innerHTML = questionObj[question]["answer"];
+        questionBodyAnswer.innerHTML = "[" + questionObj[question]["answer"] + "]";
         questionBody.appendChild(questionBodyQuestion);
         if (questionObj[question]["img"]) {
             console.log("Show the image (" + roundObj["name"] + "){" + questionObj[question]["img"] + "}")

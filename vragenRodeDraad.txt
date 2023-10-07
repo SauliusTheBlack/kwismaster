@@ -1,5 +1,5 @@
 Lange vraag: In welk land vieren ze op 8 mei het feest van de overwinning (in 1945)?
-Korte vraag: In welk land vieren ze op 8 mei het feest van de overwinning (in 1945)?
+Korte vraag: In welk land vieren ze op 8 mei het feest van de overwinning?
 Antwoord: Frankrijk
 Categorie: Rode Draad
 Ronde: Ronde 1	
@@ -11,7 +11,7 @@ Categorie: Rode Draad
 Ronde: Ronde 2
 
 Lange vraag: Wat we zoeken zijn systemen voor recuperatief remmen, die ontwikkeld worden voor zowel het wegverkeer als Formule-1-racewagens. Dit systeem zorgt ervoor dat remenergie, die normaal wordt omgezet in warmte, wordt opgeslagen. Dit is op twee manieren mogelijk: één is met een vliegwiel, het andere is gebaseerd op een principe van een elektromotor die ook dienst kan doen als generator. Deze energie kan later weer gebruikt worden bijvoorbeeld om tijdelijk meer vermogen te krijgen.
-Korte vraag: Wat is de afkorting voor deze remsystemen
+Korte vraag: Wat is de afkorting voor deze remsystemen?
 Antwoord: KERS (Kinetic Energy Recovery Systems)
 Categorie: Rode Draad
 Ronde: Ronde 3
