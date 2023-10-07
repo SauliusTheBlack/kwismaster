@@ -54,7 +54,7 @@ Korte vraag: Wat is de naam van deze kunstenaar?
 Antwoord: Anton Pieck
 Afbeelding: anton pieck ronde 4 kunst cultuur en literatuur
 Geluid:/
-Categorie: kunst cultuur en literatuur
+Categorie: kunst, cultuur en literatuur
 Ronde: Ronde 4
 
  Lange vraag: Dit deelproject van de wikimedia foundation verzamelt citaten van bekende personen. Je denkt hierbij meteen aan historische uitspraken, maar je kan er evengoed citaten uit hedendaagse films of boeken terugvinden. Er wordt je ook telkens een citaat van de maand aangeboden. Hoe heet deze bundeling van uitspraken of vult u even de website verder aan www. … . org.

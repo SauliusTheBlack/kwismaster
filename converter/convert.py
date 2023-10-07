@@ -34,48 +34,52 @@ allQuestions = []
 allQuestionsByRoundMap = {}
 
             
-currentQuestion = None
-baseInOutDir = "C:\\Users\\peter\\Projects\\kwismaster\\"    
-outFilename = baseInOutDir + "/revealPresenter/questions.js"
+
+baseInOutDir = "C:/Users/peter/Projects/kwismaster/" 
+outDir =    baseInOutDir + "/revealPresenter" 
+outFilename = outDir + "/questions.js"
 # inFileName =  "vragenBeperkt.txt"
-inFileName =  "vragen.txt"
+#inFileName =  "vragen.txt"
 
-with open(baseInOutDir +inFileName ,'r', encoding='utf-8') as questionFile:
-    for line in questionFile:
-        # print(line)
-        if not ':' in line:
-            continue
-            
-        key, value = line.split(':',1)
-        # print(key)
-        # print("- " + value)
-        if key.lower().strip() == "rondes":
-            for round in value.split(","):
-                allQuestionsByRoundMap[round.strip()] = []
-            continue
-
-        if key.lower().strip() == "lange vraag":
-            if(currentQuestion):
-                allQuestions.append(currentQuestion)
-                
-            currentQuestion = Question()
-
-            currentQuestion.setLongQuestion(value)
-        elif key.lower().strip() == "korte vraag":
-            currentQuestion.setShortQuestion(value)
-        elif key.lower().strip() == "antwoord":
-            currentQuestion.setAnswer(value)
-        elif key.lower().strip() == "afbeelding":
-            currentQuestion.setImg(value)
-        elif key.lower().strip() == "categorie":
-            currentQuestion.setCategory(value)
-        elif key.lower().strip() == "ronde":
-            currentQuestion.setRound(value)
-        else:
-            print(f"Skipping line {line}")
-    allQuestions.append(currentQuestion)
+infiles = ["vragenVeerle.txt", "vragenEva.txt", "vragenRodeDraad.txt"
+        #    "vragenEllen.txt", "vragenSara.txt", "vragenHilde.txt",
+             ]
 
 
+def readSingleFile(filename):
+    print("Reading " + filename)
+    currentQuestion = None
+    with open(baseInOutDir+filename ,'r', encoding='utf-8') as questionFile:
+        for line in questionFile:
+            if not ':' in line:
+                continue            
+            key, value = line.split(':',1)
+            if key.lower().strip() == "rondes":
+                for round in value.split(","):
+                    allQuestionsByRoundMap[round.strip()] = []
+                continue
+
+            if key.lower().strip() == "lange vraag":
+                if(currentQuestion):
+                    allQuestions.append(currentQuestion)                
+                currentQuestion = Question()
+                currentQuestion.setLongQuestion(value)
+            elif key.lower().strip() == "korte vraag":
+                currentQuestion.setShortQuestion(value)
+            elif key.lower().strip() == "antwoord":
+                currentQuestion.setAnswer(value)
+            elif key.lower().strip() == "afbeelding":
+                currentQuestion.setImg(value)
+            elif key.lower().strip() == "categorie":
+                currentQuestion.setCategory(value)
+            elif key.lower().strip() == "ronde":
+                currentQuestion.setRound(value)
+            else:
+                print(f"Skipping line {line}")
+        allQuestions.append(currentQuestion)
+
+for fileName in infiles:
+    readSingleFile(fileName)
 
 
 # this should come from a file
@@ -84,21 +88,15 @@ category_order = [
 "kunst, cultuur en literatuur","Media","Muziek","sport","techniek en technologie","Wiskunde","Rode Draad"
 ]
 
-# print(allQuestions)
 allQuestions.sort(key=lambda question: question.round.lower())
-# print(allQuestions)
 
 questions = []
 currentRound = None
 currentRoundName = ""
 currentRoundQuestions = []
 for question in allQuestions:
-    print(currentRoundName.strip().lower())
-    print(question.round.strip().lower())
     if currentRoundName != question.round.strip().lower():
-        print("Starting a new round")
         if(currentRound != None):
-            print("There is a round to append now")
             currentRound["name"] = currentRoundName.capitalize()
             currentRound["questions"] = currentRoundQuestions
             questions.append(currentRound)
@@ -113,10 +111,9 @@ questions.append(currentRound)
 
 # [{name,questions},{}]
 for round in questions:
-    print(round)
     round["questions"].sort(key=lambda x: [co.lower() for co in category_order].index(x.category.lower()))
     
-    with open(baseInOutDir + "/presenter/presentationText_"+round["name"]+".txt", 'w') as presenterText:
+    with open(outDir + "/presentationText_"+round["name"]+".txt", 'w') as presenterText:
         presenterText.write(round["name"] + "\n")
         for questionNumber, question in enumerate(round["questions"]):
             presenterText.write(str(questionNumber + 1) + ": " + question.longQuestion + "\n\n")
