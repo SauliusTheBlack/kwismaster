@@ -1,0 +1,55 @@
+Lange vraag: De landen
+Korte vraag: 
+Antwoord: Denemarken: Geel - Spanje: Rood - Italië: Groen - Oostenrijk: Blauw - Zweden: Zwart
+Afbeelding: gekleurdeLanden.png:1.5
+Geluid:
+Categorie: Tafelronde - Kleuren
+Ronde: Tafelronde 1
+
+Lange vraag: De teletubbies
+Korte vraag: 
+Antwoord:
+Afbeelding: teletubbies.png
+Geluid:
+Categorie: Tafelronde - Kleuren
+Ronde: Tafelronde 1
+
+Lange vraag: De vlaggen
+Korte vraag: 
+Antwoord: 
+Afbeelding: vlaggen.png
+Geluid:
+Categorie: Tafelronde - Kleuren
+Ronde: Tafelronde 1
+
+Lange vraag: Logo's
+Korte vraag: 
+Antwoord: 
+Afbeelding: logos.png
+Geluid:
+Categorie: Tafelronde - Kleuren
+Ronde: Tafelronde 1
+
+Lange vraag: De landen
+Korte vraag: 
+Antwoord: 
+Afbeelding: ringen.png:1.7
+Geluid:
+Categorie: Tafelronde - Kleuren
+Ronde: Tafelronde 1
+
+Lange vraag: De landen
+Korte vraag: 
+Antwoord: 
+Afbeelding: regenboog.png:1.2
+Geluid:
+Categorie: Tafelronde - Kleuren
+Ronde: Tafelronde 1
+
+Lange vraag: De landen
+Korte vraag: 
+Antwoord: 
+Afbeelding: regenboogTrui.png:1.5
+Geluid:
+Categorie: Tafelronde - Kleuren
+Ronde: Tafelronde 1

@@ -14,8 +14,8 @@ Geluid:
 Categorie: Muziek
 Ronde: Ronde 2
 
-Lange vraag: Welk muziekinstrument is dit?
-Korte vraag: Welk muziekinstrument is dit?
+Lange vraag: Welk Muziekinstrument is dit?
+Korte vraag: Welk Muziekinstrument is dit?
 Antwoord: Kalimba
 Afbeelding: kalimba.jpg
 Geluid: 
@@ -39,9 +39,9 @@ Geluid:
 Categorie: Halloween
 Ronde: Ronde 2
 
-Lange vraag: Met halloween ends komt er een einde aan het halloween francise. Wie vertolkte de rol van
+Lange vraag: Met Halloween ends komt er een einde aan het Halloween francise. Wie vertolkte de rol van
 Laurie in deze films
-Korte vraag: Met halloween ends komt er een einde aan het halloween francise. Wie vertolkte de rol van
+Korte vraag: Met Halloween ends komt er een einde aan het Halloween francise. Wie vertolkte de rol van
 Laurie in deze films
 Antwoord: Jamie Lee Curtis
 Afbeelding:
@@ -102,7 +102,7 @@ Korte vraag: De belgian Cats speelden dit jaar europees kampioen, welk land vers
 Antwoord: Frankrijk
 Afbeelding:
 Geluid: 
-Categorie: sport
+Categorie: Sport
 Ronde: Ronde 1
 
 Lange vraag: Tijdens welke wielrennerswedstrijd overleed Gino Mäder ten gevolge van een val? 
@@ -110,7 +110,7 @@ Korte vraag: Tijdens welke wielrennerswedstrijd overleed Gino Mäder ten gevolge
 Antwoord: Tour van zwitserland
 Afbeelding:
 Geluid: 
-Categorie: sport
+Categorie: Sport
 Ronde: Ronde 2
 
 Lange vraag:  wereldkampioenschappen turnen 2021 waren de 50ste editie van de wereldkampioenschappen (WK) turnen. In welk land ging deze door
@@ -118,7 +118,7 @@ Korte vraag:  wereldkampioenschappen turnen 2021 waren de 50ste editie van de 
 Antwoord: Japan
 Afbeelding:
 Geluid: 
-Categorie: sport
+Categorie: Sport
 Ronde: Ronde 3
 
 Lange vraag: Naar welke diersoort verwijst de naam van de Canarische Eilanden
@@ -126,7 +126,7 @@ Korte vraag: Naar welke diersoort verwijst de naam van de Canarische Eilanden
 Antwoord: Honden
 Afbeelding:
 Geluid: 
-Categorie: fauna en flora
+Categorie: Fauna en Flora
 Ronde: Ronde 1
 
 Lange vraag: Hoe noemen we het fenomeen waarbij een vogel je raam lijkt aan te vallen maar het
@@ -136,7 +136,7 @@ eigenlijk op zijn eigen weerkaatsing gemunt heeft
 Antwoord: Spiegelvechten
 Afbeelding:
 Geluid: 
-Categorie: fauna en flora
+Categorie: Fauna en Flora
 Ronde: Ronde 2
 
 Lange vraag: Het niet aanmaken van pigment noemen we albinisme hoe nomen we het omgekeerde?
@@ -144,16 +144,16 @@ Korte vraag: Het niet aanmaken van pigment noemen we albinisme hoe nomen we het 
 Antwoord: Melanisme
 Afbeelding:
 Geluid: 
-Categorie: fauna en flora
+Categorie: Fauna en Flora
 Ronde: Ronde 3
 
-– geschiedenis
+– Geschiedenis
 Lange vraag: Welke vier presidenten zijn op Mount Rushmore
 Korte vraag: Welke vier presidenten zijn op Mount Rushmore
 Antwoord: George Washington, Abraham Lincoln, Thomas Jefferson en Theodore Roosevelt
 Afbeelding:
 Geluid: 
-Categorie: geschiedenis
+Categorie: Geschiedenis
 Ronde: Ronde 1
 
 Lange vraag: Hoe oud was koningin Elizabeth II toen ze tot koningin van Engeland werd gekroond
@@ -161,7 +161,7 @@ Korte vraag: Hoe oud was koningin Elizabeth II toen ze tot koningin van Engeland
 Antwoord: 27
 Afbeelding:
 Geluid: 
-Categorie: geschiedenis
+Categorie: Geschiedenis
 Ronde: Ronde 2
 
 Lange vraag: Wat was de hoofdstad van het inkarijk
@@ -169,7 +169,7 @@ Korte vraag: Wat was de hoofdstad van het inkarijk
 Antwoord: Kuzco
 Afbeelding:
 Geluid: 
-Categorie: geschiedenis
+Categorie: Geschiedenis
 Ronde: Ronde 3
 
 Lange vraag: Op de website van standaard boekhandel vonden we volgende lezersbeoordeling: “Als ik heel eerlijk moet zijn... Er staan enorm veel schrijffouten in qua zinsbouw.... Ook de verleden tijd en tegenwoordige tijd etc kloppen niet altijd en dat is enorm jammer. Ik weet, omdat ik heel veel boeken van haar heb gelezen, dat zij “De geheimen van de kostschool” nog zou herschreven hebben... En dat merk je wel. Deze mening is opvallend tussen voor de rest allemaal lovende kritiek. De schrijfster wou het boek eerst nog herschrijven, maar is ondertussen overleden. Welke Noord-Ierse is de auteur van “De geheimen van de kostschool”?
@@ -177,7 +177,7 @@ Korte vraag: Welk personage uit hamlet?
 Antwoord: Lucinda Riley
 Afbeelding:
 Geluid: 
-Categorie: kunst, cultuur en literatuur
+Categorie: Kunst, Cultuur en Literatuur
 Ronde: Ronde 1
 
 Lange vraag: Hamlet is verliefd op haar, zij ook op hem. Maar na de moord op haar vader Polonius begint haar gekte vorm te krijgen. Ze drijft haar dorpsbewoners tot wanhoop met onbegrijpelijke liedjes. Later verdrinkt ze op mysterieuze wijze in een ondiepe beek. Wanneer haar broer Laërtes terugkeert uit Frankrijk komt het tot een duel met Hamlet. Over welk personage uit Hamlet gaat het hier
@@ -185,7 +185,7 @@ Korte vraag: Welk personage uit hamlet?
 Antwoord: Ophelia
 Afbeelding:
 Geluid: 
-Categorie: kunst, cultuur en literatuur
+Categorie: Kunst, Cultuur en Literatuur
 Ronde: Ronde 2
 
 Lange vraag: Holly jackson is binnen het young adult genre een grote naam, welke boekenreeks die plaats vind in little kilton krijgt volgend jaar zijn eigen serie
@@ -193,7 +193,7 @@ Korte vraag: Little Kilton?
 Antwoord: Moordgids voor lieve meisjes.
 Afbeelding:
 Geluid: 
-Categorie: kunst, cultuur en literatuur
+Categorie: Kunst, Cultuur en Literatuur
 Ronde: Ronde 3
 
 Lange vraag: Apple brengt zijn eigen VR bril op de markt, met een prijskaartje van 3500 dollar is dit niet gegeven, hoe heet hun bril?
@@ -201,7 +201,7 @@ Korte vraag: Hoe heet de VR bril van Apple?
 Antwoord: Vision Pro
 Afbeelding:
 Geluid: 
-Categorie: techniek en technologie
+Categorie: Techniek en Technologie
 Ronde: Ronde 1
 
 Lange vraag: Waarvoor staat de afkorting NFC?
@@ -209,7 +209,7 @@ Korte vraag: Near Field Communication
 Antwoord: 
 Afbeelding:
 Geluid: 
-Categorie: techniek en technologie
+Categorie: Techniek en Technologie
 Ronde: Ronde 2
 
 Lange vraag: Hoe wordt een periode van 1 miljoen jaar genoemd?
@@ -217,7 +217,7 @@ Korte vraag: 1 Giga annum
 Antwoord: 
 Afbeelding:
 Geluid: 
-Categorie: techniek en technologie
+Categorie: Techniek en Technologie
 Ronde: Ronde 3
 
 Lange vraag: Hoeveel km is de omtrek van de aarde
@@ -225,7 +225,7 @@ Korte vraag: Hoeveel km is de omtrek van de aarde
 Antwoord: 40000
 Afbeelding:
 Geluid: 
-Categorie: aardrijkskunde
+Categorie: Aardrijkskunde
 Ronde: Ronde 1
 
 
@@ -234,7 +234,7 @@ Korte vraag: Wat is de hoofdstad van Kroatie
 Antwoord: Zagreb
 Afbeelding:
 Geluid: 
-Categorie: aardrijkskunde
+Categorie: Aardrijkskunde
 Ronde: Ronde 2
 
 
@@ -243,7 +243,7 @@ Korte vraag: Op welke rivier vaar je van antwerpen naar gent
 Antwoord: Schelde
 Afbeelding:
 Geluid: 
-Categorie: aardrijkskunde
+Categorie: Aardrijkskunde
 Ronde: Ronde 3
 
 
@@ -282,25 +282,25 @@ Ronde: Ronde 4
 Lange vraag: Dit zijn de Tau Tau poppen van Lemo. Een toeristische bezienswaardigheid in Tana Toraja, Indonesië. De Toraja etnische groep, wonend in de noordelijke bergen van Zuid Sulawesi, blijven tot op heden vasthouden aan hun oude geloven, rituelen en tradities. Deze levensgrote Tau Tau poppen worden uit hout gemaakt en bekleed met traditionele kledij. 
 Korte vraag: Waarvoor dienen ze?
 Antwoord: beeltenis van een overledene die in de rotswand begraven ligt
-Afbeelding: lemo ronde 6 halloween.jpg
+Afbeelding: lemo ronde 6 Halloween.jpg
 Geluid:
-Categorie: halloween
+Categorie: Halloween
 Ronde: Ronde 6
 
 Lange vraag: Toen Geerard Van de Walle werkte als scenarist in Hotel Hungaria, bedacht hij een handpop van een betweterige aap. De oorspronkelijke naam was Eddy, als knipoog naar Eddy Wally. Toen Ketnet het format overnam, werd de naam van de handpop veranderd. Graag de voornaam en achternaam van de aap op de foto.
 Korte vraag: Wat is de naam van deze handpop?
 Antwoord: Olly Wannabe
-Afbeelding: olly wannabe ronde 5 media.jpg
+Afbeelding: olly wannabe ronde 5 Media.jpg
 Geluid:
-Categorie: media
+Categorie: Media
 Ronde: Ronde 5
 
 Lange vraag: We zoeken de naam van dit buideldier. Dit dier heeft de opening van de buidel naar achteren, om te voorkomen dat het jong bedolven raakt tijdens het graven. Het is het enig dier dat kubus-achtige uitwerpselen produceert. Men dacht vroeger dat die ze stapelt om zijn territorium af te bakenen, maar dat is een misvatting. Een combinatie van de vorm en elasticiteit van de darm samen met het feit dat de droge omgeving waarin ze in de natuur leven, ze genoodzaakt zijn om tot de laatste druppel uit het eten te persen, maakt dat deze vorm ontstaat.
 Korte vraag: Wat is de naam van dit dier?
 Antwoord: wombat
-Afbeelding: wombat ronde 5 fauna en flora.jpg
+Afbeelding: wombat ronde 5 Fauna en Flora.jpg
 Geluid:
-Categorie: fauna en flora
+Categorie: Fauna en Flora
 Ronde: Ronde 5
 
 Lange vraag: De officiële naam van deze organisatie was de Sociale en Politieke Vrouwenunie en werd opgericht in 1903 door Emmeline Pankhurst. De organsatie streed voor het vrouwenkiesrecht. Ze kregen bekendheid door het veroorzaken van opstootjes en gewelddadige confrontaties met de politie. Ze kregen hun naam van de Daily Mail, die snel door hun leden werden overgenomen. Hun motto was: Deeds not words (Geen woorden maar daden). Mannen werden niet toegelaten. 
@@ -308,7 +308,7 @@ Korte vraag: Hoe werden deze Britse vrouwen genoemd, die streden voor het vrouwe
 Antwoord: Sufragettes
 Afbeelding:
 Geluid:
-Categorie: geschiedenis
+Categorie: Geschiedenis
 Ronde: Ronde 1
 
 
@@ -319,7 +319,7 @@ Korte vraag: Wat was de volledige naam van deze sociale identiteitskaart?
 Antwoord: Sociaal informatie systeem (SIS kaart)
 Afbeelding: 
 Geluid:/
-Categorie: geschiedenis
+Categorie: Geschiedenis
 Ronde: Ronde 2
 
 Lange vraag:  Het instrument dat we zoeken is gebaseerd op het principe van de doorslaande tong. Het bespelen van dit instrument heeft een paar uitdrukkingen zoals: hottevotten, raspen, en zagen. Wat is een schippersklavier?
@@ -327,7 +327,7 @@ Korte vraag: Wat is een schippersklavier?
 Antwoord: trekharmonica/diatonische accordeon
 Afbeelding:
 Geluid:/
-Categorie: kunst, cultuur en literatuur
+Categorie: Kunst, Cultuur en Literatuur
 Ronde: Ronde 3
 
 Lange vraag: Op 92-jarige leeftijd overlijdt deze tekenleraar in Overveen. Gedurende de Tweede Wereldoorlog vervalste hij persoonsbewijzen voor mensen in het verzet. Deze toonden de kwaliteit die hij in zich had, omdat ambtenaren na de oorlog ze niet van echte bewijzen konden onderscheiden. In de jaren na WO II werd hij steeds bekender als kunstenaar. Hij ontwikkelde een heel eigen romantische, nostalgische stijl, met veel details. Eind 1951 werd hij door Peter Reijnders gevraagd om mee te werken aan de creatie van een sprookjespark dat op 31 mei 1952 werd geopend. De Stoomcarrousel was zijn troetelkind. Zijn werkwijze en perfectie staan nog steeds voorop bij het ontwikkelen van nieuwe onderdelen in de Wereld van het sprookjespark. Zijn naam?
@@ -335,15 +335,15 @@ Korte vraag: Wat is de naam van deze kunstenaar?
 Antwoord: Anton Pieck
 Afbeelding: Anton_Pieck ronde 4 kunst cultuur en literatuur.jpg
 Geluid:/
-Categorie: kunst, cultuur en literatuur
+Categorie: Kunst, Cultuur en Literatuur
 Ronde: Ronde 4
 
-Lange vraag: Dit deelproject van de wikimedia foundation verzamelt citaten van bekende personen. Je denkt hierbij meteen aan historische uitspraken, maar je kan er evengoed citaten uit hedendaagse films of boeken terugvinden. Er wordt je ook telkens een citaat van de maand aangeboden. Hoe heet deze bundeling van uitspraken of vult u even de website verder aan www. … . org.
+Lange vraag: Dit deelproject van de wikiMedia foundation verzamelt citaten van bekende personen. Je denkt hierbij meteen aan historische uitspraken, maar je kan er evengoed citaten uit hedendaagse films of boeken terugvinden. Er wordt je ook telkens een citaat van de maand aangeboden. Hoe heet deze bundeling van uitspraken of vult u even de website verder aan www. … . org.
 Korte vraag: Vult u even de website verder aan www. … . org
 Antwoord: wikiquotes
-Afbeelding: Wikiquote ronde 7 techniek en technologie.png
+Afbeelding: Wikiquote ronde 7 Techniek en Technologie.png
 Geluid:/
-Categorie: techniek en technologie
+Categorie: Techniek en Technologie
 Ronde: Ronde 7
 
 Lange vraag: Noem vier buurlanden van Hongarije
@@ -351,6 +351,6 @@ Korte vraag: Noem 4 buurlanden van Hongarije
 Antwoord: Slowakije, Oostenrijk, Oekraïne, Roemenië, Kroatië, Slovenië en Servië
 Afbeelding:
 Geluid:/
-Categorie: aardrijkskunde
+Categorie: Aardrijkskunde
 Ronde: Ronde 6
 

@@ -31,26 +31,26 @@ Ronde: Ronde 4
 Lange vraag: Jullie kennen allemaal het liedje Fast car van Jonas Blue, maar dit is een cover. Wie is de originele uitvoerder van dit liedje uit 1988? 
 Korte vraag: Wie is de originele uitvoerder van het liedje Fast Car? 
 Antwoord: Tracy Chapman
-Categorie: muziek 
+Categorie: Muziek 
 Ronde: Ronde 6 
 
 Lange vraag: Wat bereken je met de formule F=m*g , met andere woorden wat betekent F? 
 Korte vraag: Wat betekent F in de formule F = m*g? 
 Antwoord: Kracht
 Nota: hier stond als antwoord eerst zwaartekracht, maar volgens https://www.mathsisfun.com/physics/gravity.html is dat niet juist!!!
-Categorie: techniek en technologie 
+Categorie: Techniek en Technologie 
 Ronde: Ronde 4
 
 Lange vraag: Wat is de Karmanlijn en op hoeveel hoogte begint deze? 
 Korte vraag: Wat is de Karmanlijn en op hoeveel hoogte begint deze? 
 Antwoord: Dit is het einde van de atmosfeer van de aarde of het begin van de ruimte, op 100 km hoogte
-Categorie: techniek en technologie 
+Categorie: Techniek en Technologie 
 Ronde: Ronde 5
 
 Lange vraag: Waarvoor staat de afkorting NASA?
 Korte vraag: Waarvoor staat de afkorting NASA?
 Antwoord: National Aeronautics ans Space Administration
-Categorie: techniek en technologie 
+Categorie: Techniek en Technologie 
 Ronde: Ronde 6 
 
 Lange vraag: Hoeveel seconden zitten er in 2 uur en 37 minuten? 

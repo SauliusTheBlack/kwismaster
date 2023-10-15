@@ -20,29 +20,29 @@ Lange vraag: Kaas komt in de naam. We zoeken de overige twee delen van dit spel.
 Korte vraag: Kaas komt in de naam. We zoeken de overige twee delen van dit spel.
 Antwoord: eieren en boter
 Categorie: Rode Draad
-Ronde: Ronde 4
+Ronde: Ronde ABC
 
 Lange vraag: Praatjes doen het niet met gaatjes, woorden ook niet met zakken, je kan het proberen met het vat der Danaïden, of het ene gat met het andere. Welk woord zoeken we om deze spreekwoorden te vervolledigen? 
 Korte vraag: Welk woord zoeken we hier?
 Antwoord: Vullen
 Categorie: Rode Draad
-Ronde: Ronde 5
+Ronde: Ronde 4
 
 Lange vraag: hoeveel minuten ben je veilig aan de andere kant van deze deur?
-Korte vraag: hoeveel minuten ben je veilig aan de andere kant van deze deur?
-Afbeelding: branddeur.jpg
+Korte vraag: hoeveel minuten ben je veilig aan de andere kant van deze deur? (N.O.N. 713.020 - RF 30 - 013/35.12.00)
+Afbeelding: Branddeur.png
 Antwoord: 30 minuten
 Categorie: Rode Draad
-Ronde: Ronde 6
+Ronde: Ronde 5
 
 Lange vraag: orchidee, tekenfilm op vrt
 Korte vraag: orchidee, tekenfilm op vrt
 Antwoord: vanille(suiker)
 Categorie: Rode Draad
-Ronde: Ronde 7
+Ronde: Ronde 6
 
 Lange vraag: Baby-egeltjes kunnen hier helemaal niet tegen. Toch krijgen ze het dikwijls voorgeschoteld als mensen ze vinden in hun tuin. Wat is het?
 Korte vraag: Wat mogen baby-egeltjes absoluut niet eten?
 Antwoord: melk/room(lactose)
 Categorie: Rode Draad
-Ronde: Ronde 8
+Ronde: Ronde 7

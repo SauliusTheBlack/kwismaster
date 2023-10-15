@@ -14,8 +14,8 @@ Geluid:
 Categorie: Muziek
 Ronde: Ronde 2
 
-Lange vraag: Welk muziekinstrument is dit?
-Korte vraag: Welk muziekinstrument is dit?
+Lange vraag: Welk Muziekinstrument is dit?
+Korte vraag: Welk Muziekinstrument is dit?
 Antwoord: Kalimba
 Afbeelding: kalimba.jpg
 Geluid: 
@@ -39,9 +39,9 @@ Geluid:
 Categorie: Halloween
 Ronde: Ronde 2
 
-Lange vraag: Met halloween ends komt er een einde aan het halloween francise. Wie vertolkte de rol van
+Lange vraag: Met Halloween ends komt er een einde aan het Halloween francise. Wie vertolkte de rol van
 Laurie in deze films
-Korte vraag: Met halloween ends komt er een einde aan het halloween francise. Wie vertolkte de rol van
+Korte vraag: Met Halloween ends komt er een einde aan het Halloween francise. Wie vertolkte de rol van
 Laurie in deze films
 Antwoord: Jamie Lee Curtis
 Afbeelding:
@@ -102,7 +102,7 @@ Korte vraag: De belgian Cats speelden dit jaar europees kampioen, welk land vers
 Antwoord: Frankrijk
 Afbeelding:
 Geluid: 
-Categorie: sport
+Categorie: Sport
 Ronde: Ronde 1
 
 Lange vraag: Tijdens welke wielrennerswedstrijd overleed Gino Mäder ten gevolge van een val? 
@@ -110,15 +110,15 @@ Korte vraag: Tijdens welke wielrennerswedstrijd overleed Gino Mäder ten gevolge
 Antwoord: Tour van zwitserland
 Afbeelding:
 Geluid: 
-Categorie: sport
+Categorie: Sport
 Ronde: Ronde 2
 
-Lange vraag:  wereldkampioenschappen turnen 2021 waren de 50ste editie van de wereldkampioenschappen (WK) turnen. In welk land ging deze door
-Korte vraag:  wereldkampioenschappen turnen 2021 waren de 50ste editie van de wereldkampioenschappen (WK) turnen. In welk land ging deze door
+Lange vraag: De wereldkampioenschappen turnen 2021 waren de 50ste editie van de wereldkampioenschappen (WK) turnen. In welk land ging deze door
+Korte vraag: In welk land gingen de 50e wereldkampioenschappen turnen door?
 Antwoord: Japan
 Afbeelding:
 Geluid: 
-Categorie: sport
+Categorie: Sport
 Ronde: Ronde 3
 
 Lange vraag: Naar welke diersoort verwijst de naam van de Canarische Eilanden
@@ -126,7 +126,7 @@ Korte vraag: Naar welke diersoort verwijst de naam van de Canarische Eilanden
 Antwoord: Honden
 Afbeelding:
 Geluid: 
-Categorie: fauna en flora
+Categorie: Fauna en Flora
 Ronde: Ronde 1
 
 Lange vraag: Hoe noemen we het fenomeen waarbij een vogel je raam lijkt aan te vallen maar het
@@ -136,7 +136,7 @@ eigenlijk op zijn eigen weerkaatsing gemunt heeft
 Antwoord: Spiegelvechten
 Afbeelding:
 Geluid: 
-Categorie: fauna en flora
+Categorie: Fauna en Flora
 Ronde: Ronde 2
 
 Lange vraag: Het niet aanmaken van pigment noemen we albinisme hoe nomen we het omgekeerde?
@@ -144,16 +144,16 @@ Korte vraag: Het niet aanmaken van pigment noemen we albinisme hoe nomen we het 
 Antwoord: Melanisme
 Afbeelding:
 Geluid: 
-Categorie: fauna en flora
+Categorie: Fauna en Flora
 Ronde: Ronde 3
 
-– geschiedenis
+– Geschiedenis
 Lange vraag: Welke vier presidenten zijn op Mount Rushmore
-Korte vraag: Welke vier presidenten zijn op Mount Rushmore
+Korte vraag: Welke vier presidenten zijn op Mount Rushmore?
 Antwoord: George Washington, Abraham Lincoln, Thomas Jefferson en Theodore Roosevelt
 Afbeelding:
 Geluid: 
-Categorie: geschiedenis
+Categorie: Geschiedenis
 Ronde: Ronde 1
 
 Lange vraag: Hoe oud was koningin Elizabeth II toen ze tot koningin van Engeland werd gekroond
@@ -161,7 +161,7 @@ Korte vraag: Hoe oud was koningin Elizabeth II toen ze tot koningin van Engeland
 Antwoord: 27
 Afbeelding:
 Geluid: 
-Categorie: geschiedenis
+Categorie: Geschiedenis
 Ronde: Ronde 2
 
 Lange vraag: Wat was de hoofdstad van het inkarijk
@@ -169,7 +169,7 @@ Korte vraag: Wat was de hoofdstad van het inkarijk
 Antwoord: Kuzco
 Afbeelding:
 Geluid: 
-Categorie: geschiedenis
+Categorie: Geschiedenis
 Ronde: Ronde 3
 
 Lange vraag: Op de website van standaard boekhandel vonden we volgende lezersbeoordeling: “Als ik heel eerlijk moet zijn... Er staan enorm veel schrijffouten in qua zinsbouw.... Ook de verleden tijd en tegenwoordige tijd etc kloppen niet altijd en dat is enorm jammer. Ik weet, omdat ik heel veel boeken van haar heb gelezen, dat zij “De geheimen van de kostschool” nog zou herschreven hebben... En dat merk je wel. Deze mening is opvallend tussen voor de rest allemaal lovende kritiek. De schrijfster wou het boek eerst nog herschrijven, maar is ondertussen overleden. Welke Noord-Ierse is de auteur van “De geheimen van de kostschool”?
@@ -213,8 +213,8 @@ Categorie: Technologie
 Ronde: Ronde 2
 
 Lange vraag: Hoe wordt een periode van 1 miljoen jaar genoemd?
-Korte vraag: 1 Giga annum
-Antwoord: 
+Korte vraag: Hoe wordt een periode van 1 miljoen jaar genoemd?
+Antwoord: 1 Giga annum
 Afbeelding:
 Geluid: 
 Categorie: Technologie
@@ -225,7 +225,7 @@ Korte vraag: Hoeveel km is de omtrek van de aarde
 Antwoord: 40000
 Afbeelding:
 Geluid: 
-Categorie: aardrijkskunde
+Categorie: Aardrijkskunde
 Ronde: Ronde 1
 
 
@@ -234,7 +234,7 @@ Korte vraag: Wat is de hoofdstad van Kroatie
 Antwoord: Zagreb
 Afbeelding:
 Geluid: 
-Categorie: aardrijkskunde
+Categorie: Aardrijkskunde
 Ronde: Ronde 2
 
 
@@ -243,7 +243,7 @@ Korte vraag: Op welke rivier vaar je van antwerpen naar gent
 Antwoord: Schelde
 Afbeelding:
 Geluid: 
-Categorie: aardrijkskunde
+Categorie: Aardrijkskunde
 Ronde: Ronde 3
 
 
