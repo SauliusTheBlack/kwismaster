@@ -37,7 +37,10 @@ function renderScores() {
             });
             const totalCell = document.createElement('th');
             totalCell.appendChild(document.createTextNode("Totaal"));
+            const rank = document.createElement('th');
+            rank.appendChild(document.createTextNode("Rang"));
             headerRow.appendChild(totalCell);
+            headerRow.appendChild(rank);
 
             questionTable.appendChild(headerRow);
         }

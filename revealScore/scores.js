@@ -30,4 +30,9 @@ Meghan Rangel	2	2	101	3	3	102	4	4	103
 Saint Valentine	12	12	11	13	13	12	14	14	13
 August Madden	11	11	12	12	12	13	13	13	14
 
+`;
+
+consumptions = `
+Account 	Drank 	Eten
+Plateus 	6 	8
 `
