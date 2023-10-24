@@ -5,5 +5,5 @@ Managing different versions of your questions is equally hard.
 With this tool it becomes a whole lot easier.
 
 The tool is made out of several components to 
-a. convert from plain text to technical file
-b. use the converted technical file to show the quiz
+*. convert from plain text to technical file
+*. use the converted technical file to show the quiz
