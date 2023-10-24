@@ -75,11 +75,27 @@ function parseScoreline(line, lineIndex) {
     parsedScores.push({ teamName: teamName, scores: teamScores })
 }
 
+function parseScoreline(line, lineIndex) {
+    console.log(line);
+    console.log(line.split("\t"));
+    let teamScores = line.split("\t").slice(1)[0];
+    let teamName = line.split("\t")[0];
+    // console.log(lineIndex + ": " + teamName + " scores: [" + teamScores + "] - total " + sumArray(teamScores));
+    parsedConsumptions.push({ teamName: teamName, consumptions: teamScores })
+}
+
 window.onload = (event) => {
     var scoreLines = scores.split("\n");
     scoreLines.forEach((element, index) => {
         if (element) {
             parseScoreline(element, index)
+        }
+    });
+    
+    var consumptionLines = consumptions.split("\n");
+    consumptionLines.forEach((element, index) => {
+        if (element) {
+            parseConsumptionLine(element, index)
         }
     });
 
