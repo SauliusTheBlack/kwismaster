@@ -45,7 +45,6 @@ rounds is a list, containing all the rounds that will be presented in the quiz. 
 "rounds": [
         "Round 1",
         "Round 2",
-        "subsetRound 1",
 		...
         "Round x"
     ],
