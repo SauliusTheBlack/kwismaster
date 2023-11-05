@@ -1,7 +1,3 @@
-function _setQuestions(questionObj) {
-    questions = questionObj;
-}
-
 function _setSettings(settingsObj) {
     settings = settingsObj;
 }
