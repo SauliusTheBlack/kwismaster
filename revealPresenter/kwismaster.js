@@ -6,11 +6,11 @@ function _setSettings(settingsObj) {
 function makeAnswerSlides(roundObj, questionObj, excludeQuestions = []) {
 
     slides.appendChild(makeRoundTitleSlide(roundObj, " - Antwoorden"));
-    for (question in questionObj) {
-        if (excludeQuestions.includes(questionObj[question]["category"])) {
+    for (questionIndex in questionObj) {
+        if (excludeQuestions.includes(questionObj[questionIndex]["category"])) {
             continue;
         }
-        slides.appendChild(makeSingleAnswerSlide(roundObj, questionObj));
+        slides.appendChild(makeSingleAnswerSlide(roundObj["name"], questionObj[questionIndex], questionIndex));
     }
 }
 
@@ -25,44 +25,46 @@ function makeQuestionSlides(roundObj, questionObj) {
 
     slides.appendChild(makeRoundTitleSlide(roundObj));
 
-    for (question in questionObj) {
-        slides.appendChild(makeSingleQuestionSlide(roundObj, questionObj));
+    for (questionIndex in questionObj) {
+        slides.appendChild(makeSingleQuestionSlide(roundObj["name"], questionObj[questionIndex], questionIndex));
     }
 }
 
-function setSlideHeader(questionSectionDom, question, roundObj, questionObj) {
+function setSlideHeader(questionSectionDom, roundName, questionObj, questionIndex) {
     var questionTitle = document.createElement('h4');
+    questionTitle.classList.add("questionTitle");
     var questionCategory = document.createElement('h5');
-    var questionCounter = Number(question) + 1;
-    questionTitle.innerHTML = roundObj["name"] + " - " + "Vraag " + questionCounter;
-    if ("category" in questionObj[question]) {
-        questionCategory.innerHTML = questionObj[question]["category"];
+    questionCategory.classList.add("questionCategory");
+    var questionCounter = questionIndex;
+    questionTitle.innerHTML = roundName + " - " + "Vraag " + questionCounter;
+    if ("category" in questionObj) {
+        questionCategory.innerHTML = questionObj["category"];
     }
 
     questionSectionDom.appendChild(questionTitle);
     questionSectionDom.appendChild(questionCategory);
 }
 
-function makeSingleAnswerSlide(roundObj, questionObj) {
+function makeSingleAnswerSlide(roundName, questionObj, questionIndex) {
     var imgRatio = 1;
     var questionDOM = document.createElement('section');
 
-    setSlideHeader(questionDOM, question, roundObj, questionObj);
+    setSlideHeader(questionDOM, roundName, questionObj, questionIndex);
 
 
     var questionBody = document.createElement('section');
     var questionBodyQuestion = document.createElement('div');
     var questionBodyAnswer = document.createElement('div');
 
-    questionBodyQuestion.innerHTML = questionObj[question]["shortQuestion"];
-    if (questionObj[question]["answer"] !== "") {
-        questionBodyAnswer.innerHTML = "[" + questionObj[question]["answer"] + "]";
+    questionBodyQuestion.innerHTML = questionObj["shortQuestion"];
+    if (questionObj["answer"] !== "") {
+        questionBodyAnswer.innerHTML = "[" + questionObj["answer"] + "]";
     }
     questionBody.appendChild(questionBodyQuestion);
-    if (questionObj[question]["img"]) {
+    if (questionObj["img"]) {
         var questionImg = document.createElement('img');
-        questionImg.src = "images/" + questionObj[question]["img"].split(":")[0];
-        imgRatio = questionObj[question]["img"].split(":")[1] || 1;
+        questionImg.src = "images/" + questionObj["img"].split(":")[0];
+        imgRatio = questionObj["img"].split(":")[1] || 1;
         questionImg.style.height = (300 * imgRatio) + 'px';
         questionBody.appendChild(questionImg);
     }
@@ -74,29 +76,33 @@ function makeSingleAnswerSlide(roundObj, questionObj) {
     return questionDOM;
 }
 
-function makeSingleQuestionSlide(roundObj, questionObj) {
+function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
+    let questionCounter = Number(questionIndex) + 1;
+
     var imgRatio = 1;
     var questionDOM = document.createElement('section');
 
-    setSlideHeader(questionDOM, question, roundObj, questionObj);
+    setSlideHeader(questionDOM, roundName, questionObj, questionCounter);
 
-    var questionBody = document.createElement('section');
+    var questionBody = document.createElement('p');
 
     var questionBodyQuestion = document.createElement('div');
-    questionBodyQuestion.innerHTML = questionObj[question]["shortQuestion"];
+    questionBodyQuestion.classList.add("presentedQuestion");
+    questionBodyQuestion.innerHTML = questionObj["shortQuestion"];
 
     var questionBodyLongQuestion = document.createElement('aside');
     questionBodyLongQuestion.className = "notes";
-    questionBodyLongQuestion.innerHTML = questionObj[question]["longQuestion"];
+    questionBodyLongQuestion.innerHTML = questionObj["longQuestion"];
+    questionBodyLongQuestion.classList.add("notesQuestion");
 
     questionBody.appendChild(questionBodyQuestion);
     questionBody.appendChild(questionBodyLongQuestion);
 
-    if (questionObj[question]["img"]) {
+    if (questionObj["img"]) {
         console.log("restyling");
         var questionImg = document.createElement('img');
-        questionImg.src = "images/" + questionObj[question]["img"].split(":")[0];
-        imgRatio = questionObj[question]["img"].split(":")[1] || 1;
+        questionImg.src = "images/" + questionObj["img"].split(":")[0];
+        imgRatio = questionObj["img"].split(":")[1] || 1;
         questionImg.style.height = (300 * imgRatio) + 'px';
         questionBody.appendChild(questionImg);
     }
