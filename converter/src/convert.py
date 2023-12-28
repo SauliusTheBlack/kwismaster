@@ -4,20 +4,26 @@ import sys
 # this makes classes serialisable
 class MyEncoder(json.JSONEncoder):
 	def default(self, o):
-		return o.__dict__   
+		return o.__dict__
 
 class Question:
 	def __init__(self):
-		pass
+		self.longQuestion = ""
+		self.shortQuestion = ""
+		self.answer = ""
 		
 	def setLongQuestion(self, txt):
-		self.longQuestion = txt.strip()
-		
+		self.longQuestion += txt.strip()
+		self.lastUsed = self.setLongQuestion
+
 	def setShortQuestion(self, txt):
-		self.shortQuestion = txt.strip()
+		self.shortQuestion += txt.strip()
+		self.lastUsed = self.setShortQuestion
 		
 	def setAnswer(self, txt):
-		self.answer = txt.strip()
+		print("Adding", txt.strip(), " to the answer")
+		self.answer += txt.strip()
+		self.lastUsed = self.setAnswer
 		
 	def setImg(self, txt):
 		self.img = txt.strip()
@@ -31,9 +37,14 @@ class Question:
 	def setSourceFile(self, txt):
 		self.sourceFile = txt
 
+	def appendToLastUsedField(self, txt):
+		self.lastUsed(r"\n" + txt.strip())
+
 	def __repr__(self) -> str:
+		print("appending with last used method")
 		return self.round + " - " + self.category + " - " + self.shortQuestion 
 
+#parse the user friendly syntax to Question objects
 def readSingleFile(filename):
 	fileQuestions = []
 	
@@ -41,15 +52,19 @@ def readSingleFile(filename):
 	currentQuestion = None
 	with open(filename ,'r', encoding='utf-8') as questionFile:		
 		for line in questionFile:
-			print(line)
+			
 			if not ':' in line:
-				continue			
+				if currentQuestion and line != "\n":
+					currentQuestion.appendToLastUsedField(line)
+				continue
+
 			key, value = line.split(':',1)
-			print(key,"-",value)
+			# print(key,"-",value)
 			if value.strip() == "/" or value.strip() == "\\":
 				print("Skipping line " + line + " because content is single forward or backward slash")
 				continue
 
+			#lange vraag, or its translation, should be the first line in a block, if you encounter it, finish the current question
 			if key.lower().strip() == "lange vraag":
 				if(currentQuestion):
 					currentQuestion.setSourceFile(filename)
@@ -69,10 +84,11 @@ def readSingleFile(filename):
 			else:
 				print(f"Skipping line {line}")
 
+	# no more "lange vraag" line means you have to write the current ongoing question
 	if currentQuestion:
 		currentQuestion.setSourceFile(filename)
 		fileQuestions.append(currentQuestion)
-		
+
 	return fileQuestions
 
 
@@ -110,21 +126,21 @@ if __name__ == '__main__':
 	for round in rounds:
 		if round in specifications:
 			roundSpecs = specifications[round]
-			print(round + ": " + str(roundSpecs))
+			# print(round + ": " + str(roundSpecs))
 			categoryPattern = re.compile("CATEGORY:.*")
 			matchingPatterns = list(filter(categoryPattern.match, roundSpecs))
-			print(matchingPatterns)
+			# print(matchingPatterns)
 			if(matchingPatterns):
-				print("Category found, need to filter all rounds for this category now")
+				# print("Category found, need to filter all rounds for this category now")
 				
 				categoryToExtract = matchingPatterns[0].split(":")[1]
-				print("Extracting " + categoryToExtract)
+				# print("Extracting " + categoryToExtract)
 				for question in allQuestions:
 					if question.category == categoryToExtract:
-						print(question)					
+						# print(question)					
 						q = copy.deepcopy(question)
 						q.setRound(round)
-						print(q)
+						# print(q)
 						questionsToAppend.append(q)
 
 	print(len(allQuestions))
