@@ -21,7 +21,6 @@ class Question:
 		self.lastUsed = self.setShortQuestion
 		
 	def setAnswer(self, txt):
-		print("Adding", txt.strip(), " to the answer")
 		self.answer += txt.strip()
 		self.lastUsed = self.setAnswer
 		
@@ -41,7 +40,6 @@ class Question:
 		self.lastUsed(r"\n" + txt.strip())
 
 	def __repr__(self) -> str:
-		print("appending with last used method")
 		return self.round + " - " + self.category + " - " + self.shortQuestion 
 
 #parse the user friendly syntax to Question objects
@@ -91,6 +89,43 @@ def readSingleFile(filename):
 
 	return fileQuestions
 
+def getAllQuestionsOrderedByRoundSpec(unhandledQuestions):
+	import re
+	import copy
+	#loop over the rounds, find if there is a round that has a CATEGORY: spec, and create a new round containing these questions
+	unhandledQuestions.sort(key=lambda question: [round.lower() for round in rounds].index(question.round.lower()))
+	print(unhandledQuestions)
+	questionsToAppend = []
+	for round in rounds:
+		if round in specifications:
+			roundSpecs = specifications[round]
+			categoryPattern = re.compile("CATEGORY:.*")
+			matchingPatterns = list(filter(categoryPattern.match, roundSpecs))
+			if(matchingPatterns):
+				# print("Category found, need to filter all rounds for this category now")
+				
+				categoryToExtract = matchingPatterns[0].split(":")[1]
+				for question in allQuestions:
+					if question.category == categoryToExtract:
+						q = copy.deepcopy(question)
+						q.setRound(round)
+						questionsToAppend.append(q)
+
+	unhandledQuestions.extend(questionsToAppend)
+
+	#Sort the question list by the round value for every question object, so that it matches the Rounds value in the spec file
+	unhandledQuestions.sort(key=lambda question: [round.lower() for round in rounds].index(question.round.lower()))
+	print("---")
+	print(unhandledQuestions)
+	print("---")
+
+	print("===")
+	print(unhandledQuestions)
+	print("---")
+
+	return unhandledQuestions
+
+
 
 usageText = """
 USAGE:
@@ -109,18 +144,23 @@ if __name__ == '__main__':
 
 	configFile = os.path.abspath(sys.argv[1])
 	baseInOutDir = os.path.abspath(sys.argv[1] + "/..")
-	print(configFile, baseInOutDir)
-	allQuestionsByRoundMap = {}		
-
-	outDir = baseInOutDir + "/revealPresenter" 
-	outFilename = outDir + "/questions.js"
-
 	with open(configFile,"r") as f:
 		config = json.load(f)
 		lines = f.readlines()
 
-	with open(baseInOutDir + "/revealPresenter/settings.js","w") as h:
-		h.write("var settings = ")
+		print(config)
+		if("base_dir" in config["settings"]):
+			print(f'appending custom base dir [{config["settings"]["base_dir"]}] to [{baseInOutDir}]')
+			baseInOutDir += "/" + config["settings"]["base_dir"]
+
+
+	print(configFile, baseInOutDir)
+	allQuestionsByRoundMap = {}		
+
+	outFilename = baseInOutDir + "/questions.js"
+	
+	with open(baseInOutDir + "/settings.js","w") as h:
+		h.write("var settings = {}")
 		h.writelines(lines)
 
 	category_order = config["category_order"]
@@ -131,50 +171,26 @@ if __name__ == '__main__':
 	for fileName in infiles:
 		allQuestions = readSingleFile(baseInOutDir+"/"+fileName)
 
-	import re
-	import copy
-	#loop over the rounds, find if there is a round that has a CATEGORY: spec, and create a new round containing these questions
-	allQuestions.sort(key=lambda question: [round.lower() for round in rounds].index(question.round.lower()))
-	questionsToAppend = []
-	for round in rounds:
-		if round in specifications:
-			roundSpecs = specifications[round]
-			# print(round + ": " + str(roundSpecs))
-			categoryPattern = re.compile("CATEGORY:.*")
-			matchingPatterns = list(filter(categoryPattern.match, roundSpecs))
-			# print(matchingPatterns)
-			if(matchingPatterns):
-				# print("Category found, need to filter all rounds for this category now")
-				
-				categoryToExtract = matchingPatterns[0].split(":")[1]
-				# print("Extracting " + categoryToExtract)
-				for question in allQuestions:
-					if question.category == categoryToExtract:
-						# print(question)					
-						q = copy.deepcopy(question)
-						q.setRound(round)
-						# print(q)
-						questionsToAppend.append(q)
-
-	print(len(allQuestions))
-	allQuestions.extend(questionsToAppend)
-
-	#Sort the question list by the round value for every question object, so that it matches the Rounds value in the spec file
-	allQuestions.sort(key=lambda question: [round.lower() for round in rounds].index(question.round.lower()))
-
-	print(len(allQuestions))
+	questionSortedByRound = getAllQuestionsOrderedByRoundSpec(allQuestions)
+	print("dumping allQuestions")
+	print(questionSortedByRound)
 
 	questions = []
 	currentRound = None
 	currentRoundName = ""
 	currentRoundQuestions = []
-	for question in allQuestions:
+	for question in questionSortedByRound:
 		if currentRoundName != question.round.strip():
+			print(f"switching to the next round: {question.round.strip()}")
 			if(currentRound != None):
 				currentRound["name"] = currentRoundName
 				currentRound["questions"] = currentRoundQuestions
+				print(rounds, currentRoundName)
 				if(currentRoundName in rounds):
+					print("storing questions in main object")
 					questions.append(currentRound)
+				else:
+					print(f"Couldn't find round '{currentRoundName}' in rounds {rounds}")
 
 				currentRoundQuestions = []
 			currentRound = {}
@@ -197,12 +213,12 @@ if __name__ == '__main__':
 			print(f"sorting {round['name']} by category")
 			round["questions"].sort(key=lambda x: [co.lower() for co in category_order].index(x.category.lower()))
 		
-		with open(outDir + "/presentationText_"+round["name"]+".txt", 'w') as presenterText:
+		with open(baseInOutDir + "/presentationText_"+round["name"]+".txt", 'w') as presenterText:
 			presenterText.write(round["name"] + "\n")
 			for questionNumber, question in enumerate(round["questions"]):
 				presenterText.write(str(questionNumber + 1) + ": " + question.longQuestion + "\n\n")
 
-		with open(outDir + "/presentationText_"+round["name"]+"_answers.txt", 'w') as answerText:
+		with open(baseInOutDir + "/presentationText_"+round["name"]+"_answers.txt", 'w') as answerText:
 			answerText.write(f"\n\nAntwoorden {round['name']}\n\n\n")
 			# Exclude Rode Draad from answersheet?
 			for questionNumber, question in enumerate(round["questions"]):

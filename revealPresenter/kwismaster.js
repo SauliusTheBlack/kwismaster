@@ -15,7 +15,7 @@ function makeAnswerSlides(roundObj, questionObj, excludeQuestions = []) {
 }
 
 function makeQuestionSlides(roundObj, questionObj) {
-    if (Object.keys(settings.specs).includes(roundObj["name"])) {
+    if (settings && settings.specs && Object.keys(settings.specs).includes(roundObj["name"])) {
         if (settings.specs[roundObj["name"]].includes("NO_QUESTIONS_ONLY")) {
             return;
         }
@@ -56,11 +56,20 @@ function makeSingleAnswerSlide(roundName, questionObj, questionIndex) {
     var questionBodyQuestion = document.createElement('div');
     var questionBodyAnswer = document.createElement('div');
 
-    questionBodyQuestion.innerHTML = questionObj["shortQuestion"];
+    questionBodyQuestion.innerHTML = questionObj["shortQuestion"].replace("\\n", "<br/>");
+    questionBodyQuestion.classList.add("presentedQuestion");
     if (questionObj["answer"] !== "") {
-        questionBodyAnswer.innerHTML = "[" + questionObj["answer"] + "]";
+        questionBodyAnswer.innerHTML = "[" + questionObj["answer"].replace("\\n", "<br/>") + "]";
+        questionBodyAnswer.classList.add("answer");
     }
+
+    var questionBodyLongQuestion = document.createElement('aside');
+    questionBodyLongQuestion.className = "notes";
+    questionBodyLongQuestion.innerHTML = questionObj["longQuestion"].replace("\\n", "<br/>");
+    questionBodyLongQuestion.classList.add("notesQuestion");
+
     questionBody.appendChild(questionBodyQuestion);
+    questionBody.appendChild(questionBodyLongQuestion);
     if (questionObj["img"]) {
         var questionImg = document.createElement('img');
         questionImg.src = "images/" + questionObj["img"].split(":")[0];
@@ -88,11 +97,11 @@ function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
 
     var questionBodyQuestion = document.createElement('div');
     questionBodyQuestion.classList.add("presentedQuestion");
-    questionBodyQuestion.innerHTML = questionObj["shortQuestion"];
+    questionBodyQuestion.innerHTML = questionObj["shortQuestion"].replace("\\n", "<br/>");
 
     var questionBodyLongQuestion = document.createElement('aside');
     questionBodyLongQuestion.className = "notes";
-    questionBodyLongQuestion.innerHTML = questionObj["longQuestion"];
+    questionBodyLongQuestion.innerHTML = questionObj["longQuestion"].replace("\\n", "<br/>");
     questionBodyLongQuestion.classList.add("notesQuestion");
 
     questionBody.appendChild(questionBodyQuestion);
