@@ -1,5 +1,5 @@
 import json
-import sys
+import sys, os
 
 # this makes classes serialisable
 class MyEncoder(json.JSONEncoder):
@@ -92,19 +92,32 @@ def readSingleFile(filename):
 	return fileQuestions
 
 
+usageText = """
+USAGE:
+convert.py configFile.json
+
+see readme for configFile contents
+"""
+
+def usage():
+	print(usageText)
+	exit()
 
 if __name__ == '__main__':
+	if len(sys.argv) == 1:
+		usage()
+
+	configFile = os.path.abspath(sys.argv[1])
+	baseInOutDir = os.path.abspath(sys.argv[1] + "/..")
+	print(configFile, baseInOutDir)
 	allQuestionsByRoundMap = {}		
 
-	baseInOutDir = ".." 
 	outDir = baseInOutDir + "/revealPresenter" 
 	outFilename = outDir + "/questions.js"
 
-	with open(sys.argv[1],"r") as f:
+	with open(configFile,"r") as f:
 		config = json.load(f)
-
-	with open(baseInOutDir + "/kwismaster.json","r") as g:
-		lines = g.readlines()
+		lines = f.readlines()
 
 	with open(baseInOutDir + "/revealPresenter/settings.js","w") as h:
 		h.write("var settings = ")
