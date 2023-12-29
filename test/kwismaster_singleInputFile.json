@@ -1,0 +1,18 @@
+{
+    "category_order": [
+        "this is the category", "this is the category 2"
+    ],
+    "input_files": [
+        "converter/tests/resources/SingleQuestion_withNewlines_NL.txt"
+    ],
+    "rounds": [
+        "This is the round", "This is the round 2"
+    ],
+    "specs": {
+
+    },
+    "settings": {
+        "base_dir": ".."
+    }
+
+}

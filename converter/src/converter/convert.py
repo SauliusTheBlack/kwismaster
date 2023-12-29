@@ -1,6 +1,6 @@
 import json
 import sys, os
-from converter.translations import translations
+from translations import translations
 
 # this makes classes serialisable
 class MyEncoder(json.JSONEncoder):
@@ -50,15 +50,13 @@ def readSingleFile(filename):
 	print("Reading " + filename)
 	currentQuestion = None
 	with open(filename ,'r', encoding='utf-8') as questionFile:		
-		for line in questionFile:
-			
+		for line in questionFile:			
 			if not ':' in line:
 				if currentQuestion and line != "\n":
 					currentQuestion.appendToLastUsedField(line)
 				continue
 
 			key, value = line.split(':',1)
-			# print(key,"-",value)
 			if value.strip() == "/" or value.strip() == "\\":
 				print("Skipping line " + line + " because content is single forward or backward slash")
 				continue
@@ -94,8 +92,8 @@ def getAllQuestionsOrderedByRoundSpec(unhandledQuestions):
 	import re
 	import copy
 	#loop over the rounds, find if there is a round that has a CATEGORY: spec, and create a new round containing these questions
-	unhandledQuestions.sort(key=lambda question: [round.lower() for round in rounds].index(question.round.lower()))
 	print(unhandledQuestions)
+	unhandledQuestions.sort(key=lambda question: [round.lower() for round in rounds].index(question.round.lower()))
 	questionsToAppend = []
 	for round in rounds:
 		if round in specifications:
@@ -103,8 +101,6 @@ def getAllQuestionsOrderedByRoundSpec(unhandledQuestions):
 			categoryPattern = re.compile("CATEGORY:.*")
 			matchingPatterns = list(filter(categoryPattern.match, roundSpecs))
 			if(matchingPatterns):
-				# print("Category found, need to filter all rounds for this category now")
-				
 				categoryToExtract = matchingPatterns[0].split(":")[1]
 				for question in allQuestions:
 					if question.category == categoryToExtract:
@@ -116,17 +112,13 @@ def getAllQuestionsOrderedByRoundSpec(unhandledQuestions):
 
 	#Sort the question list by the round value for every question object, so that it matches the Rounds value in the spec file
 	unhandledQuestions.sort(key=lambda question: [round.lower() for round in rounds].index(question.round.lower()))
-	print("---")
-	print(unhandledQuestions)
-	print("---")
-
-	print("===")
-	print(unhandledQuestions)
-	print("---")
-
 	return unhandledQuestions
 
-
+def getAllQuestionsFromFiles(inFiles):
+	allQuestions = []
+	for fileName in inFiles:
+		allQuestions += readSingleFile(fileName)
+	return allQuestions
 
 usageText = """
 USAGE:
@@ -149,15 +141,11 @@ if __name__ == '__main__':
 		config = json.load(f)
 		lines = f.readlines()
 
-		print(config)
 		if("base_dir" in config["settings"]):
 			print(f'appending custom base dir [{config["settings"]["base_dir"]}] to [{baseInOutDir}]')
 			baseInOutDir += "/" + config["settings"]["base_dir"]
 
-
-	print(configFile, baseInOutDir)
 	allQuestionsByRoundMap = {}		
-
 	outFilename = baseInOutDir + "/questions.js"
 	
 	with open(baseInOutDir + "/settings.js","w") as h:
@@ -169,12 +157,8 @@ if __name__ == '__main__':
 	rounds = config["rounds"]
 	specifications = config["specs"]
 
-	for fileName in infiles:
-		allQuestions = readSingleFile(baseInOutDir+"/"+fileName)
-
+	allQuestions = getAllQuestionsFromFiles([baseInOutDir+"/" + infile for infile in infiles])
 	questionSortedByRound = getAllQuestionsOrderedByRoundSpec(allQuestions)
-	print("dumping allQuestions")
-	print(questionSortedByRound)
 
 	questions = []
 	currentRound = None
@@ -182,13 +166,10 @@ if __name__ == '__main__':
 	currentRoundQuestions = []
 	for question in questionSortedByRound:
 		if currentRoundName != question.round.strip():
-			print(f"switching to the next round: {question.round.strip()}")
 			if(currentRound != None):
 				currentRound["name"] = currentRoundName
 				currentRound["questions"] = currentRoundQuestions
-				print(rounds, currentRoundName)
 				if(currentRoundName in rounds):
-					print("storing questions in main object")
 					questions.append(currentRound)
 				else:
 					print(f"Couldn't find round '{currentRoundName}' in rounds {rounds}")
@@ -202,9 +183,6 @@ if __name__ == '__main__':
 	currentRound["questions"] = currentRoundQuestions
 	if(currentRoundName in rounds): 
 		questions.append(currentRound)
-
-
-	print(questions)
 
 	#this next part is not optimized for performance or resource utilisation, but works fine
 	for round in questions:

@@ -1,4 +1,4 @@
-from src.converter.convert import readSingleFile
+from src.converter.convert import readSingleFile, getAllQuestionsFromFiles
 
 def test_singleQuestion():
 	foundQuestions = readSingleFile("tests/resources/SingleMinimalQuestion_NL.txt")
@@ -11,7 +11,7 @@ def test_singleQuestion():
 	assert question.category == "This is the category"
 	assert question.round == "This is the round"
 	
-def test_multipleQuestions():
+def test_multipleQuestions_oneFile():
 	foundQuestions = readSingleFile("tests/resources/MultipleMinimalQuestions_NL.txt")
 	assert len(foundQuestions) == 2
 	
@@ -28,6 +28,10 @@ def test_multipleQuestions():
 	assert question.answer == "This is the answer 2"
 	assert question.category == "This is the category 2"
 	assert question.round == "This is the round 2"
+
+def test_multipleQuestions_twoInputFiles():
+	allQuestions = getAllQuestionsFromFiles(["tests/resources/SingleMinimalQuestion_NL.txt","tests/resources/SingleQuestion_withNewlines_NL.txt"])
+	assert len(allQuestions) == 2
 
 #maintain newlines in strings
 def test_lineWithoutPrefixShouldBeAddedToPreviousObject():
