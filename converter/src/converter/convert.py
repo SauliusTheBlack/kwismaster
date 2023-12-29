@@ -1,5 +1,6 @@
 import json
 import sys, os
+import converter.translations
 
 # this makes classes serialisable
 class MyEncoder(json.JSONEncoder):

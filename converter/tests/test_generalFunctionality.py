@@ -1,7 +1,7 @@
-from src.convert import readSingleFile
+from src.converter.convert import readSingleFile
 
 def test_singleQuestion():
-	foundQuestions = readSingleFile("resources/SingleMinimalQuestion_NL.txt")
+	foundQuestions = readSingleFile("tests/resources/SingleMinimalQuestion_NL.txt")
 	assert len(foundQuestions) == 1
 	
 	question = foundQuestions[0]
@@ -12,7 +12,7 @@ def test_singleQuestion():
 	assert question.round == "This is the round"
 	
 def test_multipleQuestions():
-	foundQuestions = readSingleFile("resources/MultipleMinimalQuestions_NL.txt")
+	foundQuestions = readSingleFile("tests/resources/MultipleMinimalQuestions_NL.txt")
 	assert len(foundQuestions) == 2
 	
 	question = foundQuestions[0]
@@ -31,7 +31,7 @@ def test_multipleQuestions():
 
 #maintain newlines in strings
 def test_lineWithoutPrefixShouldBeAddedToPreviousObject():
-	foundQuestions = readSingleFile("resources/SingleQuestion_withNewlines_NL.txt")
+	foundQuestions = readSingleFile("tests/resources/SingleQuestion_withNewlines_NL.txt")
 	assert len(foundQuestions) == 1
 	
 	question = foundQuestions[0]
