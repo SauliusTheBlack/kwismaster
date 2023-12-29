@@ -79,6 +79,16 @@ For any given round there are settings that are possible
  - NO_QUESTIONS_ONLY: don't show a questions slide, only show answer slides. This is useful if you have a table-round that needs no presentation for the questionsm but has the questions on distributed papers. and are done during the course of the quiz. This way you can enter those questions in the question files, but don't show them during the presentation, except for the answers.
  - CATEGORY: extract all the questions with this category from all the questions, and show them in this round.
 
+## execution
+While a .exe is in the works for Windows, the following commands will work for all platforms that support python.
+### Creating the question.js
+The following command is an example, executed from kwismaster/converter.  
+It needs python 3.7+ to be installed.
+```python3 src/converter/onvert.py ../test/kwismaster_singleInputFile.json```
+This should generate a questions.js file in the main folder.  
+Adapt as you see fit.
+
+From revealPresenter, run the kwismaster.html file to see the generated presentation.
 # Q & A
 ## My round is not visible in the presentation!
 You probably didn't specify your round in the `rounds` part of `kwismaster.json`
