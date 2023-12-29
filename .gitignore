@@ -3,3 +3,5 @@ kwismaster.json
 settings.js
 **/licenses
 presentationText*
+**/__pycache__/**
+.coverage

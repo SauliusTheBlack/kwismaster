@@ -1,6 +1,6 @@
 import json
 import sys, os
-import converter.translations
+from converter.translations import translations
 
 # this makes classes serialisable
 class MyEncoder(json.JSONEncoder):
@@ -64,21 +64,21 @@ def readSingleFile(filename):
 				continue
 
 			#lange vraag, or its translation, should be the first line in a block, if you encounter it, finish the current question
-			if key.lower().strip() == "lange vraag":
+			if key.lower().strip() == translations["NL"]["longQuestion"].lower().strip():
 				if(currentQuestion):
 					currentQuestion.setSourceFile(filename)
 					fileQuestions.append(currentQuestion)				
 				currentQuestion = Question()
 				currentQuestion.setLongQuestion(value)
-			elif key.lower().strip() == "korte vraag":
+			elif key.lower().strip() == translations["NL"]["shortQuestion"].lower().strip():
 				currentQuestion.setShortQuestion(value)
-			elif key.lower().strip() == "antwoord":
+			elif key.lower().strip() == translations["NL"]["answer"].lower().strip():
 				currentQuestion.setAnswer(value)
-			elif key.lower().strip() == "afbeelding":
+			elif key.lower().strip() == translations["NL"]["image"].lower().strip():
 				currentQuestion.setImg(value)
-			elif key.lower().strip() == "categorie":
+			elif key.lower().strip() == translations["NL"]["category"].lower().strip():
 				currentQuestion.setCategory(value)
-			elif key.lower().strip() == "ronde":
+			elif key.lower().strip() == translations["NL"]["round"].lower().strip():
 				currentQuestion.setRound(value)
 			else:
 				print(f"Skipping line {line}")
