@@ -43,14 +43,24 @@ class Question:
 	def __repr__(self) -> str:
 		return self.round + " - " + self.category + " - " + self.shortQuestion 
 
+def detectLanguage(line):
+	if line.lower().startswith("lange vraag"):
+		return "NL"
+	elif line.lower().startswith("long question"):
+		return "EN"
+	else:
+		return None
+
 #parse the user friendly syntax to Question objects
 def readSingleFile(filename):
 	fileQuestions = []
+	detectedLanguage = None
+
 	
 	print("Reading " + filename)
 	currentQuestion = None
 	with open(filename ,'r', encoding='utf-8') as questionFile:		
-		for line in questionFile:			
+		for line in questionFile:
 			if not ':' in line:
 				if currentQuestion and line != "\n":
 					currentQuestion.appendToLastUsedField(line)
@@ -62,21 +72,24 @@ def readSingleFile(filename):
 				continue
 
 			#lange vraag, or its translation, should be the first line in a block, if you encounter it, finish the current question
-			if key.lower().strip() == translations["NL"]["longQuestion"].lower().strip():
+			if not detectedLanguage:
+				detectedLanguage = detectLanguage(line)
+				print(f"detected {detectedLanguage} as the language")
+			if key.lower().strip() == translations[detectedLanguage]["longQuestion"].lower().strip():
 				if(currentQuestion):
 					currentQuestion.setSourceFile(filename)
 					fileQuestions.append(currentQuestion)				
 				currentQuestion = Question()
 				currentQuestion.setLongQuestion(value)
-			elif key.lower().strip() == translations["NL"]["shortQuestion"].lower().strip():
+			elif key.lower().strip() == translations[detectedLanguage]["shortQuestion"].lower().strip():
 				currentQuestion.setShortQuestion(value)
-			elif key.lower().strip() == translations["NL"]["answer"].lower().strip():
+			elif key.lower().strip() == translations[detectedLanguage]["answer"].lower().strip():
 				currentQuestion.setAnswer(value)
-			elif key.lower().strip() == translations["NL"]["image"].lower().strip():
+			elif key.lower().strip() == translations[detectedLanguage]["image"].lower().strip():
 				currentQuestion.setImg(value)
-			elif key.lower().strip() == translations["NL"]["category"].lower().strip():
+			elif key.lower().strip() == translations[detectedLanguage]["category"].lower().strip():
 				currentQuestion.setCategory(value)
-			elif key.lower().strip() == translations["NL"]["round"].lower().strip():
+			elif key.lower().strip() == translations[detectedLanguage]["round"].lower().strip():
 				currentQuestion.setRound(value)
 			else:
 				print(f"Skipping line {line}")

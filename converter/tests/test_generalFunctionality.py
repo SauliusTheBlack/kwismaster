@@ -10,6 +10,17 @@ def test_singleQuestion():
 	assert question.answer == "This is the answer"
 	assert question.category == "This is the category"
 	assert question.round == "This is the round"
+
+def test_singleQuestion_EN():
+	foundQuestions = readSingleFile("tests/resources/SingleMinimalQuestion_EN.txt")
+	assert len(foundQuestions) == 1
+	
+	question = foundQuestions[0]
+	assert question.longQuestion == "This is the long question?"
+	assert question.shortQuestion == "This is the short question?"
+	assert question.answer == "This is the answer"
+	assert question.category == "This is the category"
+	assert question.round == "This is the round"
 	
 def test_multipleQuestions_oneFile():
 	foundQuestions = readSingleFile("tests/resources/MultipleMinimalQuestions_NL.txt")
@@ -31,6 +42,10 @@ def test_multipleQuestions_oneFile():
 
 def test_multipleQuestions_twoInputFiles():
 	allQuestions = getAllQuestionsFromFiles(["tests/resources/SingleMinimalQuestion_NL.txt","tests/resources/SingleQuestion_withNewlines_NL.txt"])
+	assert len(allQuestions) == 2
+
+def test_multipleQuestions_twoInputFiles_multiLingual():
+	allQuestions = getAllQuestionsFromFiles(["tests/resources/SingleMinimalQuestion_NL.txt","tests/resources/SingleMinimalQuestion_EN.txt"])
 	assert len(allQuestions) == 2
 
 #maintain newlines in strings
