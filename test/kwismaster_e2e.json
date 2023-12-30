@@ -1,0 +1,19 @@
+{
+    "Documentation": "This sample quiz consists of 4 rounds, and in all but the ABC round there are 5 categories. The answers for the Red Herring questions can only be shown at the end of the quiz. The ABC round has no categories, so a specification is required",
+    "category_order": [
+        "Geography", "Math", "Languages", "History", "Red Herring"
+    ],
+    "input_files": [
+        "e2e_EN.txt", "e2e_NL.txt", "e2e_ABC.txt"
+    ],
+    "rounds": [
+        "Round 1", "Round 2", "ABC", "Round 3"
+    ],
+    "specs": {
+        "ABC": ["NO_CATEGORY_SORT"]
+    },
+    "settings": {
+        "base_dir": "../test"
+    }
+
+}

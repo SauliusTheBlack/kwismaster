@@ -12,6 +12,7 @@ class Question:
 		self.longQuestion = ""
 		self.shortQuestion = ""
 		self.answer = ""
+		self.category = ""
 		
 	def setLongQuestion(self, txt):
 		self.longQuestion += txt.strip()
