@@ -83,8 +83,8 @@ For any given round there are settings that are possible
 While a .exe is in the works for Windows, the following commands will work for all platforms that support python.
 ### Creating the question.js
 The following command is an example, executed from kwismaster/converter.  
-It needs python 3.7+ to be installed.
-```python3 src/converter/onvert.py ../test/kwismaster_singleInputFile.json```
+It needs python 3.7+ to be installed and added to Path.
+```python src/converter/convert.py ../test/kwismaster_singleInputFile.json```
 This should generate a questions.js file in the main folder.  
 Adapt as you see fit.
 
