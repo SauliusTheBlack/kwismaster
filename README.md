@@ -137,7 +137,9 @@ this isn't either:
 Make a folder for your event on the same level as revealPresenter and converter, and place all required files in there, including any images, sounds, and all question files, as well as the configuration file.
 Run the command `python <path_to_converter_folder>/src/converter/convert.py <name_of_the_config_file>`
 
-From revealPresenter, run the kwismaster.html file to see the generated presentation.
+This will generate all required files, as well as copy a set of kwismaster files to your project folder.
+While you can't distribute this folder as-is(yet) due to the dependency on reveal itself, it makes it easier to see what you need to do the day of the event.
+
 # Q & A
 ## My round is not visible in the presentation!
 You probably didn't specify your round in the `rounds` part of `kwismaster.json`
