@@ -6,3 +6,6 @@ settings.js
 presentationText*
 **/__pycache__/**
 .coverage
+quiz_demo/*
+!quiz_demo/demo_questions*
+!quiz_demo/demo_configuration.json
