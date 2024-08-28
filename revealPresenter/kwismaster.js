@@ -86,6 +86,7 @@ function makeSingleAnswerSlide(roundName, questionObj, questionIndex) {
 }
 
 function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
+    console.log("adding a single question slide");
     let questionCounter = Number(questionIndex) + 1;
 
     var imgRatio = 1;
@@ -114,6 +115,20 @@ function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
         imgRatio = questionObj["img"].split(":")[1] || 1;
         questionImg.style.height = (300 * imgRatio) + 'px';
         questionBody.appendChild(questionImg);
+    }
+
+
+    console.log(questionObj["shortQuestion"])
+    console.log(questionObj["sound"])
+    if (questionObj["sound"]) {
+        console.log("Adding a sound controll")
+        var questionSound = document.createElement('audio');
+        questionSound.controls = "controls"
+        questionSound.classList.add("soundControl");
+
+        questionSound.src = questionObj["sound"];
+
+        questionBody.appendChild(questionSound);
     }
 
     questionDOM.appendChild(questionBody);

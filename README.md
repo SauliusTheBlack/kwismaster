@@ -92,3 +92,10 @@ From revealPresenter, run the kwismaster.html file to see the generated presenta
 # Q & A
 ## My round is not visible in the presentation!
 You probably didn't specify your round in the `rounds` part of `kwismaster.json`
+
+# Tests
+## converter
+Tests are written using pytest. To execute them just go to the converter folder and run `pytest`. Settings are done through pytest.ini.
+
+## revealPresenter
+Specified as .spec file, executed by showing the SpecRunner.html file in the browser.

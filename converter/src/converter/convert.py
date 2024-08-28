@@ -13,6 +13,7 @@ class Question:
 		self.shortQuestion = ""
 		self.answer = ""
 		self.category = ""
+		self.sound = ""
 		
 	def setLongQuestion(self, txt):
 		self.longQuestion += txt.strip()
@@ -34,6 +35,9 @@ class Question:
 		
 	def setRound(self, txt):
 		self.round = txt.strip()
+
+	def setSound(self, filename):
+		self.sound = filename.strip()
 
 	def setSourceFile(self, txt):
 		self.sourceFile = txt
@@ -92,6 +96,8 @@ def readSingleFile(filename):
 				currentQuestion.setCategory(value)
 			elif key.lower().strip() == translations[detectedLanguage]["round"].lower().strip():
 				currentQuestion.setRound(value)
+			elif key.lower().strip() == translations[detectedLanguage]["sound"].lower().strip():
+				currentQuestion.setSound(value)
 			else:
 				print(f"Skipping line {line}")
 

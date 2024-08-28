@@ -59,3 +59,11 @@ def test_lineWithoutPrefixShouldBeAddedToPreviousObject():
 	assert question.answer == r"This is the answer\nnew line is allowed here as well"
 	assert question.category == "This is the category"
 	assert question.round == "This is the round"
+
+#maintain newlines in strings
+def test_lineWithoutPrefixShouldBeAddedToPreviousObject():
+	foundQuestions = readSingleFile("tests/resources/SingleQuestion_withMusicFile.txt")
+	assert len(foundQuestions) == 1
+	
+	question = foundQuestions[0]
+	assert question.sound == "testRecording.mp3"

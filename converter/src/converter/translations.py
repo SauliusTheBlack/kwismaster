@@ -7,6 +7,7 @@ translations = {
 		"category" : "Categorie",
 		"sourceFile" : "Bestand",
 		"image" : "Afbeelding",
+		"sound" : "Geluid",
 	},
 	"EN":{
 		"shortQuestion" : "Short Question",
@@ -16,5 +17,6 @@ translations = {
 		"category" : "Category",
 		"sourceFile" : "File",
 		"image" : "Image",
+		"sound" : "Sound",
 	}
 }
