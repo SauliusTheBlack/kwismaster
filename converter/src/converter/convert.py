@@ -1,6 +1,8 @@
 import json
 import sys, os
 from translations import translations
+from shutil import copy2
+import glob
 
 # this makes classes serialisable
 class MyEncoder(json.JSONEncoder):
@@ -151,23 +153,48 @@ def usage():
 	print(usageText)
 	exit()
 
+def enablePresenter():
+	for file in glob.glob(projectDir + "/../revealPresenter/kwismaster*"):
+		print(file)
+		copy2(file, projectDir)
+
+	with open("kwismaster.html") as r:
+		kwismaster = r.read()\
+			.replace("@TEMPLATE_TITLE@", "The title of this quiz")\
+			.replace("@SETTINGSJS@", kwisMasterInOutDir + "/settings.js")\
+			.replace("@QUESTIONSJS@", kwisMasterInOutDir + "/questions.js")\
+			.replace("@REVEAL_PATH@", "../reveal")\
+		
+	with open("kwismaster.html", "w") as w:
+		w.write(kwismaster)
+	
+
+
 if __name__ == '__main__':
 	if len(sys.argv) == 1:
 		usage()
 
 	configFile = os.path.abspath(sys.argv[1])
-	baseInOutDir = os.path.abspath(sys.argv[1] + "/..")
+	projectDir = os.path.abspath(sys.argv[1] + "/..")
+	baseInOutDir = projectDir
+	kwisMasterInOutDir = '.'
 	with open(configFile,"r") as f:
 		config = json.load(f)
 		lines = f.readlines()
 
-		if("base_dir" in config["settings"]):
-			print(f'appending custom base dir [{config["settings"]["base_dir"]}] to [{baseInOutDir}]')
-			baseInOutDir += "/" + config["settings"]["base_dir"]
+		if "settings" in config:
+			if("output_dir" in config["settings"]):
+				print(f'appending custom base dir [{config["settings"]["output_dir"]}] to [{baseInOutDir}]')
+				baseInOutDir += "/" + config["settings"]["output_dir"]
+				kwisMasterInOutDir = config["settings"]["output_dir"]
+		
 
 	allQuestionsByRoundMap = {}		
 	outFilename = baseInOutDir + "/questions.js"
 	
+	if not os.path.exists(baseInOutDir):
+		os.makedirs(baseInOutDir)
+
 	with open(baseInOutDir + "/settings.js","w") as h:
 		h.write("var settings = {}")
 		h.writelines(lines)
@@ -175,9 +202,11 @@ if __name__ == '__main__':
 	category_order = config["category_order"]
 	infiles = config["input_files"]
 	rounds = config["rounds"]
-	specifications = config["specs"]
+	specifications = {} 
+	if "specs" in config:
+		specifications = config["specs"]
 
-	allQuestions = getAllQuestionsFromFiles([baseInOutDir+"/" + infile for infile in infiles])
+	allQuestions = getAllQuestionsFromFiles([projectDir + "/" + infile for infile in infiles])
 	questionSortedByRound = getAllQuestionsOrderedByRoundSpec(allQuestions)
 
 	questions = []
@@ -242,3 +271,5 @@ if __name__ == '__main__':
 		print(f'writing to {outFilename}')
 		outfile.write("questions = ")
 		outfile.write(round_object)
+
+	enablePresenter()

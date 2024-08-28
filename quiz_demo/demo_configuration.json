@@ -1,0 +1,13 @@
+{
+	"rounds" : ["Round 1", "Round 2"],
+	"category_order": [
+			"Miscelaneous", "Varia"
+	],
+	"input_files": [
+        "demo_questions_1.txt",
+        "demo_questions_2.txt"
+    ],
+	"settings": {
+		"output_dir":"output"
+	}
+}

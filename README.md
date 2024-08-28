@@ -67,6 +67,15 @@ The files need to adhere to the specification as explained in the relevant secti
         "questionsX.txt"
     ],
 ```
+
+## settings
+Generic part where settings that should be shared are placed.
+TODO: expand with actual information
+```
+    "settings": {
+        "output_dir": "output"
+    }
+```
 ## specs
 For any given round there are settings that are possible
 ```
@@ -76,17 +85,57 @@ For any given round there are settings that are possible
     }
 ```
  - NO_CATEGORY_SORT: don't sort this round by category. This is useful if you have a round where there is only 1 category(see the CATEGORY: spec) or a category that does not appear in any other round.
- - NO_QUESTIONS_ONLY: don't show a questions slide, only show answer slides. This is useful if you have a table-round that needs no presentation for the questionsm but has the questions on distributed papers. and are done during the course of the quiz. This way you can enter those questions in the question files, but don't show them during the presentation, except for the answers.
+ - NO_QUESTIONS_ONLY: don't show a questions slide, only show answer slides. This is useful if you have a table-round that needs no presentation for the questions, but has the questions on distributed papers. and are done during the course of the quiz. This way you can enter those questions in the question files, but don't show them during the presentation, except for the answers.
  - CATEGORY: extract all the questions with this category from all the questions, and show them in this round.
 
-## execution
-While a .exe is in the works for Windows, the following commands will work for all platforms that support python.
-### Creating the question.js
-The following command is an example, executed from kwismaster/converter.  
-It needs python 3.7+ to be installed and added to Path.
-```python src/converter/convert.py ../test/kwismaster_singleInputFile.json```
-This should generate a questions.js file in the main folder.  
-Adapt as you see fit.
+## caveats
+Make sure there are no trailing spaces in the json file.  
+This is valid: 
+```json
+{
+	"rounds" : ["Round 1", "Round 2"],
+	"category_order": [
+			"Miscelaneous", "Varia"
+	],
+	"input_files": [
+        "demo_questions_1.txt",
+        "demo_questions_2.txt"
+    ]
+}
+```
+
+This is not: 
+```json
+{
+	"rounds" : ["Round 1", "Round 2"],
+	"category_order": [
+			"Miscelaneous", "Varia"
+	],
+	"input_files": [
+        "demo_questions_1.txt",
+        "demo_questions_2.txt"
+    ],
+}
+```
+
+
+this isn't either: 
+```json
+{
+	"rounds" : ["Round 1", "Round 2"],
+	"category_order": [
+			"Miscelaneous", "Varia"
+	],
+	"input_files": [
+        "demo_questions_1.txt",
+        "demo_questions_2.txt",
+    ]
+}
+```
+
+# execution
+Make a folder for your event on the same level as revealPresenter and converter, and place all required files in there, including any images, sounds, and all question files, as well as the configuration file.
+Run the command `python <path_to_converter_folder>/src/converter/convert.py <name_of_the_config_file>`
 
 From revealPresenter, run the kwismaster.html file to see the generated presentation.
 # Q & A
