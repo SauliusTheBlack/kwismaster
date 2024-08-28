@@ -92,7 +92,7 @@ describe('Questions with sound', function() {
         var questionObj = new QuestionObjBuilder().withSound("testRecording.mp3").build();
 
         let questionSlide = makeSingleQuestionSlide("Automated Test Round", questionObj, 0);
-        expect(questionSlide.getElementsByClassName("soundControl")).toBe("SECTION");
+        expect(questionSlide.getElementsByClassName("soundControl")[0].nodeName).toBe("AUDIO");
     });
 });
 
