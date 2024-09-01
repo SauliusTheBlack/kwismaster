@@ -9,28 +9,33 @@ import os, pickle
 
 scoreDelimiter = "@##@"
 scoreFileName = "scores.pkl"
-
+teamFileName = "teams.pkl"
 scores = {}
 if os.path.exists(scoreFileName):
 	with open(scoreFileName, 'rb') as rf:
 		scores = pickle.load(rf)
 
 teams = {
-	"carebears": "Carebears",
-	"my_little_pony" : "My Little Pony",
-	"pokemon": "Pokémon"
+
 }
+if os.path.exists(teamFileName):
+	with open(teamFileName, 'rb') as rf:
+		teams = pickle.load(rf)
 
 @post('/teams')
 def addTeam():
 	print(request.forms.newTeamName)
 	newTeamName = request.forms.newTeamName
 	teams[newTeamName.lower().replace(" ","_")] = newTeamName
-	# with open(scoreFileName, 'wb') as f:  # open a text file
-	# 	pickle.dump(scores, f) # serialize the list
+	with open(teamFileName, 'wb') as f:  # open a text file
+		pickle.dump(teams, f) # serialize the list
 
 	redirect('/')
 
+@post('/reset')
+def reset():
+	pass
+	# remove pkl files(or backup them) and start from scratch
 
 @post('/scores')
 def updateScores():
