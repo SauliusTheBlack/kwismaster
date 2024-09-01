@@ -8,28 +8,44 @@
 
 	<body>
 		<div id="mainContent">
-			<table>
-				<tr>
-						<th></th> <!-- empty cell to allign with team names -->
-					% for round in rounds:
-						<th>{{round[0]}}</th>
-					% end
-				</tr>
-			% for team in teams:
-				<tr>
-					<td>{{team[0]}}</td>
-					% for round in rounds:
-						% generatedId = team[1] + "_" + round[1]
-						% if generatedId in scores : 
-						<td><input type="number" id="{{generatedId}}" value="{{scores[generatedId]}}"></td>
-						% else :
-						<td><input type="number" id="{{generatedId}}"></td>
+			<form action="/scores" method="post">
+				<table>
+					<tr>
+							<th></th> <!-- empty cell to allign with team names -->
+						% for round in rounds:
+							<th>{{round[0]}}</th>
 						% end
-					% end
-				</tr>
+					</tr>
+
+
+				% for team in teams:
+					<tr>
+						<td>{{teams[team]}}</td>
+						% for round in rounds:							
+							% if team in scores and round[1] in scores[team] : 
+							<td><input type="number" name="{{team + DELIMITER + round[1]}}" value="{{scores[team][round[1]]}}"></td>
+							% else :
+							<td><input type="number" name="{{team + DELIMITER + round[1]}}"></td>
+							% end
+						% end
+					</tr>
 				% end
-			</table>
+
+				
+				</table>
+				<input type="submit" value="Bevestigen">
+			</form>
+			<br/>
+			<br/>
+			<br/>
+			<form  action="/teams" method="post">
+				<label for="newTeamName">Teamnaam</label> <input type="text" name="newTeamName">
+				<input type="submit" value="Toevoegen">
+			</form>
 		</div>
 
     </body>
 </html>
+
+
+
