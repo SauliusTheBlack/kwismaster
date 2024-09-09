@@ -22,15 +22,55 @@ if os.path.exists(teamFileName):
 	with open(teamFileName, 'rb') as rf:
 		teams = pickle.load(rf)
 
+technicalTeamNameCache = {}
+def getTechnicalTeamName(humanTeamName):
+	if humanTeamName not in technicalTeamNameCache:
+		technicalTeamNameCache[humanTeamName] = humanTeamName.lower().replace(" ","_")
+	return technicalTeamNameCache[humanTeamName]
+
 @post('/teams')
 def addTeam():
 	print(request.forms.newTeamName)
 	newTeamName = request.forms.newTeamName
-	teams[newTeamName.lower().replace(" ","_")] = newTeamName
+	teams[getTechnicalTeamName(newTeamName)] = newTeamName
+	persistTeams()
+
+	redirect('/')
+
+def persistTeams():
 	with open(teamFileName, 'wb') as f:  # open a text file
 		pickle.dump(teams, f) # serialize the list
 
-	redirect('/')
+@get('/deleteTeamName/<target>')
+def uglyTeamNameChange(target):
+	if getTechnicalTeamName(target) in teams:
+		teams.pop(getTechnicalTeamName(target))
+		persistTeams()
+
+	if getTechnicalTeamName(target) in scores:
+		scores.pop(getTechnicalTeamName(target))
+		persistScores()
+
+@get('/changeTeamName/<source>/<target>')
+def uglyTeamNameChange(source, target):
+	print("uglyTeamNameChange", flush=True)
+	print("changing %s(%s) to %s(%s)" % (source, getTechnicalTeamName(source), target, getTechnicalTeamName(target)), flush=True)
+	print(getTechnicalTeamName(source) in teams)
+	if getTechnicalTeamName(source) in teams:
+		if getTechnicalTeamName(source) == getTechnicalTeamName(target):
+			teams[getTechnicalTeamName(source)] = target
+		else:
+			teams[getTechnicalTeamName(target)] = target
+			teams.pop(getTechnicalTeamName(source))
+		persistTeams()
+
+		print("Echo", flush=True)
+		if getTechnicalTeamName(source) in scores:
+			print("Setting scores for %s(%s) to those of %s(%s)" % (target, getTechnicalTeamName(target), source, getTechnicalTeamName(source)), flush=True)
+			scores[getTechnicalTeamName(target)] = scores[getTechnicalTeamName(source)]
+			# scores.pop(getTechnicalTeamName(source))
+			persistScores()
+
 
 @post('/reset')
 def reset():
@@ -47,11 +87,15 @@ def updateScores():
 			if teamName not in scores:
 				scores[teamName] = {}
 			scores[teamName][round] = scorePoint[1]
+	persistScores()
 
+	redirect('/')
+
+def persistScores():
 	with open(scoreFileName, 'wb') as f:  # open a text file
 		pickle.dump(scores, f) # serialize the list
 
-	redirect('/')
+	
 
 
 
