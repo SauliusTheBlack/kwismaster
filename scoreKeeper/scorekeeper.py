@@ -2,10 +2,25 @@
 # All data is kept in simple files for persistence and ease of adaptation, at the cost of some security
 
 
-from bottle import get, post, run, template, TEMPLATE_PATH, redirect, app, request
+from bottle import get, post, run, template, TEMPLATE_PATH, redirect, app, request, response
 from requests.exceptions import ConnectTimeout
 from pathlib import Path
 import os, pickle
+
+# the decorator
+def enable_cors(fn):
+    def _enable_cors(*args, **kwargs):
+        # set CORS headers
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
+
+        if request.method != 'OPTIONS':
+            # actual request; reply with the actual response
+            return fn(*args, **kwargs)
+
+    return _enable_cors
+
 
 scoreDelimiter = "@##@"
 scoreFileName = "scores.pkl"
@@ -93,6 +108,7 @@ def updateScores():
 	redirect('/')
 
 @get('/scores')
+@enable_cors
 def getScores():
 	returnScores = {}
 	for team in teams:
@@ -102,7 +118,7 @@ def getScores():
 		for round in rounds:
 			print(round[0])
 			if(team in scores):
-				returnScores[teams[team]][round[0]] = scores[team][round[1]]
+				returnScores[teams[team]][round[0]] = int(scores[team][round[1]])
 				runningTotal += int(scores[team][round[1]])
 			else:
 				returnScores[teams[team]][round[0]] = 0

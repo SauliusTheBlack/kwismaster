@@ -1,103 +1,103 @@
-function sumArray(myArray) {
-    return myArray.reduce((acc, curr) => {
-        return acc + parseInt(curr)
-    }, 0);
+function fetchScores(url) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", url, false); // false for synchronous request
+    xmlHttp.send(null);
+    return JSON.parse(xmlHttp.responseText);
 }
 
-const maxLinesOnSlide = 10;
-const lastXScoresToShow = 4;
 
-let parsedScores = [];
 
-function renderScores() {
-    console.log(parsedScores);
-    var scoreSection = undefined;
-    var questionTable = undefined;
+document.addEventListener('DOMContentLoaded', function() {
+    var scores = fetchScores("http://localhost:4040/scores");
+    console.log(scores);
 
-    parsedScores.slice(1).forEach((element, index) => {
-        console.log(index % maxLinesOnSlide);
-        if (index % maxLinesOnSlide == 0) {
-            //close previous section
-            if (index > 0) {
-                scoreSection.appendChild(questionTable);
-                slides.appendChild(scoreSection);
-            }
+    const sortedScoresArray = Object.entries(scores).sort((a, b) => {
+        return b[1].total - a[1].total; // Sort by the 'total' key in descending order
+    });
 
-            //open new section
-            scoreSection = document.createElement('section');
-            questionTable = document.createElement('table');
-            var headerRow = document.createElement('tr');
-            const teamNameCell = document.createElement('th');
-            teamNameCell.appendChild(document.createTextNode("Team"));
-            headerRow.appendChild(teamNameCell);
-            parsedScores[0].scores.slice(Math.max(parsedScores[0].scores.length - lastXScoresToShow, 0)).forEach((rondeNaam, index) => {
-                const rondeCell = document.createElement('th');
-                rondeCell.appendChild(document.createTextNode(rondeNaam));
-                headerRow.appendChild(rondeCell);
-            });
-            const totalCell = document.createElement('th');
-            totalCell.appendChild(document.createTextNode("Totaal"));
-            const rank = document.createElement('th');
-            rank.appendChild(document.createTextNode("Rang"));
-            headerRow.appendChild(totalCell);
-            headerRow.appendChild(rank);
+    // Convert the sorted array back into an object
+    const sortedScores = Object.fromEntries(sortedScoresArray);
 
-            questionTable.appendChild(headerRow);
+    // Output the sorted object
+    console.log(sortedScores);
+
+    var currentResultsShown = 0;
+
+    function cellWithValue(value) {
+        const cell = document.createElement('td');
+        cell.textContent = value;
+
+        return cell;
+    }
+
+    var scoreTable;
+    var scoreBody;
+
+    slides.replaceChildren();
+    sortedScoresArray.forEach(([team, score]) => {
+
+        if (currentResultsShown == 0) {
+            scoreBody = document.createElement('section');
+            scoreTable = document.createElement("table");
+
+            const row = document.createElement('tr');
+
+            row.appendChild(cellWithValue(" "));
+            row.appendChild(cellWithValue('Ronde 1'));
+            row.appendChild(cellWithValue('Ronde 2'));
+            row.appendChild(cellWithValue('Totaal'));
+
+            scoreTable.appendChild(row);
+
         }
-        var scoreRow = document.createElement('tr');
-        const teamNameCell = scoreRow.insertCell();
-        teamNameCell.appendChild(document.createTextNode(element.teamName));
+        currentResultsShown++;
 
-        element.scores.slice(Math.max(element.scores.length - lastXScoresToShow, 0)).forEach((scorePoint, index) => {
-            const scoreCell = scoreRow.insertCell();
-            scoreCell.appendChild(document.createTextNode(scorePoint));
-        })
+        const row = document.createElement('tr');
 
-        const teamTotalsCell = scoreRow.insertCell();
-        teamTotalsCell.appendChild(document.createTextNode(sumArray(element.scores)));
+        // Create and append team name
 
-        questionTable.appendChild(scoreRow);
+        row.appendChild(cellWithValue(team));
+        row.appendChild(cellWithValue(score['Ronde 1']));
+        row.appendChild(cellWithValue(score['Ronde 2']));
+        row.appendChild(cellWithValue(score['total']));
+
+        // Append the row to the tbody
+        scoreTable.appendChild(row);
+
+        if (currentResultsShown == 10) {
+            // Append tbody to the table
+            scoreBody.appendChild(scoreTable);
+            currentResultsShown = 0
+            slides.appendChild(scoreBody)
+        }
+
+    });
+
+    scoreBody.appendChild(scoreTable);
+    currentResultsShown = 0
+    slides.appendChild(scoreBody)
 
 
+    let isPlaying = false;
+    console.log("Getting element by id")
+    console.log(document.getElementById('playControl'))
+    document.getElementById('playControl').addEventListener('click', function() {
+        console.log("click");
+        if (isPlaying) {
+            isPlaying = false;
+            Reveal.configure({ loop: false }); // Stop looping
+            clearInterval(intervalId);
+            this.textContent = 'Play';
+        } else {
+            isPlaying = true;
+            Reveal.configure({ loop: true }); // Enable looping
+
+            intervalId = setInterval(function() {
+                Reveal.next(); // Move to the next slide every second
+            }, 5000); // Adjust interval as needed
+
+            Reveal.slide(0)
+            this.textContent = 'Pause';
+        }
     })
-    scoreSection.appendChild(questionTable);
-    slides.appendChild(scoreSection);
-
-}
-
-
-function parseScoreline(line, lineIndex) {
-    console.log(line);
-    console.log(line.split("\t"));
-    let teamScores = line.split("\t").slice(1);
-    let teamName = line.split("\t")[0];
-    // console.log(lineIndex + ": " + teamName + " scores: [" + teamScores + "] - total " + sumArray(teamScores));
-    parsedScores.push({ teamName: teamName, scores: teamScores })
-}
-
-function parseScoreline(line, lineIndex) {
-    console.log(line);
-    console.log(line.split("\t"));
-    let teamScores = line.split("\t").slice(1)[0];
-    let teamName = line.split("\t")[0];
-    // console.log(lineIndex + ": " + teamName + " scores: [" + teamScores + "] - total " + sumArray(teamScores));
-    parsedConsumptions.push({ teamName: teamName, consumptions: teamScores })
-}
-
-window.onload = (event) => {
-    var scoreLines = scores.split("\n");
-    scoreLines.forEach((element, index) => {
-        if (element) {
-            parseScoreline(element, index)
-        }
-    });
-    
-    var consumptionLines = consumptions.split("\n");
-    consumptionLines.forEach((element, index) => {
-        if (element) {
-            parseConsumptionLine(element, index)
-        }
-    });
-
-    renderScores();
-}
+});
