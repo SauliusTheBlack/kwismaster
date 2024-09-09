@@ -23,6 +23,7 @@ if os.path.exists(teamFileName):
 		teams = pickle.load(rf)
 
 technicalTeamNameCache = {}
+
 def getTechnicalTeamName(humanTeamName):
 	if humanTeamName not in technicalTeamNameCache:
 		technicalTeamNameCache[humanTeamName] = humanTeamName.lower().replace(" ","_")
@@ -91,18 +92,41 @@ def updateScores():
 
 	redirect('/')
 
+@get('/scores')
+def getScores():
+	returnScores = {}
+	for team in teams:
+		print(teams[team], flush=True)
+		returnScores[teams[team]] = {}
+		runningTotal = 0
+		for round in rounds:
+			print(round[0])
+			if(team in scores):
+				returnScores[teams[team]][round[0]] = scores[team][round[1]]
+				runningTotal += int(scores[team][round[1]])
+			else:
+				returnScores[teams[team]][round[0]] = 0
+		returnScores[teams[team]]["total"] = runningTotal
+
+	print(returnScores, flush=True)
+	from bottle import response
+	from json import dumps
+	rv = returnScores
+	response.content_type = 'application/json'
+	return dumps(rv)
+
 def persistScores():
 	with open(scoreFileName, 'wb') as f:  # open a text file
 		pickle.dump(scores, f) # serialize the list
 
 	
 
-
+rounds = [("Ronde 1","ronde_1"), ("Ronde 2","ronde_2")]
 
 @get('/')
 def redirectToMain():
 	return template('main', teams = teams, 
-			rounds = [("Ronde 1","ronde_1"), ("Ronde 2","ronde_2")], scores = scores, DELIMITER=scoreDelimiter)#rounds can be gotten from settings, teams need to be managed at runtime
+			rounds = rounds, scores = scores, DELIMITER=scoreDelimiter)#rounds can be gotten from settings, teams need to be managed at runtime
     
 templateDir = Path(__file__ + '/../views')
 print(templateDir)
