@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             intervalId = setInterval(function() {
                 Reveal.next(); // Move to the next slide every second
-            }, 5000); // Adjust interval as needed
+            }, 7500); // Adjust interval as needed
 
             Reveal.slide(0)
             this.textContent = 'Pause';

@@ -2,6 +2,17 @@ import json
 import sys, os
 from translations import translations
 from shutil import copy2
+
+import shutil
+def copy_tree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
 import glob
 
 # this makes classes serialisable
@@ -153,6 +164,12 @@ def usage():
 	print(usageText)
 	exit()
 
+def primeScoreKeeper():
+	print("Trying to copy from " + projectDir + "/../scoreKeeper to " + projectDir + "/scoreKeeper" )
+	if not os.path.exists(projectDir + "/scoreKeeper"):
+		os.makedirs(projectDir + "/scoreKeeper")
+	copy_tree(projectDir + "/../scoreKeeper", projectDir + "/scoreKeeper")
+
 def enablePresenter():
 	for file in glob.glob(projectDir + "/../revealPresenter/kwismaster*"):
 		print(file)
@@ -271,5 +288,10 @@ if __name__ == '__main__':
 		print(f'writing to {outFilename}')
 		outfile.write("questions = ")
 		outfile.write(round_object)
+	print(rounds)
 
+	with open("rounds.txt", "w") as roundsFile:
+		for round in rounds:
+			roundsFile.write(round + "\n")
 	enablePresenter()
+	primeScoreKeeper()

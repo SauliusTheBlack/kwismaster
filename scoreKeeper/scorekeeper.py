@@ -3,7 +3,6 @@
 
 
 from bottle import get, post, run, template, TEMPLATE_PATH, redirect, app, request, response
-from requests.exceptions import ConnectTimeout
 from pathlib import Path
 import os, pickle
 
@@ -135,14 +134,24 @@ def persistScores():
 	with open(scoreFileName, 'wb') as f:  # open a text file
 		pickle.dump(scores, f) # serialize the list
 
-	
 
-rounds = [("Ronde 1","ronde_1"), ("Ronde 2","ronde_2")]
+def loadRounds():
+	print("Trying to load " + os.path.abspath("rounds.txt"))
+	if os.path.exists("rounds.txt"):
+		roundsObj = []
+		with open("rounds.txt", "r") as roundsFile:
+			for line in roundsFile.readlines():
+				roundsObj.append((line, getTechnicalTeamName(line)))
+		return roundsObj
+	else:
+		return [("Test 1","test_1")]
+
+rounds = loadRounds()
 
 @get('/')
 def redirectToMain():
 	return template('main', teams = teams, 
-			rounds = rounds, scores = scores, DELIMITER=scoreDelimiter)#rounds can be gotten from settings, teams need to be managed at runtime
+			rounds = rounds, scores = scores, DELIMITER=scoreDelimiter) #rounds can be gotten from settings, teams need to be managed at runtime
     
 templateDir = Path(__file__ + '/../views')
 print(templateDir)

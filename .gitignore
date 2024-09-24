@@ -10,3 +10,4 @@ quiz_demo/*
 !quiz_demo/demo_questions*
 !quiz_demo/demo_configuration.json
 *.pkl
+scores.pkl
