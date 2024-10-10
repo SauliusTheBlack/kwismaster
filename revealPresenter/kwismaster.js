@@ -2,6 +2,20 @@ function _setSettings(settingsObj) {
     settings = settingsObj;
 }
 
+function checkImageExists(imagePath, callback) {
+    const img = new Image();
+
+    img.onload = function() {
+        callback(true); // Image exists
+    };
+
+    img.onerror = function() {
+        callback(false); // Image does not exist or load failed
+    };
+
+    img.src = imagePath; // Try loading the image
+}
+
 //feature request: create a setting to exclude specific round from questions, instead of passing it as an argument hardcoded here
 function makeAnswerSlides(roundObj, questionObj, excludeQuestions = []) {
 
@@ -86,6 +100,12 @@ function makeSingleAnswerSlide(roundName, questionObj, questionIndex) {
     return questionDOM;
 }
 
+const extensions = ["jpg", "jpeg", "png"];
+
+// Create an array of uppercase equivalents
+const allExtensions = extensions.concat(extensions.map(ext => ext.toUpperCase()));
+
+
 function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
     console.log("adding a single question slide");
     let questionCounter = Number(questionIndex) + 1;
@@ -113,6 +133,21 @@ function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
         console.log("restyling");
         var questionImg = document.createElement('img');
         questionImg.src = "images/" + questionObj["img"].split(":")[0];
+
+        checkImageExists(questionImg.src, function(exists) {
+            if (!exists) {
+                var found = false;
+                allExtensions.forEach(ext => {
+                    checkImageExists(questionImg.src + "." + ext, function(exists) {
+                        if (exists && !found) {
+                            questionImg.src = questionImg.src + "." + ext;
+                            found = true;
+                        }
+                    })
+                })
+            }
+        });
+
         imgRatio = questionObj["img"].split(":")[1] || 1;
         questionImg.style.height = (300 * imgRatio) + 'px';
         questionBody.appendChild(questionImg);
@@ -122,12 +157,17 @@ function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
     console.log(questionObj["shortQuestion"])
     console.log(questionObj["sound"])
     if (questionObj["sound"]) {
-        console.log("Adding a sound controll")
+        console.log("Adding a sound control")
         var questionSound = document.createElement('audio');
         questionSound.controls = "controls"
         questionSound.classList.add("soundControl");
 
-        questionSound.src = questionObj["sound"];
+        questionSound.src = "sounds/" + questionObj["sound"].split("[")[0];
+        var startTimeString = questionObj["sound"].split("[")[1].split("]")[0];
+        var minutes = parseInt(startTimeString.split(":")[0]);
+        var seconds = parseInt(startTimeString.split(":")[1]);
+        seconds += (minutes * 60);
+        questionSound.dataset.startTime = seconds;
 
         questionBody.appendChild(questionSound);
     }

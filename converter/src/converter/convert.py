@@ -170,14 +170,14 @@ def primeScoreKeeper():
 		os.makedirs(projectDir + "/scoreKeeper")
 	copy_tree(projectDir + "/../scoreKeeper", projectDir + "/scoreKeeper")
 
-def enablePresenter():
+def enablePresenter(title):
 	for file in glob.glob(projectDir + "/../revealPresenter/kwismaster*"):
 		print(file)
 		copy2(file, projectDir)
 
 	with open("kwismaster.html") as r:
 		kwismaster = r.read()\
-			.replace("@TEMPLATE_TITLE@", "The title of this quiz")\
+			.replace("@TEMPLATE_TITLE@", title)\
 			.replace("@SETTINGSJS@", kwisMasterInOutDir + "/settings.js")\
 			.replace("@QUESTIONSJS@", kwisMasterInOutDir + "/questions.js")\
 			.replace("@REVEAL_PATH@", "../reveal")\
@@ -191,11 +191,12 @@ if __name__ == '__main__':
 	if len(sys.argv) == 1:
 		usage()
 
+
 	configFile = os.path.abspath(sys.argv[1])
 	projectDir = os.path.abspath(sys.argv[1] + "/..")
 	baseInOutDir = projectDir
 	kwisMasterInOutDir = '.'
-	with open(configFile,"r") as f:
+	with open(configFile,"r", encoding='utf-8') as f:
 		config = json.load(f)
 		lines = f.readlines()
 
@@ -217,6 +218,7 @@ if __name__ == '__main__':
 		h.writelines(lines)
 
 	category_order = config["category_order"]
+	print([co.lower() for co in category_order])
 	infiles = config["input_files"]
 	rounds = config["rounds"]
 	specifications = {} 
@@ -256,6 +258,7 @@ if __name__ == '__main__':
 			print(f"Not sorting {round['name']}")
 		else:
 			print(f"sorting {round['name']} by category")
+			
 			round["questions"].sort(key=lambda x: [co.lower() for co in category_order].index(x.category.lower()))
 		
 		with open(baseInOutDir + "/presentationText_"+round["name"]+".txt", 'w') as presenterText:
@@ -293,5 +296,5 @@ if __name__ == '__main__':
 	with open("rounds.txt", "w") as roundsFile:
 		for round in rounds:
 			roundsFile.write(round + "\n")
-	enablePresenter()
+	enablePresenter(config["title"])
 	primeScoreKeeper()
