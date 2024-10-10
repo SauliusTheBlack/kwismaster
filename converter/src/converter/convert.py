@@ -1,7 +1,7 @@
 import json
 import sys, os
 from translations import translations
-from shutil import copy2
+from shutil import copy2, rmtree
 
 import shutil
 def copy_tree(src, dst, symlinks=False, ignore=None):
@@ -166,8 +166,10 @@ def usage():
 
 def primeScoreKeeper():
 	print("Trying to copy from " + projectDir + "/../scoreKeeper to " + projectDir + "/scoreKeeper" )
-	if not os.path.exists(projectDir + "/scoreKeeper"):
-		os.makedirs(projectDir + "/scoreKeeper")
+	if os.path.exists(projectDir + "/scoreKeeper"):
+		rmtree(projectDir + "/scoreKeeper")
+
+	os.makedirs(projectDir + "/scoreKeeper")
 	copy_tree(projectDir + "/../scoreKeeper", projectDir + "/scoreKeeper")
 
 def enablePresenter(title):
@@ -258,8 +260,12 @@ if __name__ == '__main__':
 			print(f"Not sorting {round['name']}")
 		else:
 			print(f"sorting {round['name']} by category")
-			
-			round["questions"].sort(key=lambda x: [co.lower() for co in category_order].index(x.category.lower()))
+			try:
+				round["questions"].sort(key=lambda x: [co.lower() for co in category_order].index(x.category.lower()))
+			except ValueError as ve:
+				print(ve)
+				print("Could not find category in {}, please check category_order in {}".format(category_order, configFile))
+				exit()
 		
 		with open(baseInOutDir + "/presentationText_"+round["name"]+".txt", 'w') as presenterText:
 			presenterText.write(round["name"] + "\n")

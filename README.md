@@ -89,14 +89,17 @@ For any given round there are settings that are possible
  - CATEGORY: extract all the questions with this category from all the questions, and show them in this round.
 
 ## caveats
-Make sure there are no trailing spaces in the json file.  
+Make sure there are no trailing comma's in the json file.  
 This is valid: 
 ```json
 {
-	"rounds" : ["Round 1", "Round 2"],
+	"rounds" : ["Round 1", "Round 2", "ABC"],
 	"category_order": [
 			"Miscelaneous", "Varia"
 	],
+    "specs": {
+        "ABC": ["NO_CATEGORY_SORT"]
+    },
 	"input_files": [
         "demo_questions_1.txt",
         "demo_questions_2.txt"
@@ -140,6 +143,9 @@ Run the command `python <path_to_converter_folder>/src/converter/convert.py <nam
 This will generate all required files, as well as copy a set of kwismaster files to your project folder.
 While you can't distribute this folder as-is(yet) due to the dependency on reveal itself, it makes it easier to see what you need to do the day of the event.
 
+By default a round's questions will be sorted by the 'category_order'. If you don't want this behaviour, and just want the questions in the order they appear in the question files, specify a NO_CATEGORY_SORT for the round in the specs part of the configuration eg. ```"specs": {
+        "ABC": ["NO_CATEGORY_SORT"]
+    }```
 # Q & A
 ## My round is not visible in the presentation!
 You probably didn't specify your round in the `rounds` part of `kwismaster.json`
