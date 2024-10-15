@@ -172,6 +172,21 @@ def primeScoreKeeper():
 	os.makedirs(projectDir + "/scoreKeeper")
 	copy_tree(projectDir + "/../scoreKeeper", projectDir + "/scoreKeeper")
 
+def copyScorePresenter(title):
+	if os.path.exists(projectDir + "/scoreboard"):
+		rmtree(projectDir + "/scoreboard")
+
+	os.makedirs(projectDir + "/scoreboard")
+	copy_tree(projectDir + "/../revealScore", projectDir + "/scoreboard")
+
+	with open(projectDir + "/scoreboard/" + "scoreboard.html") as r:
+		scoreboard = r.read()\
+			.replace("@TEMPLATE_TITLE@", title)\
+			.replace("@REVEAL_PATH@", "../../reveal")\
+			
+	with open(projectDir + "/scoreboard/" + "scoreboard.html", "w") as w:
+		w.write(scoreboard)
+
 def enablePresenter(title):
 	for file in glob.glob(projectDir + "/../revealPresenter/kwismaster*"):
 		print(file)
@@ -304,3 +319,4 @@ if __name__ == '__main__':
 			roundsFile.write(round + "\n")
 	enablePresenter(config["title"])
 	primeScoreKeeper()
+	copyScorePresenter(config["title"])

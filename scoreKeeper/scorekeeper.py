@@ -94,9 +94,11 @@ def reset():
 
 @post('/scores')
 def updateScores():
+	print("Updating scores")
+	print(scores)
 	for scorePoint in list(request.forms.items()):
-		print(scorePoint)
-		if(scorePoint[1] != ''):
+		print("sp" + str(scorePoint))
+		if(scorePoint[1] != ''): #if round has a score
 			print(scorePoint[0].split(scoreDelimiter), scorePoint[1])
 			teamName, round = scorePoint[0].split(scoreDelimiter )
 			if teamName not in scores:
@@ -110,18 +112,30 @@ def updateScores():
 @enable_cors
 def getScores():
 	returnScores = {}
+	print(teams, flush=True)
+	print(scores, flush=True)
+
 	for team in teams:
-		print(teams[team], flush=True)
-		returnScores[teams[team]] = {}
+		print(team)
+		technicalName = team[1]
+		humanName = team[0]
+		print(technicalName, flush=True)
+		returnScores[technicalName] = {}
 		runningTotal = 0
+		print(rounds)
 		for round in rounds:
 			print(round[0])
-			if(team in scores):
-				returnScores[teams[team]][round[0]] = int(scores[team][round[1]])
-				runningTotal += int(scores[team][round[1]])
+			humanRoundName = round[0]
+			technicalRoundName = round[1]
+			if(technicalName in scores):
+				if(technicalRoundName in scores[technicalName]):
+					returnScores[technicalName][humanRoundName] = int(scores[technicalName][technicalRoundName])
+					runningTotal += int(scores[technicalName][round[1]])
+				else:
+					returnScores[technicalName][round[0]] = 0
 			else:
-				returnScores[teams[team]][round[0]] = 0
-		returnScores[teams[team]]["total"] = runningTotal
+				returnScores[technicalName][round[0]] = 0
+		returnScores[technicalName]["total"] = runningTotal
 
 	print(returnScores, flush=True)
 	from bottle import response
@@ -134,19 +148,35 @@ def persistScores():
 	with open(scoreFileName, 'wb') as f:  # open a text file
 		pickle.dump(scores, f) # serialize the list
 
+import os
+scriptPath = os.path.dirname(os.path.realpath(__file__))
 
+roundsFilePath = scriptPath + "/../rounds.txt"
 def loadRounds():
-	print("Trying to load " + os.path.abspath("rounds.txt"))
-	if os.path.exists("rounds.txt"):
+	print("Trying to load " + os.path.abspath(roundsFilePath))
+	if os.path.exists(roundsFilePath):
 		roundsObj = []
-		with open("rounds.txt", "r") as roundsFile:
+		with open(roundsFilePath, "r") as roundsFile:
 			for line in roundsFile.readlines():
-				roundsObj.append((line, getTechnicalTeamName(line)))
+				roundsObj.append((line.strip(), getTechnicalTeamName(line).strip()))
 		return roundsObj
 	else:
 		return [("Test 1","test_1")]
+	
+teamsFilePath = scriptPath + "/../teams.txt"
+def loadTeams():
+	print("Trying to load " + os.path.abspath(teamsFilePath))
+	if os.path.exists(teamsFilePath):
+		teamsObj = []
+		with open(teamsFilePath, "r") as teamsFile:
+			for line in teamsFile.readlines():
+				teamsObj.append((line.strip(), getTechnicalTeamName(line).strip()))
+		return teamsObj
+	else:
+		return [("Team 1","team_1")]
 
 rounds = loadRounds()
+teams = loadTeams()
 
 @get('/')
 def redirectToMain():

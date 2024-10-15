@@ -7,13 +7,19 @@
 
     <title>Scoreboard</title>
 
-    <link rel="stylesheet" href="../reveal/dist/reset.css">
-    <link rel="stylesheet" href="../reveal/dist/reveal.css">
-    <link rel="stylesheet" href="../reveal/dist/theme/beige.css">
+    <link rel="stylesheet" href="@REVEAL_PATH@/dist/reset.css">
+    <link rel="stylesheet" href="@REVEAL_PATH@/dist/reveal.css">
+    <link rel="stylesheet" href="@REVEAL_PATH@/dist/theme/beige.css">
     <link rel="stylesheet" href="scoreboard.css">
 
     <script src="scores.js"></script>
     <script src="scoreboard.js"></script>
+
+
+    <script src="@REVEAL_PATH@/dist/reveal.js"></script>
+    <script src="@REVEAL_PATH@/plugin/notes/notes.js"></script>
+    <script src="@REVEAL_PATH@/plugin/markdown/markdown.js"></script>
+    <script src="@REVEAL_PATH@/plugin/highlight/highlight.js"></script>
 
     <!-- Theme used for syntax highlighted code -->
     <!-- <link rel="stylesheet" href="../reveal/plugin/highlight/monokai.css"> -->
@@ -22,16 +28,12 @@
 <body>
     <div class="reveal">
         <div class="slides" id="slides">
-            <section>TraDDanS Quiz - Oktober 2024</section>
+            <section>@TEMPLATE_TITLE@</section>
         </div>
         <button id="playControl">Play</button>
     </div>
 
 
-    <script src="../reveal/dist/reveal.js"></script>
-    <script src="../reveal/plugin/notes/notes.js"></script>
-    <script src="../reveal/plugin/markdown/markdown.js"></script>
-    <script src="../reveal/plugin/highlight/highlight.js"></script>
     <script>
         // More info about initialization & config:
         // - https://revealjs.com/initialization/

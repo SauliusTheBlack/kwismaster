@@ -11,26 +11,28 @@
 			<form action="/scores" method="post">
 				<table>
 					<tr>
-							<th></th> <!-- empty cell to allign with team names -->
+						<th></th> <!-- empty cell to allign with team names -->
 						% for round in rounds:
 							<th>{{round[0]}}</th>
 						% end
 					</tr>
 
-
 				% for team in teams:
+					% humanTeamName = team[0]
+					% technicalTeamName = team[1]
 					<tr>
-						<td>{{teams[team]}}</td>
-						% for round in rounds:							
-							% if team in scores and round[1] in scores[team] : 
-							<td><input type="number" name="{{team + DELIMITER + round[1]}}" value="{{scores[team][round[1]]}}"></td>
+						<td>{{humanTeamName}}</td>
+						% for round in rounds:
+							% technicalRoundName = round[1]							
+							% if technicalTeamName in scores and technicalRoundName in scores[technicalTeamName] : 
+	
+							<td><input type="number" name="{{technicalTeamName + DELIMITER + technicalRoundName}}" value="{{scores[technicalTeamName][technicalRoundName]}}"></td>
 							% else :
-							<td><input type="number" name="{{team + DELIMITER + round[1]}}"></td>
+							<td><input type="number" name="{{technicalTeamName + DELIMITER + technicalRoundName}}"></td>
 							% end
 						% end
 					</tr>
 				% end
-
 				
 				</table>
 				<input type="submit" value="Bevestigen">
