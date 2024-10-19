@@ -20,41 +20,53 @@ def enable_cors(fn):
 
     return _enable_cors
 
-
 scoreDelimiter = "@##@"
 scoreFileName = "scores.pkl"
+def loadScores():
+	if os.path.exists(scoreFileName):
+		with open(scoreFileName, 'rb') as rf:
+			return pickle.load(rf)
+	else:
+		return {}
+
 teamFileName = "teams.pkl"
-scores = {}
-if os.path.exists(scoreFileName):
-	with open(scoreFileName, 'rb') as rf:
-		scores = pickle.load(rf)
+def loadTeams():
+	if os.path.exists(teamFileName):
+		with open(teamFileName, 'rb') as rf:
+			return pickle.load(rf)
+	else:
+		return []
 
-teams = {
 
-}
-if os.path.exists(teamFileName):
-	with open(teamFileName, 'rb') as rf:
-		teams = pickle.load(rf)
 
-technicalTeamNameCache = {}
-
+def findHumanTeamName(techTeamName):
+	print("Finding human name for " + techTeamName)
+	print(teams, techTeamName)
+	for team in teams:
+		if team[1] == techTeamName:
+			return team[0]
+		
+technicalTeamNameCache = {}	
 def getTechnicalTeamName(humanTeamName):
 	if humanTeamName not in technicalTeamNameCache:
 		technicalTeamNameCache[humanTeamName] = humanTeamName.lower().replace(" ","_")
 	return technicalTeamNameCache[humanTeamName]
 
+def persistTeams():
+	with open(teamFileName, 'wb') as f:  # open a text file
+		pickle.dump(teams, f) # serialize the list
+
+
 @post('/teams')
 def addTeam():
 	print(request.forms.newTeamName)
+	print(teams)
 	newTeamName = request.forms.newTeamName
-	teams[getTechnicalTeamName(newTeamName)] = newTeamName
+	teams.append((newTeamName,getTechnicalTeamName(newTeamName)))
 	persistTeams()
 
 	redirect('/')
 
-def persistTeams():
-	with open(teamFileName, 'wb') as f:  # open a text file
-		pickle.dump(teams, f) # serialize the list
 
 @get('/deleteTeamName/<target>')
 def uglyTeamNameChange(target):
@@ -92,6 +104,8 @@ def reset():
 	pass
 	# remove pkl files(or backup them) and start from scratch
 
+
+
 @post('/scores')
 def updateScores():
 	print("Updating scores")
@@ -100,10 +114,12 @@ def updateScores():
 		print("sp" + str(scorePoint))
 		if(scorePoint[1] != ''): #if round has a score
 			print(scorePoint[0].split(scoreDelimiter), scorePoint[1])
-			teamName, round = scorePoint[0].split(scoreDelimiter )
-			if teamName not in scores:
-				scores[teamName] = {}
-			scores[teamName][round] = scorePoint[1]
+			tech_teamName, round = scorePoint[0].split(scoreDelimiter)
+			human_teamName = findHumanTeamName(tech_teamName)
+			print(human_teamName)
+			if human_teamName not in scores:
+				scores[human_teamName] = {}
+			scores[human_teamName][round] = scorePoint[1]
 	persistScores()
 
 	redirect('/')
@@ -120,22 +136,22 @@ def getScores():
 		technicalName = team[1]
 		humanName = team[0]
 		print(technicalName, flush=True)
-		returnScores[technicalName] = {}
+		returnScores[humanName] = {}
 		runningTotal = 0
 		print(rounds)
 		for round in rounds:
 			print(round[0])
 			humanRoundName = round[0]
 			technicalRoundName = round[1]
-			if(technicalName in scores):
-				if(technicalRoundName in scores[technicalName]):
-					returnScores[technicalName][humanRoundName] = int(scores[technicalName][technicalRoundName])
-					runningTotal += int(scores[technicalName][round[1]])
+			if(humanName in scores):
+				if(technicalRoundName in scores[humanName]):
+					returnScores[humanName][humanRoundName] = int(scores[humanName][technicalRoundName])
+					runningTotal += int(scores[humanName][round[1]])
 				else:
-					returnScores[technicalName][round[0]] = 0
+					returnScores[humanName][round[0]] = 0
 			else:
-				returnScores[technicalName][round[0]] = 0
-		returnScores[technicalName]["total"] = runningTotal
+				returnScores[humanName][round[0]] = 0
+		returnScores[humanName]["total"] = runningTotal
 
 	print(returnScores, flush=True)
 	from bottle import response
@@ -163,28 +179,16 @@ def loadRounds():
 	else:
 		return [("Test 1","test_1")]
 	
-teamsFilePath = scriptPath + "/../teams.txt"
-def loadTeams():
-	print("Trying to load " + os.path.abspath(teamsFilePath))
-	if os.path.exists(teamsFilePath):
-		teamsObj = []
-		with open(teamsFilePath, "r") as teamsFile:
-			for line in teamsFile.readlines():
-				teamsObj.append((line.strip(), getTechnicalTeamName(line).strip()))
-		return teamsObj
-	else:
-		return [("Team 1","team_1")]
-
-rounds = loadRounds()
-teams = loadTeams()
-
 @get('/')
 def redirectToMain():
 	return template('main', teams = teams, 
 			rounds = rounds, scores = scores, DELIMITER=scoreDelimiter) #rounds can be gotten from settings, teams need to be managed at runtime
     
 templateDir = Path(__file__ + '/../views')
-print(templateDir)
+
+rounds = loadRounds()
+teams = loadTeams()
+scores = loadScores()
 
 TEMPLATE_PATH.insert(0, templateDir)
 run(host='0.0.0.0', port=4040, debug=True)

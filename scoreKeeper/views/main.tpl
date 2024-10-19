@@ -24,9 +24,9 @@
 						<td>{{humanTeamName}}</td>
 						% for round in rounds:
 							% technicalRoundName = round[1]							
-							% if technicalTeamName in scores and technicalRoundName in scores[technicalTeamName] : 
+							% if humanTeamName in scores and technicalRoundName in scores[humanTeamName] : 
 	
-							<td><input type="number" name="{{technicalTeamName + DELIMITER + technicalRoundName}}" value="{{scores[technicalTeamName][technicalRoundName]}}"></td>
+							<td><input type="number" name="{{technicalTeamName + DELIMITER + technicalRoundName}}" value="{{scores[humanTeamName][technicalRoundName]}}"></td>
 							% else :
 							<td><input type="number" name="{{technicalTeamName + DELIMITER + technicalRoundName}}"></td>
 							% end

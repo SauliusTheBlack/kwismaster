@@ -34,7 +34,7 @@ function makeQuestionSlides(roundObj, questionObj) {
             return;
         }
     } else {
-        console.log("found no setting for " + roundObj["name"]);
+        //console.log("found no setting for " + roundObj["name"]);
     }
 
     slides.appendChild(makeRoundTitleSlide(roundObj));
@@ -120,7 +120,7 @@ const allExtensions = extensions.concat(extensions.map(ext => ext.toUpperCase())
 
 
 function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
-    console.log("adding a single question slide");
+    //console.log("adding a single question slide");
     let questionCounter = Number(questionIndex) + 1;
 
     var imgRatio = 1;
@@ -143,7 +143,7 @@ function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
     questionBody.appendChild(questionBodyLongQuestion);
 
     if (questionObj["img"]) {
-        console.log("restyling");
+        //console.log("restyling");
         var questionImg = document.createElement('img');
         questionImg.src = "images/" + questionObj["img"].split(":")[0];
 
@@ -167,10 +167,10 @@ function makeSingleQuestionSlide(roundName, questionObj, questionIndex) {
     }
 
 
-    console.log(questionObj["shortQuestion"])
-    console.log(questionObj["sound"])
+    //console.log(questionObj["shortQuestion"])
+    //console.log(questionObj["sound"])
     if (questionObj["sound"]) {
-        console.log("Adding a sound control")
+        //console.log("Adding a sound control")
         var questionSound = document.createElement('audio');
         questionSound.controls = "controls"
         questionSound.classList.add("soundControl");
@@ -207,13 +207,15 @@ function domQuestions() {
         var roundObj = questions[round];
         var pat = /CATEGORY:/g;
         // if (Object.keys(settings.specs).includes(roundObj["name"])) {
-        //     console.log(settings.specs[roundObj["name"]].some(e => pat.test(e)));
-        //     console.log("Need to extract category from all questions")
+        //     //console.log(settings.specs[roundObj["name"]].some(e => pat.test(e)));
+        //     //console.log("Need to extract category from all questions")
         // } else {
         var questionObj = roundObj["questions"];
 
         makeQuestionSlides(roundObj, questionObj);
         //hardcoded for traddans, needs to change
+        console.log(roundObj["name"]);
+
         if (roundObj["name"] === "Rode Draad") {
             makeAnswerSlides(roundObj, questionObj);
         } else {

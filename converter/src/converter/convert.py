@@ -187,6 +187,15 @@ def copyScorePresenter(title):
 	with open(projectDir + "/scoreboard/" + "scoreboard.html", "w") as w:
 		w.write(scoreboard)
 
+
+	print(rounds, flush=True)
+	with open(projectDir + "/scoreboard/" + "scoreboard.js") as r:
+		scoreboardJs = r.read()\
+			.replace("var rounds = [];", 'var rounds = ' + str(rounds) + ";")\
+			
+	with open(projectDir + "/scoreboard/" + "scoreboard.js", "w") as w:
+		w.write(scoreboardJs)
+
 def enablePresenter(title):
 	for file in glob.glob(projectDir + "/../revealPresenter/kwismaster*"):
 		print(file)

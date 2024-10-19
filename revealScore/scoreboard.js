@@ -5,9 +5,76 @@ function fetchScores(url) {
     return JSON.parse(xmlHttp.responseText);
 }
 
+var rounds = [];
+const render = new Event("render");
+
+document.addEventListener('DOMContentLoaded', primeConfiguration);
+document.addEventListener('DOMContentLoaded', renderScores);
+
+document.addEventListener('render', renderScores);
+
+function primeConfiguration() {
+
+    let table = document.createElement("TABLE");
+    let row = document.createElement("TR");
+    rounds.forEach((round) => {
+        console.log("adding checkbox for " + round);
+        let cell = document.createElement("TH")
+        cell.innerText = round;
+        row.appendChild(cell);
 
 
-document.addEventListener('DOMContentLoaded', function() {
+    })
+
+    console.log("adding checkbox for total ");
+    let cell = document.createElement("TH")
+    cell.innerText = "Total";
+    row.appendChild(cell);
+
+    table.appendChild(row);
+
+    row = document.createElement("TR");
+
+    rounds.forEach((round) => {
+        console.log("adding checkbox for " + round);
+        let checkbox = document.createElement("INPUT");
+
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("id", "checkbox_" + round.replace(" ", "_"));
+        let cell = document.createElement("TD")
+        cell.appendChild(checkbox);
+        row.appendChild(cell);
+
+    })
+
+    console.log("adding checkbox for total ");
+    cell = document.createElement("TD")
+
+    checkbox = document.createElement("INPUT");
+
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.setAttribute("id", "checkbox_total");
+
+    cell.appendChild(checkbox);
+    row.appendChild(cell);
+
+
+    table.appendChild(row);
+
+    document.getElementById('configuration').appendChild(table);
+
+    console.log("Priming configuration");
+    console.log(document.getElementById("configButton"));
+    document.getElementById("configButton").addEventListener("click", () => {
+        console.log("I was clicked")
+        renderScores();
+    });
+
+}
+
+function renderScores() {
+    console.log("rendering scores");
+
     var scores = fetchScores("http://localhost:4040/scores");
     console.log(scores);
 
@@ -33,7 +100,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var scoreTable;
     var scoreBody;
 
-    slides.replaceChildren();
+    // slides.replaceChildren();
+    var totalSlides = Reveal.getTotalSlides();
+    console.log(totalSlides);
+    if (totalSlides > 2) {
+        document.querySelectorAll('.reveal .slides section:nth-child(n+3)').forEach(slide => slide.remove());
+    }
+
     sortedScoresArray.forEach(([team, score]) => {
 
         if (currentResultsShown == 0) {
@@ -43,10 +116,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const row = document.createElement('tr');
 
             row.appendChild(cellWithValue(" "));
-            row.appendChild(cellWithValue('Ronde 1'));
-            row.appendChild(cellWithValue('Ronde 2'));
-            row.appendChild(cellWithValue('Totaal'));
 
+            rounds.forEach((round) => {
+                console.log(document.getElementById("checkbox_" + round.replace(" ", "_")).checked);
+                if (document.getElementById("checkbox_" + round.replace(" ", "_")).checked) {
+                    console.log("Adding header for " + round)
+                    row.appendChild(cellWithValue(round));
+                }
+            })
+
+            row.appendChild(cellWithValue("Totaal"));
             scoreTable.appendChild(row);
 
         }
@@ -57,14 +136,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create and append team name
 
         row.appendChild(cellWithValue(team));
-        row.appendChild(cellWithValue(score['Ronde 1']));
-        row.appendChild(cellWithValue(score['Ronde 2']));
+        rounds.forEach((round) => {
+            console.log(document.getElementById("checkbox_" + round.replace(" ", "_")).checked);
+            if (document.getElementById("checkbox_" + round.replace(" ", "_")).checked) {
+                console.log("Adding score for " + round)
+                row.appendChild(cellWithValue(score[round]));
+            }
+        })
         row.appendChild(cellWithValue(score['total']));
 
         // Append the row to the tbody
         scoreTable.appendChild(row);
 
-        if (currentResultsShown == 10) {
+        if (currentResultsShown == 11) {
             // Append tbody to the table
             scoreBody.appendChild(scoreTable);
             currentResultsShown = 0
@@ -81,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let isPlaying = false;
     console.log("Getting element by id")
     console.log(document.getElementById('playControl'))
+
     document.getElementById('playControl').addEventListener('click', function() {
         console.log("click");
         if (isPlaying) {
@@ -93,11 +178,19 @@ document.addEventListener('DOMContentLoaded', function() {
             Reveal.configure({ loop: true }); // Enable looping
 
             intervalId = setInterval(function() {
-                Reveal.next(); // Move to the next slide every second
+
+                var currentIndices = Reveal.getIndices();
+
+                var isLastSlide = currentIndices.h === (totalSlides - 1);
+                if (isLastSlide) {
+                    Reveal.slide(2)
+                } else {
+                    Reveal.next();
+                }
             }, 7500); // Adjust interval as needed
 
-            Reveal.slide(0)
+            Reveal.slide(2)
             this.textContent = 'Pause';
         }
     })
-});
+}
