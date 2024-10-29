@@ -12,3 +12,4 @@ quiz_demo/*
 quiz_*
 *.pkl
 scores.pkl
+*coverage
