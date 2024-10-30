@@ -1,4 +1,4 @@
-from src.converter.question_parser import readSingleFile, getAllQuestionsFromFiles
+from converter.question_parser import readSingleFile, getAllQuestionsFromFiles
 
 def test_ifTheLanguageIsDutch_andValidTextInputIsGiven_ThenAQuestionIsMade():	
 	foundQuestions = readSingleFile("tests/resources/SingleMinimalQuestion_NL.txt", "NL")

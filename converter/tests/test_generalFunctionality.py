@@ -1,4 +1,5 @@
-from src.converter.convert import detectLanguage
+from converter.convert import detectLanguage
+
 
 def test_ifLineStartsWithLangeVraag_ThenLanguageIsDutch():
     assert detectLanguage("Lange Vraag") == "NL"

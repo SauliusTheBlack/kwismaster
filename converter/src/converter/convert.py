@@ -4,16 +4,17 @@ import sys, os
 from shutil import copy2, rmtree
 
 from question_parser import getAllQuestionsFromFiles
+from file_creator import writeRoundPresentationText
 
 import shutil
 def copy_tree(src, dst, symlinks=False, ignore=None):
-    for item in os.listdir(src):
-        s = os.path.join(src, item)
-        d = os.path.join(dst, item)
-        if os.path.isdir(s):
-            shutil.copytree(s, d, symlinks, ignore)
-        else:
-            shutil.copy2(s, d)
+	for item in os.listdir(src):
+		s = os.path.join(src, item)
+		d = os.path.join(dst, item)
+		if os.path.isdir(s):
+			shutil.copytree(s, d, symlinks, ignore)
+		else:
+			shutil.copy2(s, d)
 
 import glob
 
@@ -34,7 +35,7 @@ def getAllQuestionsOrderedByRoundSpec(unhandledQuestions):
 			roundSpecs = specifications[round]
 			categoryPattern = re.compile("CATEGORY:.*")
 			matchingPatterns = list(filter(categoryPattern.match, roundSpecs))
-			if(matchingPatterns):
+			if matchingPatterns:
 				categoryToExtract = matchingPatterns[0].split(":")[1]
 				for question in allQuestions:
 					if question.category == categoryToExtract:
@@ -79,7 +80,7 @@ def copyScorePresenter(title):
 		scoreboard = r.read()\
 			.replace("@TEMPLATE_TITLE@", title)\
 			.replace("@REVEAL_PATH@", "../../reveal")\
-			
+
 	with open(projectDir + "/scoreboard/" + "scoreboard.html", "w") as w:
 		w.write(scoreboard)
 
@@ -88,7 +89,7 @@ def copyScorePresenter(title):
 	with open(projectDir + "/scoreboard/" + "scoreboard.js") as r:
 		scoreboardJs = r.read()\
 			.replace("var rounds = [];", 'var rounds = ' + str(rounds) + ";")\
-			
+
 	with open(projectDir + "/scoreboard/" + "scoreboard.js", "w") as w:
 		w.write(scoreboardJs)
 
@@ -103,7 +104,7 @@ def enablePresenter(title):
 			.replace("@SETTINGSJS@", kwisMasterInOutDir + "/settings.js")\
 			.replace("@QUESTIONSJS@", kwisMasterInOutDir + "/questions.js")\
 			.replace("@REVEAL_PATH@", "../reveal")\
-		
+
 	with open("kwismaster.html", "w") as w:
 		w.write(kwismaster)
 
@@ -121,7 +122,6 @@ if __name__ == '__main__':
 	if len(sys.argv) == 1:
 		usage()
 
-
 	configFile = os.path.abspath(sys.argv[1])
 	projectDir = os.path.abspath(sys.argv[1] + "/..")
 	baseInOutDir = projectDir
@@ -131,15 +131,14 @@ if __name__ == '__main__':
 		lines = f.readlines()
 
 		if "settings" in config:
-			if("output_dir" in config["settings"]):
+			if "output_dir" in config["settings"]:
 				print(f'appending custom base dir [{config["settings"]["output_dir"]}] to [{baseInOutDir}]')
 				baseInOutDir += "/" + config["settings"]["output_dir"]
 				kwisMasterInOutDir = config["settings"]["output_dir"]
-		
 
-	allQuestionsByRoundMap = {}		
+	allQuestionsByRoundMap = {}
 	outFilename = baseInOutDir + "/questions.js"
-	
+
 	if not os.path.exists(baseInOutDir):
 		os.makedirs(baseInOutDir)
 
@@ -151,7 +150,7 @@ if __name__ == '__main__':
 	print([co.lower() for co in category_order])
 	infiles = config["input_files"]
 	rounds = config["rounds"]
-	specifications = {} 
+	specifications = {}
 	if "specs" in config:
 		specifications = config["specs"]
 
@@ -169,10 +168,10 @@ if __name__ == '__main__':
 	currentRoundQuestions = []
 	for question in questionSortedByRound:
 		if currentRoundName != question.round.strip():
-			if(currentRound != None):
+			if currentRound is not None:
 				currentRound["name"] = currentRoundName
 				currentRound["questions"] = currentRoundQuestions
-				if(currentRoundName in rounds):
+				if currentRoundName in rounds:
 					questions.append(currentRound)
 				else:
 					print(f"Couldn't find round '{currentRoundName}' in rounds {rounds}")
@@ -184,34 +183,24 @@ if __name__ == '__main__':
 
 	currentRound["name"] = currentRoundName
 	currentRound["questions"] = currentRoundQuestions
-	if(currentRoundName in rounds): 
+	if currentRoundName in rounds:
 		questions.append(currentRound)
 
 	#this next part is not optimized for performance or resource utilisation, but works fine
-	for round in questions:
-		if (round["name"] in specifications and 'NO_CATEGORY_SORT' in specifications[round["name"]]):
-			print(f"Not sorting {round['name']}")
+	for roundWithQuestions in questions:
+		if roundWithQuestions["name"] in specifications and 'NO_CATEGORY_SORT' in specifications[roundWithQuestions["name"]]:
+			print(f"Not sorting {roundWithQuestions['name']}")
 		else:
-			print(f"sorting {round['name']} by category")
+			print(f"sorting {roundWithQuestions['name']} by category")
 			try:
-				round["questions"].sort(key=lambda x: [co.lower() for co in category_order].index(x.category.lower()))
+				roundWithQuestions["questions"].sort(key=lambda x: [co.lower() for co in category_order].index(x.category.lower()))
 			except ValueError as ve:
 				print(ve)
 				print("Could not find category in {}, please check category_order in {}".format(category_order, configFile))
 				exit()
-		
-		with open(baseInOutDir + "/presentationText_"+round["name"]+".txt", 'w') as presenterText:
-			presenterText.write(round["name"] + "\n")
-			for questionNumber, question in enumerate(round["questions"]):
-				presenterText.write(str(questionNumber + 1) + ": " + question.longQuestion + "\n\n")
 
-		with open(baseInOutDir + "/presentationText_"+round["name"]+"_answers.txt", 'w') as answerText:
-			answerText.write(f"\n\nAntwoorden {round['name']}\n\n\n")
-			# Exclude Rode Draad from answersheet?
-			for questionNumber, question in enumerate(round["questions"]):
-				answerText.write(str(questionNumber + 1) + ": " + question.shortQuestion + "\n")
-				answerText.write("\t - " + question.answer + "\n\n")
-			
+		writeRoundPresentationText(baseInOutDir, roundWithQuestions)
+
 
 	round_object = json.dumps(questions, indent=4, cls=MyEncoder)
 
@@ -230,6 +219,7 @@ if __name__ == '__main__':
 		print(f'writing to {outFilename}')
 		outfile.write("questions = ")
 		outfile.write(round_object)
+
 	print(rounds)
 
 	with open("rounds.txt", "w") as roundsFile:
