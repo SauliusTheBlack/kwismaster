@@ -1,6 +1,6 @@
 from converter.question_parser import readSingleFile, getAllQuestionsFromFiles
 
-def test_ifTheLanguageIsDutch_andValidTextInputIsGiven_ThenAQuestionIsMade():	
+def test_ifTheLanguageIsDutch_andValidTextInputIsGiven_ThenAQuestionIsMade():
 	foundQuestions = readSingleFile("tests/resources/SingleMinimalQuestion_NL.txt", "NL")
 	assert len(foundQuestions) == 1
 	
@@ -10,6 +10,14 @@ def test_ifTheLanguageIsDutch_andValidTextInputIsGiven_ThenAQuestionIsMade():
 	assert question.answer == "This is the answer"
 	assert question.category == "This is the category"
 	assert question.round == "This is the round"
+
+
+def test_ifTheLanguageIsDutch_andValidTextInputIsGiven_ThenAQuestionIsMade():
+	foundQuestions = readSingleFile("tests/resources/SingleQuestion_withImage_NL.txt", "NL")
+	assert len(foundQuestions) == 1
+
+	question = foundQuestions[0]
+	assert question.img == "testImage.jpg"
 
 def test_ifTheLanguageIsEnglish_andValidTextInputIsGiven_ThenAQuestionIsMade():
 	foundQuestions = readSingleFile("tests/resources/SingleMinimalQuestion_EN.txt", "EN")

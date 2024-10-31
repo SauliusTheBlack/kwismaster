@@ -1,3 +1,5 @@
+import pathlib
+
 from converter.file_creator import _writePresentationText, _writeAnswerText
 from unittest.mock import patch, mock_open
 
@@ -22,6 +24,7 @@ roundObj = {
     "questions": [minimumViableQuestion1, minimumViableQuestion2]
 }
 def test_ifPresentationTextIsWritten_thenContentIsCorrect():
+    print("\n" + "DEBUG:" + str(pathlib.Path(__file__).parent.absolute()) + "\n")
     # Prepare the expected content that should be written to the file
     expected_content = """TestRound
 1: What is the capital of France?
