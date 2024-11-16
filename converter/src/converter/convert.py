@@ -3,8 +3,8 @@ import sys, os
 
 from question_parser import getAllQuestionsFromFiles
 from file_creator import writeRoundPresentationText
-from deliverable_creator import enablePresenter, primeScoreKeeper, copyScorePresenter
-
+from deliverable_creator import copyPresenter, copyScoreKeeper, copyScorePresenter
+from util import Settings
 # this makes classes serialisable
 class MyEncoder(json.JSONEncoder):
 	def default(self, o):
@@ -59,12 +59,7 @@ def detectLanguage(line):
 	else:
 		return None
 
-class Settings:
-	def __init__(self):
-		self.configFile = None
-		self.projectDir = None
-		self.baseInOutDir = None
-		self.kwisMasterInOutDir = '.'
+
 
 if __name__ == '__main__':
 	settings = Settings()
@@ -174,6 +169,6 @@ if __name__ == '__main__':
 	with open("rounds.txt", "w") as roundsFile:
 		for rnd in rounds:
 			roundsFile.write(rnd + "\n")
-	enablePresenter(config["title"], settings)
-	primeScoreKeeper(settings)
+	copyPresenter(config["title"], settings)
+	copyScoreKeeper(settings)
 	copyScorePresenter(config["title"], settings, rounds)
