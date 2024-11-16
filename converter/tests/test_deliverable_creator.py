@@ -28,3 +28,20 @@ def test_theScorePresenterIsCopied_thenTheRequiredFilesAreDone():
 	assert os.path.exists("./tmptest/scoreBoard/scoreboard.html")
 	assert os.path.exists("./tmptest/scoreBoard/scoreboard.js")
 	#todo: check that correct find and replaces are done as well!!
+
+
+def test_thePresenterIsCopied_thenTheRequiredFilesAreDone():
+	settings = Settings()
+	settings.projectDir = './tmptest'
+	settings.sourceDir = '..'
+
+	copyPresenter(title="test scores", settings=settings)
+
+	#flaky / implementation-dependent, but will do for now
+	assert os.path.exists("./tmptest/presenter/kwismaster.css")
+	assert os.path.exists("./tmptest/presenter/kwismaster.html")
+	assert os.path.exists("./tmptest/presenter/kwismaster.js")
+	assert not os.path.exists("./tmptest/presenter/testRecording.mp3")
+	assert not os.path.exists("./tmptest/presenter/lib")
+	assert not os.path.exists("./tmptest/presenter/spec")
+	#todo: check that correct find and replaces are done as well!!

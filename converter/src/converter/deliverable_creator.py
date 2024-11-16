@@ -1,6 +1,5 @@
 from shutil import copy2, rmtree, copytree
-import os
-import glob
+import os, shutil
 
 def __copy_tree(src, dst, symlinks=False, ignore=None):
 	for item in os.listdir(src):
@@ -43,15 +42,24 @@ def copyScorePresenter(title, settings, rounds):
 		w.write(scoreboardJs)
 
 def copyPresenter(title, settings):
-	for file in glob.glob(settings.projectDir + "/../revealPresenter/kwismaster*"):
-		copy2(file, settings.projectDir)
+	if os.path.exists(settings.projectDir + "/presenter"):
+		rmtree(settings.projectDir + "/presenter")
 
-	with open("kwismaster.html") as r:
+	os.makedirs(settings.projectDir + "/presenter")
+	__copy_tree(settings.sourceDir + "/revealPresenter", settings.projectDir + "/presenter")
+
+	rmtree(settings.projectDir + "/presenter/lib")
+	rmtree(settings.projectDir + "/presenter/spec")
+	os.remove(settings.projectDir + "/presenter/SpecRunner.html" )
+	os.remove(settings.projectDir + "/presenter/testRecording.mp3" )
+	os.remove(settings.projectDir + "/presenter/kwismasterRunner.js" )
+
+	with open(settings.projectDir + "/presenter/kwismaster.html") as r:
 		kwismaster = r.read()\
 			.replace("@TEMPLATE_TITLE@", title)\
 			.replace("@SETTINGSJS@", settings.kwisMasterInOutDir + "/settings.js")\
 			.replace("@QUESTIONSJS@", settings.kwisMasterInOutDir + "/questions.js")\
 			.replace("@REVEAL_PATH@", "../reveal")\
 
-	with open("kwismaster.html", "w") as w:
+	with open(settings.projectDir + "/presenter/kwismaster.html", "w") as w:
 		w.write(kwismaster)
