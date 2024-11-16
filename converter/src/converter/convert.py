@@ -67,8 +67,15 @@ if __name__ == '__main__':
 		usage()
 
 	settings.configFile = os.path.abspath(sys.argv[1])
-	settings.projectDir = os.path.abspath(sys.argv[1] + "/..")
+	#the following assumes the sourceDir is one level higher, and the project dir is current folder.
+	#This should become settable in the configFile
+	settings.sourceDir = os.path.abspath(sys.argv[1] + "/..")
+	settings.projectDir = os.path.abspath(sys.argv[1])
 	settings.baseInOutDir = settings.projectDir
+
+	if not settings.validate():
+		print(settings.error_messages)
+		exit()
 
 	with open(settings.configFile,"r", encoding='utf-8') as f:
 		config = json.load(f)
