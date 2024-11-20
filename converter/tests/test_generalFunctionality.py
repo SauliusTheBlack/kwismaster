@@ -48,7 +48,7 @@ def test_settingCreation():
     current_dir = os.getcwd()
     print(current_dir)
 
-    assert settings.sourceDir == current_dir
+    assert settings.sourceDir == os.path.dirname(current_dir)
     assert settings.configFile == current_dir + "\\config.json"
     assert settings.projectDir == current_dir
 
