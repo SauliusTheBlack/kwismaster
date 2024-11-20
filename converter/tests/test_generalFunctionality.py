@@ -1,69 +1,54 @@
-from src.converter.convert import readSingleFile, getAllQuestionsFromFiles
+from converter.convert import detectLanguage, create_settings
+from converter.util import Settings
+import os
 
-def test_singleQuestion():
-	foundQuestions = readSingleFile("tests/resources/SingleMinimalQuestion_NL.txt")
-	assert len(foundQuestions) == 1
-	
-	question = foundQuestions[0]
-	assert question.longQuestion == "This is the long question?"
-	assert question.shortQuestion == "This is the short question?"
-	assert question.answer == "This is the answer"
-	assert question.category == "This is the category"
-	assert question.round == "This is the round"
+def test_ifLineStartsWithLangeVraag_ThenLanguageIsDutch():
+    assert detectLanguage("Lange Vraag") == "NL"
+    assert detectLanguage("LANGE VRAAG") == "NL"
+    assert detectLanguage("lange vraag") == "NL"
+    assert detectLanguage("lange VRAAG") == "NL"
+    assert detectLanguage("LANGE vraag") == "NL"
+    assert detectLanguage("LANGE vraag: and then some useless data") == "NL"
 
-def test_singleQuestion_EN():
-	foundQuestions = readSingleFile("tests/resources/SingleMinimalQuestion_EN.txt")
-	assert len(foundQuestions) == 1
-	
-	question = foundQuestions[0]
-	assert question.longQuestion == "This is the long question?"
-	assert question.shortQuestion == "This is the short question?"
-	assert question.answer == "This is the answer"
-	assert question.category == "This is the category"
-	assert question.round == "This is the round"
-	
-def test_multipleQuestions_oneFile():
-	foundQuestions = readSingleFile("tests/resources/MultipleMinimalQuestions_NL.txt")
-	assert len(foundQuestions) == 2
-	
-	question = foundQuestions[0]
-	assert question.longQuestion == "This is the long question?"
-	assert question.shortQuestion == "This is the short question?"
-	assert question.answer == "This is the answer"
-	assert question.category == "This is the category"
-	assert question.round == "This is the round"
-	
-	question = foundQuestions[1]
-	assert question.longQuestion == "This is the long question 2?"
-	assert question.shortQuestion == "This is the short question 2?"
-	assert question.answer == "This is the answer 2"
-	assert question.category == "This is the category 2"
-	assert question.round == "This is the round 2"
+def test_ifLineStartsWithLongQuestion_ThenLanguageIsDutch():
+    assert detectLanguage("Long Question") == "EN"
+    assert detectLanguage("LONG QUESTION") == "EN"
+    assert detectLanguage("long question") == "EN"
+    assert detectLanguage("LONG question") == "EN"
+    assert detectLanguage("long QUESTION") == "EN"
+    assert detectLanguage("Long Question: and then some useless data") == "EN"
 
-def test_multipleQuestions_twoInputFiles():
-	allQuestions = getAllQuestionsFromFiles(["tests/resources/SingleMinimalQuestion_NL.txt","tests/resources/SingleQuestion_withNewlines_NL.txt"])
-	assert len(allQuestions) == 2
+def test_ifNoRequiredFieldsAreNotSet_ThenSettingsDoesntValidate_andMultipleErrorMessagesExist():
+    settings = Settings()
+    assert settings.validate() == False
+    assert len(settings.error_messages) == 2
+    assert "SourceDir needs to be filled in" in settings.error_messages
+    assert "ProjectDir needs to be filled in" in settings.error_messages
 
-def test_multipleQuestions_twoInputFiles_multiLingual():
-	allQuestions = getAllQuestionsFromFiles(["tests/resources/SingleMinimalQuestion_NL.txt","tests/resources/SingleMinimalQuestion_EN.txt"])
-	assert len(allQuestions) == 2
+def test_ifNoSourceDirIsSet_ThenSettingsDoesntValidate():
+    settings = Settings()
+    settings.projectDir = "."
+    assert settings.validate() == False
+    assert "SourceDir needs to be filled in" in settings.error_messages
 
-#maintain newlines in strings
-def test_lineWithoutPrefixShouldBeAddedToPreviousObject():
-	foundQuestions = readSingleFile("tests/resources/SingleQuestion_withNewlines_NL.txt")
-	assert len(foundQuestions) == 1
-	
-	question = foundQuestions[0]
-	assert question.longQuestion == r"This is the long question?\nIt contains a new line"
-	assert question.shortQuestion == r"This is the short question?\nwhich also contains a new line"
-	assert question.answer == r"This is the answer\nnew line is allowed here as well"
-	assert question.category == "This is the category"
-	assert question.round == "This is the round"
+def test_ifNoProjectDirIsSet_ThenSettingsDoesntValidate():
+    settings = Settings()
+    settings.sourceDir = "."
+    assert settings.validate() == False
+    assert "ProjectDir needs to be filled in" in settings.error_messages
 
-#maintain newlines in strings
-def test_lineWithoutPrefixShouldBeAddedToPreviousObject():
-	foundQuestions = readSingleFile("tests/resources/SingleQuestion_withMusicFile.txt")
-	assert len(foundQuestions) == 1
-	
-	question = foundQuestions[0]
-	assert question.sound == "testRecording.mp3"
+
+def test_settingCreation():
+    settings = create_settings("./config.json")
+
+    print("#" + settings.sourceDir)
+    print(settings.projectDir)
+    print(settings.configFile)
+
+    current_dir = os.getcwd()
+    print(current_dir)
+
+    assert settings.sourceDir == os.path.dirname(current_dir)
+    assert settings.configFile == current_dir + "\\config.json"
+    assert settings.projectDir == current_dir
+
