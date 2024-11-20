@@ -1,5 +1,6 @@
-from converter.convert import detectLanguage
+from converter.convert import detectLanguage, create_settings
 from converter.util import Settings
+import os
 
 def test_ifLineStartsWithLangeVraag_ThenLanguageIsDutch():
     assert detectLanguage("Lange Vraag") == "NL"
@@ -35,4 +36,19 @@ def test_ifNoProjectDirIsSet_ThenSettingsDoesntValidate():
     settings.sourceDir = "."
     assert settings.validate() == False
     assert "ProjectDir needs to be filled in" in settings.error_messages
+
+
+def test_settingCreation():
+    settings = create_settings("./config.json")
+
+    print("#" + settings.sourceDir)
+    print(settings.projectDir)
+    print(settings.configFile)
+
+    current_dir = os.getcwd()
+    print(current_dir)
+
+    assert settings.sourceDir == current_dir
+    assert settings.configFile == current_dir + "\\config.json"
+    assert settings.projectDir == current_dir
 

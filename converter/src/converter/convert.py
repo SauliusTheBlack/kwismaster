@@ -25,7 +25,7 @@ def getAllQuestionsOrderedByRoundSpec(unhandledQuestions):
 			if matchingPatterns:
 				categoryToExtract = matchingPatterns[0].split(":")[1]
 				for qst in allQuestions:
-					if question.category == categoryToExtract:
+					if qst.category == categoryToExtract:
 						q = copy.deepcopy(qst)
 						q.setRound(rnd)
 						questionsToAppend.append(q)
@@ -60,22 +60,27 @@ def detectLanguage(line):
 		return None
 
 
+def create_settings(configFileArg):
+	_settings = Settings()
+	_settings.configFile = os.path.abspath(configFileArg)
+	# the following assumes the sourceDir is one level higher, and the project dir is current folder.
+	# This should become settable in the configFile
+	# This is the most priority TODO
+	_settings.sourceDir = os.path.abspath(configFileArg + "\\..\\..")
+	_settings.projectDir = os.path.dirname(os.path.abspath(configFileArg))
+	_settings.baseInOutDir = _settings.projectDir
+	if not _settings.validate():
+		print(_settings.error_messages)
+		exit()
+	return _settings
+
 
 if __name__ == '__main__':
-	settings = Settings()
+
 	if len(sys.argv) == 1:
 		usage()
 
-	settings.configFile = os.path.abspath(sys.argv[1])
-	#the following assumes the sourceDir is one level higher, and the project dir is current folder.
-	#This should become settable in the configFile
-	settings.sourceDir = os.path.abspath(sys.argv[1] + "/..")
-	settings.projectDir = os.path.abspath(sys.argv[1])
-	settings.baseInOutDir = settings.projectDir
-
-	if not settings.validate():
-		print(settings.error_messages)
-		exit()
+	settings = create_settings(sys.argv[1])
 
 	with open(settings.configFile,"r", encoding='utf-8') as f:
 		config = json.load(f)
@@ -88,14 +93,11 @@ if __name__ == '__main__':
 				kwisMasterInOutDir = config["settings"]["output_dir"]
 
 	allQuestionsByRoundMap = {}
-	outFilename = settings.baseInOutDir + "/questions.js"
+	
 
 	if not os.path.exists(settings.baseInOutDir):
 		os.makedirs(settings.baseInOutDir)
 
-	with open(settings.baseInOutDir + "/settings.js","w") as h:
-		h.write("var settings = {}")
-		h.writelines(lines)
 
 	category_order = config["category_order"]
 	print([co.lower() for co in category_order])
@@ -105,8 +107,9 @@ if __name__ == '__main__':
 	if "specs" in config:
 		specifications = config["specs"]
 
-	allInputFiles = [settings.projectDir + "/" + infile for infile in infiles]
-	with open(allInputFiles[0]) as f:
+	allInputFiles = [settings.projectDir + "\\" + infile for infile in infiles]
+	print("Detecting language based on first line of " + allInputFiles[0])
+	with open(allInputFiles[0], 'r') as f:
 		first_line = f.readline().strip('\n')
 	language = detectLanguage(first_line)
 
@@ -152,10 +155,6 @@ if __name__ == '__main__':
 
 		writeRoundPresentationText(settings.baseInOutDir, roundWithQuestions)
 
-
-	round_object = json.dumps(questions, indent=4, cls=MyEncoder)
-
-
 	for rnd in questions:
 		if rnd["name"] == "Ronde ABC":
 			continue
@@ -166,10 +165,7 @@ if __name__ == '__main__':
 			categoryMap[question.category] += 1
 		print(rnd["name"] + ": " + str(len(rnd["questions"])) + " vragen" + str(categoryMap))
 
-	with open(outFilename, "w") as outfile:
-		print(f'writing to {outFilename}')
-		outfile.write("questions = ")
-		outfile.write(round_object)
+
 
 	print(rounds)
 
@@ -179,3 +175,15 @@ if __name__ == '__main__':
 	copyPresenter(config["title"], settings)
 	copyScoreKeeper(settings)
 	copyScorePresenter(config["title"], settings, rounds)
+
+	outFilename = settings.projectDir + "\\presenter\\questions.js"
+	with open(outFilename, "w") as outfile:
+		print(f'writing to {outFilename}')
+		round_object = json.dumps(questions, indent=4, cls=MyEncoder)
+		outfile.write("questions = ")
+		outfile.write(round_object)
+
+	settingsFileName = settings.projectDir + "\\presenter\\settings.js"
+	with open(settingsFileName,"w") as h:
+		h.write("var settings = {}")
+		h.writelines(lines)

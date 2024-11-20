@@ -2,6 +2,7 @@ from shutil import copy2, rmtree, copytree
 import os, shutil
 
 def __copy_tree(src, dst, symlinks=False, ignore=None):
+	print("Copying from " + src + " to " + dst)
 	for item in os.listdir(src):
 		s = os.path.join(src, item)
 		d = os.path.join(dst, item)
@@ -44,15 +45,17 @@ def copyScorePresenter(title, settings, rounds):
 def copyPresenter(title, settings):
 	if os.path.exists(settings.projectDir + "/presenter"):
 		rmtree(settings.projectDir + "/presenter")
+	if os.path.exists(settings.projectDir + "/reveal"):
+		rmtree(settings.projectDir + "/reveal")
 
 	os.makedirs(settings.projectDir + "/presenter")
 	__copy_tree(settings.sourceDir + "/revealPresenter", settings.projectDir + "/presenter")
+	__copy_tree(settings.sourceDir + "/reveal", settings.projectDir + "/reveal")
 
 	rmtree(settings.projectDir + "/presenter/lib")
 	rmtree(settings.projectDir + "/presenter/spec")
 	os.remove(settings.projectDir + "/presenter/SpecRunner.html" )
 	os.remove(settings.projectDir + "/presenter/testRecording.mp3" )
-	os.remove(settings.projectDir + "/presenter/kwismasterRunner.js" )
 
 	with open(settings.projectDir + "/presenter/kwismaster.html") as r:
 		kwismaster = r.read()\
