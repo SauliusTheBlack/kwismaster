@@ -6,7 +6,6 @@ def __copy_tree(src, dst, symlinks=False, ignore=None):
 	for item in os.listdir(src):
 		s = os.path.join(src, item)
 		d = os.path.join(dst, item)
-		print(s,d)
 		if os.path.isdir(s):
 			copytree(s, d, symlinks, ignore)
 		else:
@@ -30,7 +29,7 @@ def copyScorePresenter(title, settings, rounds):
 	with open(settings.projectDir + "/scoreboard/" + "scoreboard.html") as r:
 		scoreboard = r.read()\
 			.replace("@TEMPLATE_TITLE@", title)\
-			.replace("@REVEAL_PATH@", "../../reveal")\
+			.replace("@REVEAL_PATH@", "../reveal")\
 
 	with open(settings.projectDir + "/scoreboard/" + "scoreboard.html", "w") as w:
 		w.write(scoreboard)
@@ -49,8 +48,10 @@ def copyPresenter(title, settings):
 		rmtree(settings.projectDir + "/reveal")
 
 	os.makedirs(settings.projectDir + "/presenter")
+	os.makedirs(settings.projectDir + "/presenter/images")
 	__copy_tree(settings.sourceDir + "/revealPresenter", settings.projectDir + "/presenter")
 	__copy_tree(settings.sourceDir + "/reveal", settings.projectDir + "/reveal")
+	__copy_tree(settings.projectDir + "/images", settings.projectDir + "/presenter/images")
 
 	rmtree(settings.projectDir + "/presenter/lib")
 	rmtree(settings.projectDir + "/presenter/spec")

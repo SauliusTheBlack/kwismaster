@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
 
     <title>Scoreboard</title>
 
@@ -31,7 +33,11 @@
             <section id="configuration"><input type="submit" id="configButton" text="bevestig" /></section>
             <section>@TEMPLATE_TITLE@</section>
         </div>
-        <button id="playControl">Play</button>
+        <div id="controls">
+            <div id="pageCounter">Slide 1 / 1</div>
+            <div id="countdown">7.5s</div>
+            <button id="playControl">Play</button>
+        </div>
     </div>
 
 
