@@ -1,6 +1,0 @@
-Lange vraag: This question has sound
-Korte vraag: This question has sound
-Antwoord: Irellevant for the test
-Ronde: This is the sound round
-Categorie: This is the sound category
-Geluid: testRecording.mp3

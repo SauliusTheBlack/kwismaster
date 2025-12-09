@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>@TEMPLATE_TITLE@</title>
+
+    <link rel="stylesheet" href="@REVEAL_PATH@/dist/reset.css">
+    <link rel="stylesheet" href="@REVEAL_PATH@/dist/reveal.css">
+    <link rel="stylesheet" href="@REVEAL_PATH@/dist/theme/beige.css">
+
+    <script src="@SETTINGSJS@"></script>
+    <script src="@QUESTIONSJS@"></script>
+    <script src="kwismaster.js"></script>
+    <script src="kwismasterRunner.js"></script>
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="@REVEAL_PATH@/plugin/highlight/monokai.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides" id="slides">
+            <section>@TEMPLATE_TITLE@</section>
+        </div>
+    </div>
+
+    <script src="@REVEAL_PATH@/dist/reveal.js"></script>
+    <script src="@REVEAL_PATH@/plugin/notes/notes.js"></script>
+    <script src="@REVEAL_PATH@/plugin/markdown/markdown.js"></script>
+    <script src="@REVEAL_PATH@/plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

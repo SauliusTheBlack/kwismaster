@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Quiz Presentation</title>
+
+    <link rel="stylesheet" href="lib/presenter/reveal/dist/reset.css">
+    <link rel="stylesheet" href="lib/presenter/reveal/dist/reveal.css">
+    <link rel="stylesheet" href="lib/presenter/reveal/dist/theme/beige.css">
+    <link rel="stylesheet" href="lib/presenter/css/kwismaster.css">
+
+    <!-- Load quiz data (questions and settings) -->
+    <script src="quiz_data.js"></script>
+
+    <script src="lib/presenter/js/kwismaster.js"></script>
+    <script src="lib/presenter/js/kwismasterRunner.js"></script>
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="lib/presenter/reveal/plugin/highlight/monokai.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides" id="slides">
+            <section>Quiz Presentation</section>
+        </div>
+    </div>
+
+    <script src="lib/presenter/reveal/dist/reveal.js"></script>
+    <script src="lib/presenter/reveal/plugin/notes/notes.js"></script>
+    <script src="lib/presenter/reveal/plugin/markdown/markdown.js"></script>
+    <script src="lib/presenter/reveal/plugin/highlight/highlight.js"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+Long question: What is the capital city of France, known for the Eiffel Tower?
+Short question: Capital of France?
+Answer: Paris
+Image:
+Sound:
+Category: Geography
+Round: Round 1
+
+Long question: In what year did World War II end?
+Short question: Year WWII ended?
+Answer: 1945
+Image:
+Sound:
+Category: History
+Round: Round 1
+
+Long question: What is the largest planet in our solar system?
+Short question: Largest planet?
+Answer: Jupiter
+Image:
+Sound:
+Category: Science
+Round: Round 1
+
+Long question: Which ocean is the largest by area?
+Short question: Largest ocean?
+Answer: Pacific Ocean
+Image:
+Sound:
+Category: Geography
+Round: Round 2
+
+Long question: Who painted the Mona Lisa?
+Short question: Mona Lisa painter?
+Answer: Leonardo da Vinci
+Image:
+Sound:
+Category: History
+Round: Round 2
+
+Long question: What is the chemical symbol for gold?
+Short question: Gold's chemical symbol?
+Answer: Au
+Image:
+Sound:
+Category: Science
+Round: Round 2
+
+Long question: What is the smallest country in the world by area?
+Short question: Smallest country?
+Answer: Vatican City
+Image:
+Sound:
+Category: Geography
+Round: Round 3
+
+Long question: In which year did the first human land on the moon?
+Short question: Year of moon landing?
+Answer: 1969
+Image:
+Sound:
+Category: History
+Round: Round 3
+
+Long question: What is the speed of light in a vacuum (in km/s)?
+Short question: Speed of light?
+Answer: 300,000 km/s
+Image:
+Sound:
+Category: Science
+Round: Round 3
+
+Long question: Which river is the longest in the world?
+Short question: Longest river?
+Answer: Nile River
+Image:
+Sound:
+Category: Geography
+Round: Round 4
+
+Long question: Who was the first president of the United States?
+Short question: First US president?
+Answer: George Washington
+Image:
+Sound:
+Category: History
+Round: Round 4
+
+Long question: What is the powerhouse of the cell?
+Short question: Cell's powerhouse?
+Answer: Mitochondria
+Image:
+Sound:
+Category: Science
+Round: Round 4
