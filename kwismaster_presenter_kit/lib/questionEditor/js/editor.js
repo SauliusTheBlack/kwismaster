@@ -334,6 +334,7 @@ function editQuestion(index) {
     document.getElementById('answer').value = question.answer || '';
     document.getElementById('category').value = question.category || '';
     document.getElementById('round').value = question.round || '';
+    document.getElementById('image').value = question.img || '';
 
     document.getElementById('delete-btn').style.display = 'block';
     showView('form-view');
@@ -346,6 +347,7 @@ function clearForm() {
     document.getElementById('answer').value = '';
     document.getElementById('category').value = '';
     document.getElementById('round').value = '';
+    document.getElementById('image').value = '';
 }
 
 function populateDropdowns() {
@@ -435,7 +437,8 @@ function saveQuestion() {
         shortQuestion: document.getElementById('shortQuestion').value.trim(),
         answer: document.getElementById('answer').value.trim(),
         category: document.getElementById('category').value.trim(),
-        round: document.getElementById('round').value.trim()
+        round: document.getElementById('round').value.trim(),
+        img: document.getElementById('image').value.trim()
     };
 
     if (!question.longQuestion && !question.shortQuestion) {
