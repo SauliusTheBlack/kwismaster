@@ -1,0 +1,563 @@
+/* ========================================
+   Design Tokens (matching editor style)
+   ======================================== */
+:root {
+    --color-primary: #2563eb;
+    --color-primary-dark: #1e40af;
+    --color-secondary: #10b981;
+    --color-danger: #ef4444;
+    --color-danger-dark: #dc2626;
+
+    --color-bg: #f3f4f6;
+    --color-surface: #ffffff;
+    --color-border: #e5e7eb;
+
+    --color-text: #111827;
+    --color-text-secondary: #6b7280;
+
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    padding: var(--spacing-lg);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+header {
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.event-name {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+/* ========================================
+   Cards
+   ======================================== */
+.card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text);
+}
+
+/* ========================================
+   Tab System
+   ======================================== */
+.tab-container {
+    margin-bottom: var(--spacing-xl);
+}
+
+.tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: var(--spacing-lg);
+    overflow-x: auto;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: var(--spacing-md) var(--spacing-md) 0;
+    box-shadow: var(--shadow-md);
+}
+
+.tab {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.tab:hover {
+    color: var(--color-primary);
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.tab.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+    font-weight: 600;
+}
+
+.tab-contents {
+    /* Container for all tab content divs */
+}
+
+.tab-content {
+    display: none;
+}
+
+/* ========================================
+   Score Table
+   ======================================== */
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-lg);
+}
+
+.score-table thead {
+    background-color: var(--color-bg);
+}
+
+.score-table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.score-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.score-table tbody tr:hover {
+    background-color: rgba(37, 99, 235, 0.02);
+}
+
+.team-name {
+    font-weight: 500;
+    color: var(--color-text);
+    min-width: 150px;
+}
+
+.total-score {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.score-input input[type="number"] {
+    width: 100%;
+    max-width: 120px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.score-input input[type="number"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Overview table specific styles */
+.overview-table {
+    font-size: 0.95rem;
+}
+
+.overview-table th {
+    text-align: center;
+}
+
+.overview-table .team-name {
+    font-weight: 600;
+    min-width: 150px;
+}
+
+.overview-table .score-display {
+    text-align: center;
+    font-weight: 500;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    padding: var(--spacing-md);
+}
+
+.overview-table .total-column {
+    background-color: rgba(37, 99, 235, 0.1);
+    font-weight: 700;
+}
+
+.overview-table .total-score {
+    text-align: center;
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.overview-table tbody tr:hover {
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.overview-table tbody tr:hover .score-display {
+    background-color: rgba(37, 99, 235, 0.08);
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+.btn-primary,
+.btn-secondary,
+.btn-delete,
+.btn-outline,
+.btn-quick-add,
+.btn-danger {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #059669;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-delete {
+    background-color: var(--color-danger);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.btn-delete:hover {
+    background-color: var(--color-danger-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: var(--color-danger-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-quick-add {
+    background-color: #8b5cf6;
+    color: white;
+}
+
+.btn-quick-add:hover {
+    background-color: #7c3aed;
+    box-shadow: var(--shadow-md);
+}
+
+/* ========================================
+   Team Management
+   ======================================== */
+.team-management .form-group {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.team-management input[type="text"] {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+}
+
+.team-management input[type="text"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* ========================================
+   Data Management
+   ======================================== */
+.data-management {
+    background-color: var(--color-surface);
+}
+
+.data-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+/* ========================================
+   Actions Column
+   ======================================== */
+.actions {
+    text-align: center;
+}
+
+/* ========================================
+   Network Controls
+   ======================================== */
+.network-control {
+    background-color: #eff6ff;
+    border-left: 4px solid var(--color-primary);
+}
+
+.network-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.network-info {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    padding: var(--spacing-sm);
+    background-color: rgba(37, 99, 235, 0.05);
+    border-radius: var(--radius-md);
+}
+
+.connection-indicator {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: var(--spacing-sm);
+}
+
+.connection-indicator.connected {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.connection-indicator.disconnected {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+/* ========================================
+   Modal Dialogs
+   ======================================== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--color-surface);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text);
+}
+
+.modal-content p {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-secondary);
+}
+
+.modal-content textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: monospace;
+    font-size: 0.75rem;
+    margin-bottom: var(--spacing-md);
+    resize: vertical;
+}
+
+.modal-content input[type="text"] {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.modal-content button {
+    margin-right: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.modal-content hr {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--spacing-lg) 0;
+}
+
+.modal-content small {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+}
+
+.network-mode-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.network-mode-buttons button {
+    flex: 1;
+    padding: var(--spacing-lg);
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.network-mode-buttons button small {
+    font-size: 0.875rem;
+    font-weight: normal;
+    opacity: 0.9;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 768px) {
+    body {
+        padding: var(--spacing-md);
+    }
+
+    .card {
+        padding: var(--spacing-md);
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .event-name {
+        font-size: 1rem;
+    }
+
+    .score-table {
+        font-size: 0.875rem;
+    }
+
+    .score-table th,
+    .score-table td {
+        padding: var(--spacing-sm);
+    }
+
+    .team-management .form-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .data-actions {
+        flex-direction: column;
+    }
+
+    .tabs {
+        padding: var(--spacing-sm) var(--spacing-sm) 0;
+    }
+
+    .tab {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.875rem;
+    }
+}
