@@ -1,0 +1,380 @@
+/* ========================================
+   Design Tokens
+   ======================================== */
+:root {
+    --color-primary: #2563eb;
+    --color-primary-dark: #1e40af;
+    --color-secondary: #10b981;
+    --color-danger: #ef4444;
+    --color-danger-dark: #dc2626;
+
+    --color-bg: #f3f4f6;
+    --color-surface: #ffffff;
+    --color-border: #e5e7eb;
+
+    --color-text: #111827;
+    --color-text-secondary: #6b7280;
+
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    padding: var(--spacing-lg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+header {
+    margin-bottom: var(--spacing-xl);
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    text-align: center;
+}
+
+/* ========================================
+   Cards
+   ======================================== */
+.card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text);
+}
+
+/* ========================================
+   Tab System
+   ======================================== */
+.tab-container {
+    margin-bottom: var(--spacing-xl);
+}
+
+.tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: var(--spacing-lg);
+    overflow-x: auto;
+}
+
+.tabs input[type="radio"] {
+    display: none;
+}
+
+.tab-label {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.tab-label:hover {
+    color: var(--color-primary);
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.tabs input[type="radio"]:checked + .tab-label {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+    font-weight: 600;
+}
+
+.tab-content {
+    display: none;
+}
+
+/* ========================================
+   Score Table
+   ======================================== */
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-lg);
+}
+
+.score-table thead {
+    background-color: var(--color-bg);
+}
+
+.score-table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.score-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.score-table tbody tr:hover {
+    background-color: rgba(37, 99, 235, 0.02);
+}
+
+.team-name {
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.total-score {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 1.1rem;
+}
+
+.score-input input[type="number"] {
+    width: 100%;
+    max-width: 120px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.score-input input[type="number"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+.btn-primary,
+.btn-secondary,
+.btn-delete {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #059669;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-delete {
+    background-color: var(--color-danger);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.btn-delete:hover {
+    background-color: var(--color-danger-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-quick-add {
+    background-color: #8b5cf6;
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-quick-add:hover {
+    background-color: #7c3aed;
+    box-shadow: var(--shadow-md);
+}
+
+/* ========================================
+   Forms
+   ======================================== */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+}
+
+.team-management {
+    background-color: var(--color-surface);
+}
+
+.add-team-form .form-group {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.add-team-form label {
+    font-weight: 500;
+    color: var(--color-text);
+    min-width: 100px;
+}
+
+.add-team-form input[type="text"] {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+}
+
+.add-team-form input[type="text"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.quick-add {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+}
+
+/* ========================================
+   Overview Table
+   ======================================== */
+.overview-table {
+    font-size: 0.95rem;
+}
+
+.overview-table th {
+    text-align: center;
+}
+
+.overview-table .team-name {
+    font-weight: 600;
+    min-width: 150px;
+}
+
+.overview-table .score-display {
+    text-align: center;
+    font-weight: 500;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    padding: var(--spacing-md);
+}
+
+.overview-table .total-column {
+    background-color: rgba(37, 99, 235, 0.1);
+    font-weight: 700;
+}
+
+.overview-table .total-score {
+    text-align: center;
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.overview-table tbody tr:hover {
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.overview-table tbody tr:hover .score-display {
+    background-color: rgba(37, 99, 235, 0.08);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 768px) {
+    body {
+        padding: var(--spacing-md);
+    }
+
+    .card {
+        padding: var(--spacing-md);
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .score-table {
+        font-size: 0.875rem;
+    }
+
+    .score-table th,
+    .score-table td {
+        padding: var(--spacing-sm);
+    }
+
+    .add-team-form .form-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-team-form label {
+        min-width: auto;
+    }
+}

@@ -2,7 +2,7 @@
 # All data is kept in simple files for persistence and ease of adaptation, at the cost of some security
 
 
-from bottle import get, post, run, template, TEMPLATE_PATH, redirect, app, request, response
+from bottle import get, post, delete, run, template, TEMPLATE_PATH, redirect, app, request, response, static_file
 from pathlib import Path
 import os, pickle
 
@@ -11,7 +11,7 @@ def enable_cors(fn):
     def _enable_cors(*args, **kwargs):
         # set CORS headers
         response.headers['Access-Control-Allow-Origin'] = '*'
-        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, OPTIONS'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
 
         if request.method != 'OPTIONS':
@@ -22,6 +22,9 @@ def enable_cors(fn):
 
 scoreDelimiter = "@##@"
 scoreFileName = "scores.pkl"
+
+
+
 def loadScores():
 	if os.path.exists(scoreFileName):
 		with open(scoreFileName, 'rb') as rf:
@@ -37,7 +40,7 @@ def loadTeams():
 	else:
 		return []
 
-
+teams = loadTeams()
 
 def findHumanTeamName(techTeamName):
 	print("Finding human name for " + techTeamName)
@@ -49,7 +52,7 @@ def findHumanTeamName(techTeamName):
 technicalTeamNameCache = {}	
 def getTechnicalTeamName(humanTeamName):
 	if humanTeamName not in technicalTeamNameCache:
-		technicalTeamNameCache[humanTeamName] = humanTeamName.lower().replace(" ","_")
+		technicalTeamNameCache[humanTeamName] = humanTeamName.lower().replace(" ","_").replace("&","amp")
 	return technicalTeamNameCache[humanTeamName]
 
 def persistTeams():
@@ -59,10 +62,39 @@ def persistTeams():
 
 @post('/teams')
 def addTeam():
+	global teams
 	print(request.forms.newTeamName)
-	print(teams)
 	newTeamName = request.forms.newTeamName
 	teams.append((newTeamName,getTechnicalTeamName(newTeamName)))
+	persistTeams()
+
+	redirect('/')
+
+@post('/quickAddTeam')
+def quickAddTeam():
+	global teams
+	# Find next available team number
+	existingTeamNames = [team[0] for team in teams]
+	counter = 1
+	while f"Team {counter}" in existingTeamNames:
+		counter += 1
+
+	newTeamName = f"Team {counter}"
+	teams.append((newTeamName, getTechnicalTeamName(newTeamName)))
+	persistTeams()
+
+	redirect('/')
+    
+@post('/deleteTeam')
+def deleteTeam():
+	global teams
+	print(request.forms.toDelete)
+	toDelete = request.forms.toDelete
+	
+	new_teams = [ t for t in teams if not (t[1] == getTechnicalTeamName(toDelete)) ]
+    
+	teams = new_teams
+    
 	persistTeams()
 
 	redirect('/')
@@ -181,13 +213,21 @@ def loadRounds():
 	
 @get('/')
 def redirectToMain():
-	return template('main', teams = teams, 
+	return template('main', teams = teams,
 			rounds = rounds, scores = scores, DELIMITER=scoreDelimiter) #rounds can be gotten from settings, teams need to be managed at runtime
-    
+
+@get('/presentation')
+def presentation():
+	return template('presentation', rounds = rounds)
+
+@get('/static/<filename:path>')
+def serve_static(filename):
+	return static_file(filename, root=str(Path(__file__).parent / 'static'))
+
 templateDir = Path(__file__ + '/../views')
 
 rounds = loadRounds()
-teams = loadTeams()
+
 scores = loadScores()
 
 TEMPLATE_PATH.insert(0, templateDir)

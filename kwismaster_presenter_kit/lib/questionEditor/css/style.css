@@ -1,0 +1,658 @@
+/* ========================================
+   Design Tokens
+   ======================================== */
+:root {
+    --color-primary: #2563eb;
+    --color-primary-dark: #1e40af;
+    --color-secondary: #10b981;
+    --color-danger: #ef4444;
+    --color-danger-dark: #dc2626;
+
+    --color-bg: #f3f4f6;
+    --color-surface: #ffffff;
+    --color-border: #e5e7eb;
+
+    --color-text: #111827;
+    --color-text-secondary: #6b7280;
+
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    padding: var(--spacing-lg);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+header {
+    margin-bottom: var(--spacing-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+}
+
+.header-left {
+    flex: 1;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.event-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.event-selector label {
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.event-selector select {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    background-color: var(--color-surface);
+    min-width: 200px;
+}
+
+.event-selector select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.btn-small {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+/* ========================================
+   Cards
+   ======================================== */
+.card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text);
+}
+
+/* ========================================
+   Tab System
+   ======================================== */
+.tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: var(--spacing-lg);
+    overflow-x: auto;
+}
+
+.tabs input[type="radio"] {
+    display: none;
+}
+
+.tab-label {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.tab-label:hover {
+    color: var(--color-primary);
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.tabs input[type="radio"]:checked + .tab-label {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+    font-weight: 600;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ========================================
+   Round Sections
+   ======================================== */
+.round-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.round-header {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-primary);
+}
+
+/* ========================================
+   Question Grid
+   ======================================== */
+.questions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.question-card {
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.question-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.question-card .category {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+}
+
+.question-card .short-question {
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1.5;
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+    color: var(--color-text-secondary);
+}
+
+.empty-state p {
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.1rem;
+}
+
+/* ========================================
+   View Toggle
+   ======================================== */
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+/* ========================================
+   Form Styles
+   ======================================== */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    transition: border-color 0.2s ease;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-group textarea.short {
+    min-height: 60px;
+}
+
+.form-group select {
+    cursor: pointer;
+    background-color: var(--color-surface);
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group small {
+    display: block;
+    color: var(--color-text-secondary);
+    margin-top: var(--spacing-xs);
+    font-size: 0.875rem;
+}
+
+.form-group small code {
+    background-color: var(--color-bg);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-family: 'Courier New', monospace;
+    font-size: 0.85em;
+    color: var(--color-text);
+}
+
+.config-description {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.config-list {
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    min-height: 100px;
+    background-color: var(--color-bg);
+}
+
+.config-list-item {
+    background-color: var(--color-surface);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    cursor: move;
+    transition: all 0.2s ease;
+}
+
+.config-list-item:last-child {
+    margin-bottom: 0;
+}
+
+.config-list-item:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.config-list-item.dragging {
+    opacity: 0.5;
+    transform: scale(0.98);
+}
+
+.config-list-item.drag-over {
+    border-top: 3px solid var(--color-primary);
+}
+
+.config-list-item.has-specs {
+    cursor: default;
+    display: block;
+    padding: 0;
+}
+
+.config-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: move;
+}
+
+.config-item-header > div:last-child {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.config-item-title {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.expand-button {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+    margin-left: var(--spacing-sm);
+}
+
+.expand-button:hover {
+    color: var(--color-primary);
+}
+
+.expand-button.expanded {
+    transform: rotate(90deg);
+}
+
+.config-item-specs {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 var(--spacing-md);
+}
+
+.config-item-specs.expanded {
+    max-height: 500px;
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+}
+
+.drag-handle {
+    color: var(--color-text-secondary);
+    margin-right: var(--spacing-sm);
+    cursor: grab;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.add-item-form {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--color-border);
+}
+
+.add-item-form input {
+    flex: 1;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+}
+
+.add-item-form input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.add-item-form button {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: 0.875rem;
+}
+
+.delete-item-btn {
+    background: none;
+    border: none;
+    color: var(--color-danger);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    font-size: 1rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.config-list-item:hover .delete-item-btn {
+    opacity: 1;
+}
+
+.delete-item-btn:hover {
+    color: var(--color-danger-dark);
+}
+
+.config-specs {
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    background-color: var(--color-bg);
+}
+
+.spec-item {
+    background-color: var(--color-surface);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+}
+
+.spec-item:last-child {
+    margin-bottom: 0;
+}
+
+.spec-item-header {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.spec-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.spec-options label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.spec-options input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.spec-category-input {
+    margin-top: var(--spacing-sm);
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.spec-category-input input {
+    flex: 1;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--spacing-lg);
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #059669;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-danger {
+    background-color: var(--color-danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: var(--color-danger-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-outline {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border: 2px solid var(--color-border);
+    font-weight: 500;
+    padding: var(--spacing-md) var(--spacing-xl);
+}
+
+.btn-outline:hover {
+    background-color: #e5e7eb;
+    color: var(--color-text);
+    border-color: #9ca3af;
+    box-shadow: var(--shadow-md);
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+@media (max-width: 768px) {
+    body {
+        padding: var(--spacing-md);
+    }
+
+    .card {
+        padding: var(--spacing-md);
+    }
+
+    header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: stretch;
+    }
+
+    .header-left {
+        width: 100%;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .event-selector {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .event-selector select {
+        width: 100%;
+    }
+
+    .header-actions {
+        flex-direction: column;
+    }
+
+    .questions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+}

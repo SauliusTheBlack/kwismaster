@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Editor</title>
+    <link rel="stylesheet" href="lib/questionEditor/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>Question Editor</h1>
+                <div class="event-selector">
+                    <label for="event-select">Event:</label>
+                    <select id="event-select" onchange="switchEvent()">
+                        <option value="">Select event...</option>
+                    </select>
+                    <button class="btn-outline btn-small" onclick="createNewEvent()">+ New Event</button>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-outline btn-small" onclick="showConfigView()">⚙ Settings</button>
+                <button class="btn-outline btn-small" onclick="document.getElementById('import-file').click()">📥 Import Questions</button>
+                <button class="btn-secondary" onclick="exportQuizData()">Export Quiz Data</button>
+                <button class="btn-primary" onclick="addNewQuestion()">+ Add Question</button>
+            </div>
+            <input type="file" id="import-file" accept=".txt" style="display: none;" onchange="importQuestions(event)">
+        </header>
+
+        <!-- List View -->
+        <div id="list-view" class="view active">
+            <div class="card">
+                <h2>Questions</h2>
+                <div id="questions-container">
+                    <div class="empty-state">
+                        <p>No questions yet</p>
+                        <button class="btn-primary" onclick="addNewQuestion()">Create your first question</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Config View -->
+        <div id="config-view" class="view">
+            <div class="card">
+                <h2>Configuration Settings</h2>
+                <p class="config-description">Configure quiz settings including title, rounds, categories, and round specifications.</p>
+
+                <form onsubmit="event.preventDefault(); saveConfig();">
+                    <div class="form-group">
+                        <label for="configTitle">Quiz Title *</label>
+                        <input type="text" id="configTitle" placeholder="e.g., Summer Quiz 2025" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rounds (in order)</label>
+                        <div id="rounds-list" class="config-list"></div>
+                        <small>Rounds will appear in this order. Drag items to reorder.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category Order</label>
+                        <div id="categories-list" class="config-list"></div>
+                        <small>Categories will be sorted in this order within rounds. Drag items to reorder.</small>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-outline" onclick="cancelConfig()">Back to Questions</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Form View -->
+        <div id="form-view" class="view">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg);">
+                    <h2 id="form-title" style="margin: 0;">Add Question</h2>
+                    <div id="question-nav" style="display: none; gap: var(--spacing-sm);">
+                        <button type="button" class="btn-outline btn-small" onclick="navigateToPrevious()" id="prev-btn">← Previous</button>
+                        <span id="question-position" style="color: var(--color-text-secondary); font-size: 0.875rem;"></span>
+                        <button type="button" class="btn-outline btn-small" onclick="navigateToNext()" id="next-btn">Next →</button>
+                    </div>
+                </div>
+
+                <form onsubmit="event.preventDefault(); saveQuestion();">
+                    <div class="form-group">
+                        <label for="longQuestion">Long Question</label>
+                        <textarea id="longQuestion" placeholder="Enter the full question text"></textarea>
+                        <small>The complete question text (for presenter notes)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shortQuestion">Short Question</label>
+                        <textarea id="shortQuestion" class="short" placeholder="Enter the brief question"></textarea>
+                        <small>Brief question displayed on slides</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="answer">Answer *</label>
+                        <textarea id="answer" placeholder="Enter the answer" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="round">Round *</label>
+                        <select id="round" onchange="handleRoundChange()" required>
+                            <option value="">Select a round...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" onchange="handleCategoryChange()">
+                            <option value="">Select a category...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="text" id="image" placeholder="e.g., myimage.jpg or myimage.png">
+                        <small>⚠️ Place the image file in <code>user_data/images/</code> with the exact filename and extension</small>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-danger" onclick="deleteQuestion()" id="delete-btn" style="margin-right: auto; display: none;">Delete</button>
+                        <button type="button" class="btn-outline" onclick="cancelForm()">Cancel</button>
+                        <button type="button" class="btn-secondary" onclick="saveAndContinue()">Save & Continue</button>
+                        <button type="submit" class="btn-primary">Save Question</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="lib/questionEditor/js/editor.js"></script>
+</body>
+</html>
