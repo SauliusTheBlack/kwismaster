@@ -1,9 +1,0 @@
-table {
-    font-size: 70%;
-}
-
-button {
-    position: relative;
-    z-index: 10;
-    /* Ensure button is above other content */
-}
