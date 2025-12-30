@@ -75,7 +75,14 @@
         <!-- Form View -->
         <div id="form-view" class="view">
             <div class="card">
-                <h2 id="form-title">Add Question</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg);">
+                    <h2 id="form-title" style="margin: 0;">Add Question</h2>
+                    <div id="question-nav" style="display: none; gap: var(--spacing-sm);">
+                        <button type="button" class="btn-outline btn-small" onclick="navigateToPrevious()" id="prev-btn">← Previous</button>
+                        <span id="question-position" style="color: var(--color-text-secondary); font-size: 0.875rem;"></span>
+                        <button type="button" class="btn-outline btn-small" onclick="navigateToNext()" id="next-btn">Next →</button>
+                    </div>
+                </div>
 
                 <form onsubmit="event.preventDefault(); saveQuestion();">
                     <div class="form-group">
@@ -118,6 +125,7 @@
                     <div class="form-actions">
                         <button type="button" class="btn-danger" onclick="deleteQuestion()" id="delete-btn" style="margin-right: auto; display: none;">Delete</button>
                         <button type="button" class="btn-outline" onclick="cancelForm()">Cancel</button>
+                        <button type="button" class="btn-secondary" onclick="saveAndContinue()">Save & Continue</button>
                         <button type="submit" class="btn-primary">Save Question</button>
                     </div>
                 </form>

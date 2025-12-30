@@ -338,7 +338,8 @@ function editQuestion(index) {
 
     document.getElementById('delete-btn').style.display = 'block';
     showView('form-view');
-    document.getElementById('form-title').textContent = 'Edit Question';
+
+    updateNavigationButtons();
 }
 
 function clearForm() {
@@ -465,6 +466,42 @@ function saveQuestion() {
     saveQuestions();
     renderQuestions();
     cancelForm();
+}
+
+function saveAndContinue() {
+    const question = {
+        longQuestion: document.getElementById('longQuestion').value.trim(),
+        shortQuestion: document.getElementById('shortQuestion').value.trim(),
+        answer: document.getElementById('answer').value.trim(),
+        category: document.getElementById('category').value.trim(),
+        round: document.getElementById('round').value.trim(),
+        img: document.getElementById('image').value.trim()
+    };
+
+    if (!question.longQuestion && !question.shortQuestion) {
+        alert('Please enter at least a long question or short question');
+        return;
+    }
+
+    if (!question.answer) {
+        alert('Please enter an answer');
+        return;
+    }
+
+    if (!question.round) {
+        alert('Please enter a round');
+        return;
+    }
+
+    if (editingIndex !== null) {
+        questions[editingIndex] = question;
+    } else {
+        questions.push(question);
+        editingIndex = questions.length - 1;
+    }
+
+    saveQuestions();
+    renderQuestions();
 }
 
 function deleteQuestion() {
@@ -1020,6 +1057,98 @@ function parseQuestionsFile(content) {
     }
 
     return parsedQuestions;
+}
+
+function getSortedQuestionIndices() {
+    // Create array of {question, originalIndex}
+    const indexed = questions.map((q, idx) => ({ question: q, originalIndex: idx }));
+
+    // Sort by round order, then by category order
+    indexed.sort((a, b) => {
+        const aRoundIndex = rounds.indexOf(a.question.round);
+        const bRoundIndex = rounds.indexOf(b.question.round);
+
+        // Compare rounds
+        const aRoundPos = aRoundIndex === -1 ? 9999 : aRoundIndex;
+        const bRoundPos = bRoundIndex === -1 ? 9999 : bRoundIndex;
+
+        if (aRoundPos !== bRoundPos) {
+            return aRoundPos - bRoundPos;
+        }
+
+        // Same round, compare categories
+        const aCategoryIndex = categories.indexOf(a.question.category);
+        const bCategoryIndex = categories.indexOf(b.question.category);
+
+        const aCategoryPos = aCategoryIndex === -1 ? 9999 : aCategoryIndex;
+        const bCategoryPos = bCategoryIndex === -1 ? 9999 : bCategoryIndex;
+
+        return aCategoryPos - bCategoryPos;
+    });
+
+    return indexed;
+}
+
+function updateNavigationButtons() {
+    const nav = document.getElementById('question-nav');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const position = document.getElementById('question-position');
+
+    if (editingIndex === null) {
+        nav.style.display = 'none';
+        return;
+    }
+
+    nav.style.display = 'flex';
+
+    // Get sorted order
+    const sortedIndices = getSortedQuestionIndices();
+    const currentPositionInSorted = sortedIndices.findIndex(item => item.originalIndex === editingIndex);
+
+    // Find current question's round
+    const currentQuestion = questions[editingIndex];
+    const currentRound = currentQuestion.round;
+
+    // Get all questions in the same round (in sorted order)
+    const questionsInRound = sortedIndices.filter(item => item.question.round === currentRound);
+    const positionInRound = questionsInRound.findIndex(item => item.originalIndex === editingIndex);
+
+    // Update the title to match current state (position within round)
+    const questionNumberInRound = positionInRound + 1;
+    const roundName = currentQuestion.round || 'No Round';
+    document.getElementById('form-title').textContent = `Edit Question ${questionNumberInRound} [Round ${roundName}]`;
+
+    // Update position display
+    position.textContent = `${questionNumberInRound} of ${questionsInRound.length} in ${currentRound}`;
+
+    // Disable/enable buttons based on position in sorted order
+    prevBtn.disabled = currentPositionInSorted === 0;
+    nextBtn.disabled = currentPositionInSorted === sortedIndices.length - 1;
+}
+
+function navigateToPrevious() {
+    if (editingIndex === null) return;
+
+    const sortedIndices = getSortedQuestionIndices();
+    const currentPos = sortedIndices.findIndex(item => item.originalIndex === editingIndex);
+
+    if (currentPos > 0) {
+        const previousIndex = sortedIndices[currentPos - 1].originalIndex;
+        editQuestion(previousIndex);
+    }
+}
+
+function navigateToNext() {
+    if (editingIndex === null) return;
+
+    const sortedIndices = getSortedQuestionIndices();
+    const currentPos = sortedIndices.findIndex(item => item.originalIndex === editingIndex);
+
+    if (currentPos < sortedIndices.length - 1) {
+        const nextIndex = sortedIndices[currentPos + 1].originalIndex;
+        editQuestion(nextIndex);
+    }
 }
 
 loadEvents();
