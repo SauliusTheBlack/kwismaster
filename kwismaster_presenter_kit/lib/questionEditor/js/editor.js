@@ -906,7 +906,9 @@ function exportQuizData() {
     });
 
     // Build settings object
-    const settings = {};
+    const settings = {
+        eventName: currentEvent
+    };
     if (Object.keys(specs).length > 0) {
         settings.specs = specs;
     }

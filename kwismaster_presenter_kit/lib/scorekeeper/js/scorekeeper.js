@@ -11,20 +11,27 @@ let currentTab = 'overview';
 let networkSync = null;
 let networkMode = null; // null, 'display', or 'entry'
 
-// Storage keys
-const STORAGE_KEY_TEAMS = 'kwismaster_scorekeeper_teams';
-const STORAGE_KEY_SCORES = 'kwismaster_scorekeeper_scores';
-const STORAGE_KEY_NETWORK_MODE = 'kwismaster_scorekeeper_network_mode';
+// Storage keys (will be set per event)
+let STORAGE_KEY_TEAMS = 'kwismaster_scorekeeper_teams';
+let STORAGE_KEY_SCORES = 'kwismaster_scorekeeper_scores';
+let STORAGE_KEY_NETWORK_MODE = 'kwismaster_scorekeeper_network_mode';
 
 // Initialize when data is loaded
 function initializeScorekeeper() {
     // Wait for quiz data to be loaded
-    if (typeof window.quizEventName === 'undefined' || typeof questions === 'undefined') {
+    if (typeof questions === 'undefined' || typeof settings === 'undefined') {
         setTimeout(initializeScorekeeper, 100);
         return;
     }
 
-    eventName = window.quizEventName || 'Quiz';
+    // Get event name from settings (new format) or fallback to window.quizEventName (KWON format) or default
+    eventName = (settings && settings.eventName) || window.quizEventName || 'Quiz';
+
+    // Set event-specific storage keys
+    const eventSlug = eventName.toLowerCase().replace(/\s+/g, '_');
+    STORAGE_KEY_TEAMS = `kwismaster_scorekeeper_${eventSlug}_teams`;
+    STORAGE_KEY_SCORES = `kwismaster_scorekeeper_${eventSlug}_scores`;
+    STORAGE_KEY_NETWORK_MODE = `kwismaster_scorekeeper_${eventSlug}_network_mode`;
 
     // Extract rounds from questions array
     rounds = questions.map(round => round.name);
@@ -44,11 +51,16 @@ function initializeScorekeeper() {
     // Initialize network sync
     initializeNetworkSync();
 
-    // Check for saved network mode (after UI is rendered)
+    // Check for saved network mode
     const savedMode = localStorage.getItem(STORAGE_KEY_NETWORK_MODE);
     if (savedMode) {
         networkMode = savedMode;
         updateNetworkModeUI();
+
+        // Note: WebRTC connections cannot persist across page refreshes
+        // Users will need to reconnect manually after refresh
+        console.log('Network mode restored:', networkMode);
+        console.log('Note: You will need to reconnect after page refresh');
     }
 }
 
@@ -668,9 +680,11 @@ function updateConnectionStatus(isConnected) {
         if (isConnected) {
             indicator.className = 'connection-indicator connected';
             indicator.textContent = `Connected (${networkMode === 'display' ? 'Display' : 'Entry'} Mode)`;
+            indicator.style.display = 'block';
         } else {
             indicator.className = 'connection-indicator disconnected';
             indicator.textContent = networkMode ? `Disconnected (${networkMode} Mode)` : 'Not Connected';
+            indicator.style.display = networkMode ? 'block' : 'none';
         }
     }
 }
@@ -679,8 +693,15 @@ function updateNetworkModeUI() {
     const indicator = document.getElementById('connection-indicator');
     if (indicator) {
         if (networkMode) {
-            indicator.className = 'connection-indicator disconnected';
-            indicator.textContent = `Disconnected (${networkMode} Mode)`;
+            // Check actual connection state
+            const isConnected = networkSync && networkSync.isConnected;
+            if (isConnected) {
+                indicator.className = 'connection-indicator connected';
+                indicator.textContent = `Connected (${networkMode === 'display' ? 'Display' : 'Entry'} Mode)`;
+            } else {
+                indicator.className = 'connection-indicator disconnected';
+                indicator.textContent = `Disconnected (${networkMode} Mode)`;
+            }
             indicator.style.display = 'block';
         } else {
             indicator.style.display = 'none';
@@ -796,6 +817,17 @@ function closeAllDialogs() {
         modal.style.display = 'none';
     });
 }
+
+// Warn before page refresh if connected
+window.addEventListener('beforeunload', (event) => {
+    // Only warn if network connection is active
+    if (networkSync && networkSync.isConnected) {
+        const message = 'You are currently connected. Refreshing will disconnect the network sync and you will need to re-pair the devices.';
+        event.preventDefault();
+        event.returnValue = message; // Standard way to show warning
+        return message; // For older browsers
+    }
+});
 
 // Initialize when page loads
 if (document.readyState === 'loading') {
