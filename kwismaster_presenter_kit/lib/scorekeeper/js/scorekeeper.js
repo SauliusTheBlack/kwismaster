@@ -667,7 +667,9 @@ async function completeDisplayConnection(answerCode) {
 
         await networkSync.completeConnection(answerCode);
         closeAllDialogs();
-        alert('Connection established! Scores will sync automatically.');
+
+        // Show presentation configuration dialog for Display mode
+        showPresentationConfig();
     } catch (error) {
         console.error('Error completing connection:', error);
         alert('Error completing connection: ' + error.message);
@@ -818,6 +820,7 @@ function closeAllDialogs() {
     });
 }
 
+
 // Warn before page refresh if connected
 window.addEventListener('beforeunload', (event) => {
     // Only warn if network connection is active
@@ -828,6 +831,258 @@ window.addEventListener('beforeunload', (event) => {
         return message; // For older browsers
     }
 });
+
+// ========================================
+// Presentation Mode Functions
+// ========================================
+
+let presentationConfig = {
+    selectedRounds: [],
+    timerDuration: 30,
+    isActive: false,
+    currentPage: 0,
+    pages: [],
+    timerInterval: null,
+    remainingTime: 0
+};
+
+function showPresentationConfig() {
+    const dialog = document.getElementById('presentation-config-dialog');
+    const roundList = document.getElementById('round-selector-list');
+
+    // Populate round checkboxes
+    roundList.innerHTML = '';
+    rounds.forEach(round => {
+        const label = document.createElement('label');
+        label.style.display = 'flex';
+        label.style.alignItems = 'center';
+        label.style.gap = 'var(--spacing-sm)';
+        label.style.cursor = 'pointer';
+        label.style.padding = 'var(--spacing-sm)';
+        label.style.borderRadius = 'var(--radius-sm)';
+        label.style.transition = 'background-color 0.2s';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = round;
+        checkbox.checked = true; // Default all selected
+        checkbox.style.cursor = 'pointer';
+
+        const text = document.createTextNode(round);
+
+        label.appendChild(checkbox);
+        label.appendChild(text);
+        label.onmouseover = () => label.style.backgroundColor = 'rgba(37, 99, 235, 0.05)';
+        label.onmouseout = () => label.style.backgroundColor = 'transparent';
+
+        roundList.appendChild(label);
+    });
+
+    dialog.style.display = 'flex';
+}
+
+function closePresentationConfig() {
+    const dialog = document.getElementById('presentation-config-dialog');
+    dialog.style.display = 'none';
+}
+
+function startPresentation() {
+    // Get selected rounds
+    const checkboxes = document.querySelectorAll('#round-selector-list input[type="checkbox"]:checked');
+    presentationConfig.selectedRounds = Array.from(checkboxes).map(cb => cb.value);
+
+    if (presentationConfig.selectedRounds.length === 0) {
+        alert('Please select at least one round to display.');
+        return;
+    }
+
+    // Get timer duration
+    const timerInput = document.getElementById('presentation-timer');
+    presentationConfig.timerDuration = parseInt(timerInput.value) || 30;
+
+    // Close config dialog
+    closePresentationConfig();
+
+    // Hide main container
+    document.querySelector('.container').style.display = 'none';
+
+    // Generate presentation pages
+    generatePresentationPages();
+
+    // Show presentation view
+    const presentationView = document.getElementById('presentation-view');
+    presentationView.style.display = 'block';
+
+    // Set event name
+    document.getElementById('presentation-event-name').textContent = eventName;
+
+    // Start presentation
+    presentationConfig.isActive = true;
+    presentationConfig.currentPage = 0;
+    showPresentationPage(0);
+}
+
+function generatePresentationPages() {
+    // Sort teams by total score (descending)
+    const sortedTeams = [...teams].sort((a, b) => {
+        const totalA = calculateTotalForSelectedRounds(a);
+        const totalB = calculateTotalForSelectedRounds(b);
+        return totalB - totalA;
+    });
+
+    // Calculate how many teams fit per page
+    const teamsPerPage = calculateTeamsPerPage();
+
+    // Split teams into pages
+    presentationConfig.pages = [];
+    for (let i = 0; i < sortedTeams.length; i += teamsPerPage) {
+        presentationConfig.pages.push(sortedTeams.slice(i, i + teamsPerPage));
+    }
+
+    // If no teams, create one empty page
+    if (presentationConfig.pages.length === 0) {
+        presentationConfig.pages.push([]);
+    }
+}
+
+function calculateTeamsPerPage() {
+    // Get viewport height
+    const viewportHeight = window.innerHeight;
+
+    // Account for header (70px) and padding (2 * spacing-xl = 2 * 32px = 64px)
+    const availableHeight = viewportHeight - 70 - 64;
+
+    // Estimate row height: ~60px per row (including header ~70px)
+    const headerHeight = 70;
+    const rowHeight = 60;
+
+    // Calculate teams that fit
+    const teamsPerPage = Math.floor((availableHeight - headerHeight) / rowHeight);
+
+    // Clamp between 5 and 20
+    return Math.max(5, Math.min(20, teamsPerPage));
+}
+
+function calculateTotalForSelectedRounds(teamName) {
+    if (!scores[teamName]) {
+        return 0;
+    }
+
+    return presentationConfig.selectedRounds.reduce((total, round) => {
+        return total + (scores[teamName][round] || 0);
+    }, 0);
+}
+
+function showPresentationPage(pageIndex) {
+    const content = document.getElementById('presentation-content');
+    const pageTeams = presentationConfig.pages[pageIndex] || [];
+
+    // Create table
+    let html = '<div class="card" style="margin: 0;"><table class="score-table presentation-table" style="font-size: 1.2rem;">';
+
+    // Header
+    html += '<thead><tr>';
+    html += '<th style="width: 50px; text-align: center;">#</th>';
+    html += '<th>Team</th>';
+
+    presentationConfig.selectedRounds.forEach(round => {
+        html += `<th style="text-align: center;">${round}</th>`;
+    });
+
+    html += '<th style="text-align: center; font-size: 1.3rem;">Total</th>';
+    html += '</tr></thead>';
+
+    // Body
+    html += '<tbody>';
+
+    if (pageTeams.length === 0) {
+        html += '<tr><td colspan="' + (presentationConfig.selectedRounds.length + 3) + '" style="text-align: center; padding: 3rem; color: var(--color-text-secondary);">No teams yet</td></tr>';
+    } else {
+        pageTeams.forEach((teamName, index) => {
+            const globalRank = (pageIndex * calculateTeamsPerPage()) + index + 1;
+            const rowClass = index % 2 === 0 ? 'even-row' : 'odd-row';
+
+            html += `<tr class="${rowClass}">`;
+            html += `<td style="text-align: center; font-weight: 600; color: var(--color-text-secondary);">${globalRank}</td>`;
+            html += `<td style="font-weight: 600;">${teamName}</td>`;
+
+            presentationConfig.selectedRounds.forEach(round => {
+                const score = scores[teamName]?.[round];
+                html += `<td style="text-align: center;">${score !== undefined ? score : '-'}</td>`;
+            });
+
+            const total = calculateTotalForSelectedRounds(teamName);
+            html += `<td style="text-align: center; font-weight: 700; color: var(--color-primary); font-size: 1.4rem;">${total}</td>`;
+            html += '</tr>';
+        });
+    }
+
+    html += '</tbody></table></div>';
+
+    content.innerHTML = html;
+
+    // Update page indicator
+    const totalPages = presentationConfig.pages.length;
+    document.getElementById('presentation-page-indicator').textContent = `Page ${pageIndex + 1} of ${totalPages}`;
+
+    // Start timer
+    startPresentationTimer();
+}
+
+function startPresentationTimer() {
+    // Clear existing timer
+    if (presentationConfig.timerInterval) {
+        clearInterval(presentationConfig.timerInterval);
+    }
+
+    presentationConfig.remainingTime = presentationConfig.timerDuration;
+    updateTimerDisplay();
+
+    presentationConfig.timerInterval = setInterval(() => {
+        presentationConfig.remainingTime--;
+
+        if (presentationConfig.remainingTime <= 0) {
+            // Move to next page
+            nextPresentationPage();
+        } else {
+            updateTimerDisplay();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const display = document.getElementById('presentation-timer-display');
+    const minutes = Math.floor(presentationConfig.remainingTime / 60);
+    const seconds = presentationConfig.remainingTime % 60;
+    display.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function nextPresentationPage() {
+    presentationConfig.currentPage++;
+
+    // Loop back to first page
+    if (presentationConfig.currentPage >= presentationConfig.pages.length) {
+        presentationConfig.currentPage = 0;
+    }
+
+    showPresentationPage(presentationConfig.currentPage);
+}
+
+function stopPresentation() {
+    // Stop timer
+    if (presentationConfig.timerInterval) {
+        clearInterval(presentationConfig.timerInterval);
+        presentationConfig.timerInterval = null;
+    }
+
+    // Hide presentation view
+    document.getElementById('presentation-view').style.display = 'none';
+
+    // Show main container
+    document.querySelector('.container').style.display = 'block';
+
+    presentationConfig.isActive = false;
+}
 
 // Initialize when page loads
 if (document.readyState === 'loading') {
