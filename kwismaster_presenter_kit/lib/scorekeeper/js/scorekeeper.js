@@ -591,6 +591,17 @@ function clearNetworkMode() {
 async function startDisplayMode() {
     try {
         console.log('Starting display mode...');
+
+        // Ensure networkSync is initialized
+        if (!networkSync) {
+            console.log('networkSync not initialized, initializing now...');
+            initializeNetworkSync();
+        }
+
+        if (!networkSync) {
+            throw new Error('Failed to initialize network sync. Please refresh the page.');
+        }
+
         const connectionCode = await networkSync.initializeAsDisplay();
         console.log('Connection code generated:', connectionCode.substring(0, 50) + '...');
         showConnectionCode(connectionCode);
@@ -607,6 +618,16 @@ function startEntryMode() {
 
 async function connectWithCode(offerCode) {
     try {
+        // Ensure networkSync is initialized
+        if (!networkSync) {
+            console.log('networkSync not initialized, initializing now...');
+            initializeNetworkSync();
+        }
+
+        if (!networkSync) {
+            throw new Error('Failed to initialize network sync. Please refresh the page.');
+        }
+
         const answerCode = await networkSync.initializeAsEntry(offerCode);
         showAnswerCode(answerCode);
 
@@ -622,8 +643,18 @@ async function connectWithCode(offerCode) {
 
 async function completeDisplayConnection(answerCode) {
     try {
+        // Ensure networkSync is initialized
+        if (!networkSync) {
+            console.log('networkSync not initialized, initializing now...');
+            initializeNetworkSync();
+        }
+
+        if (!networkSync) {
+            throw new Error('Failed to initialize network sync. Please refresh the page.');
+        }
+
         await networkSync.completeConnection(answerCode);
-        hideNetworkDialog();
+        closeAllDialogs();
         alert('Connection established! Scores will sync automatically.');
     } catch (error) {
         console.error('Error completing connection:', error);
@@ -677,31 +708,15 @@ function hideNetworkDialog() {
     dialog.style.display = 'none';
 }
 
+// Store connection data for file-based pairing
+let pendingPairData = null;
+let pendingPair2Data = null;
+
 function showConnectionCode(code) {
     hideNetworkDialog();
+    pendingPairData = code;
     const dialog = document.getElementById('connection-code-dialog');
-    const textarea = document.getElementById('display-connection-code');
-
-    console.log('showConnectionCode called');
-    console.log('Dialog element:', dialog);
-    console.log('Textarea element:', textarea);
-    console.log('Code length:', code ? code.length : 0);
-
-    if (!dialog) {
-        console.error('connection-code-dialog element not found!');
-        alert('Error: Dialog element not found. Please refresh the page.');
-        return;
-    }
-
-    if (!textarea) {
-        console.error('display-connection-code textarea not found!');
-        alert('Error: Textarea element not found. Please refresh the page.');
-        return;
-    }
-
-    textarea.value = code;
     dialog.style.display = 'flex';
-    console.log('Dialog should now be visible');
 }
 
 function showEntryCodePrompt() {
@@ -711,34 +726,69 @@ function showEntryCodePrompt() {
 }
 
 function showAnswerCode(code) {
+    pendingPair2Data = code;
     const dialog = document.getElementById('answer-code-dialog');
-    document.getElementById('entry-answer-code').value = code;
     dialog.style.display = 'flex';
 }
 
-function copyToClipboard(elementId) {
-    const element = document.getElementById(elementId);
-    element.select();
-    document.execCommand('copy');
-    alert('Copied to clipboard!');
-}
-
-function submitEntryCode() {
-    const code = document.getElementById('entry-connection-code-input').value.trim();
-    if (!code) {
-        alert('Please enter a connection code');
+function downloadPairFile() {
+    if (!pendingPairData) {
+        alert('No pairing data available. Please try again.');
         return;
     }
-    connectWithCode(code);
+
+    const blob = new Blob([pendingPairData], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'scorekeeper.pair';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
-function submitAnswerCode() {
-    const code = document.getElementById('answer-code-input').value.trim();
-    if (!code) {
-        alert('Please enter the answer code');
+function downloadPair2File() {
+    if (!pendingPair2Data) {
+        alert('No response data available. Please try again.');
         return;
     }
-    completeDisplayConnection(code);
+
+    const blob = new Blob([pendingPair2Data], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'scorekeeper.pair2';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+function handlePairUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const code = e.target.result;
+        connectWithCode(code);
+    };
+    reader.readAsText(file);
+    event.target.value = ''; // Reset file input
+}
+
+function handlePair2Upload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const code = e.target.result;
+        completeDisplayConnection(code);
+    };
+    reader.readAsText(file);
+    event.target.value = ''; // Reset file input
 }
 
 function closeAllDialogs() {

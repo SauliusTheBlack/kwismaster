@@ -82,40 +82,76 @@
         </div>
     </div>
 
-    <!-- Display Connection Code Dialog -->
+    <!-- Display Pairing File Dialog -->
     <div id="connection-code-dialog" class="modal">
         <div class="modal-content">
-            <h2>Display Mode - Step 1</h2>
-            <p>Copy this connection code and enter it on the <strong>Entry Station</strong> laptop:</p>
-            <textarea id="display-connection-code" readonly rows="6"></textarea>
-            <button class="btn-secondary" onclick="copyToClipboard('display-connection-code')">📋 Copy Code</button>
+            <h2>📺 Display Mode - Step 1 of 2</h2>
+            <p style="font-size: 1.1rem; margin-bottom: var(--spacing-lg);">Download the pairing file and transfer it to the <strong>Entry Station</strong> laptop using a USB stick.</p>
+
+            <div style="background-color: var(--color-bg); padding: var(--spacing-lg); border-radius: var(--radius-md); margin-bottom: var(--spacing-lg);">
+                <p style="margin-bottom: var(--spacing-sm);"><strong>Instructions:</strong></p>
+                <ol style="margin-left: var(--spacing-lg); line-height: 1.8;">
+                    <li>Click "Download Pairing File" below</li>
+                    <li>Copy the <code>scorekeeper.pair</code> file to a USB stick</li>
+                    <li>Plug the USB stick into the Entry Station laptop</li>
+                    <li>On the Entry Station, upload the <code>scorekeeper.pair</code> file</li>
+                </ol>
+            </div>
+
+            <button class="btn-primary" onclick="downloadPairFile()" style="font-size: 1.1rem; padding: var(--spacing-md) var(--spacing-xl);">⬇️ Download Pairing File</button>
             <hr>
-            <p>After entering the code on the Entry Station, you'll receive an <strong>Answer Code</strong>. Enter it below:</p>
-            <input type="text" id="answer-code-input" placeholder="Paste answer code here">
-            <button class="btn-primary" onclick="submitAnswerCode()">Connect</button>
+            <p style="margin-top: var(--spacing-lg);">After the Entry Station processes your file, you'll receive a <code>scorekeeper.pair2</code> file. Upload it below:</p>
+            <input type="file" id="pair2-upload" accept=".pair2" style="display: none;" onchange="handlePair2Upload(event)">
+            <button class="btn-secondary" onclick="document.getElementById('pair2-upload').click()">⬆️ Upload Response File (.pair2)</button>
             <button class="btn-outline" onclick="closeAllDialogs()">Cancel</button>
         </div>
     </div>
 
-    <!-- Entry Code Prompt Dialog -->
+    <!-- Entry Pairing File Dialog -->
     <div id="entry-code-dialog" class="modal">
         <div class="modal-content">
-            <h2>Entry Mode - Step 1</h2>
-            <p>Enter the connection code from the <strong>Display Station</strong> laptop:</p>
-            <textarea id="entry-connection-code-input" rows="6" placeholder="Paste connection code here"></textarea>
-            <button class="btn-primary" onclick="submitEntryCode()">Connect</button>
+            <h2>✏️ Entry Mode - Step 1 of 2</h2>
+            <p style="font-size: 1.1rem; margin-bottom: var(--spacing-lg);">Upload the pairing file from the <strong>Display Station</strong> laptop.</p>
+
+            <div style="background-color: var(--color-bg); padding: var(--spacing-lg); border-radius: var(--radius-md); margin-bottom: var(--spacing-lg);">
+                <p style="margin-bottom: var(--spacing-sm);"><strong>Instructions:</strong></p>
+                <ol style="margin-left: var(--spacing-lg); line-height: 1.8;">
+                    <li>Insert the USB stick from the Display Station</li>
+                    <li>Click "Upload Pairing File" below</li>
+                    <li>Select the <code>scorekeeper.pair</code> file from the USB stick</li>
+                    <li>Download the response file that appears</li>
+                    <li>Transfer the <code>scorekeeper.pair2</code> file back to the Display Station</li>
+                </ol>
+            </div>
+
+            <input type="file" id="pair-upload" accept=".pair" style="display: none;" onchange="handlePairUpload(event)">
+            <button class="btn-primary" onclick="document.getElementById('pair-upload').click()" style="font-size: 1.1rem; padding: var(--spacing-md) var(--spacing-xl);">⬆️ Upload Pairing File (.pair)</button>
             <button class="btn-outline" onclick="closeAllDialogs()">Cancel</button>
         </div>
     </div>
 
-    <!-- Answer Code Dialog -->
+    <!-- Entry Response File Dialog -->
     <div id="answer-code-dialog" class="modal">
         <div class="modal-content">
-            <h2>Entry Mode - Step 2</h2>
-            <p>Copy this answer code and enter it on the <strong>Display Station</strong> laptop:</p>
-            <textarea id="entry-answer-code" readonly rows="6"></textarea>
-            <button class="btn-secondary" onclick="copyToClipboard('entry-answer-code')">📋 Copy Code</button>
-            <p><small>After the Display Station enters this code, you'll be connected!</small></p>
+            <h2>✏️ Entry Mode - Step 2 of 2</h2>
+            <p style="font-size: 1.1rem; margin-bottom: var(--spacing-lg);">Download the response file and transfer it back to the <strong>Display Station</strong> laptop.</p>
+
+            <div style="background-color: #d1fae5; padding: var(--spacing-lg); border-radius: var(--radius-md); margin-bottom: var(--spacing-lg); border: 2px solid #10b981;">
+                <p style="margin-bottom: var(--spacing-sm); color: #065f46;"><strong>✓ Pairing file processed successfully!</strong></p>
+            </div>
+
+            <div style="background-color: var(--color-bg); padding: var(--spacing-lg); border-radius: var(--radius-md); margin-bottom: var(--spacing-lg);">
+                <p style="margin-bottom: var(--spacing-sm);"><strong>Next steps:</strong></p>
+                <ol style="margin-left: var(--spacing-lg); line-height: 1.8;">
+                    <li>Click "Download Response File" below</li>
+                    <li>Copy the <code>scorekeeper.pair2</code> file to the USB stick</li>
+                    <li>Plug the USB stick into the Display Station laptop</li>
+                    <li>On the Display Station, upload the <code>scorekeeper.pair2</code> file</li>
+                </ol>
+            </div>
+
+            <button class="btn-primary" onclick="downloadPair2File()" style="font-size: 1.1rem; padding: var(--spacing-md) var(--spacing-xl);">⬇️ Download Response File</button>
+            <p style="margin-top: var(--spacing-lg);"><small>After the Display Station uploads this file, the connection will be established!</small></p>
             <button class="btn-outline" onclick="closeAllDialogs()">Close</button>
         </div>
     </div>
