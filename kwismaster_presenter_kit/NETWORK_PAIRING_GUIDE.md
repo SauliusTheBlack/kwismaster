@@ -8,6 +8,17 @@ This guide explains how to connect the **Display Station** (presenting laptop) w
 - 1 USB stick (for transferring files between laptops)
 - Both laptops should be on the same local network (WiFi or Ethernet)
 
+## IMPORTANT: Keep Pages Open During Quiz Events
+
+**⚠️ DO NOT REFRESH the scorekeeper page while connected or during pairing!**
+
+- Refreshing the page will disconnect the network sync
+- You will need to re-pair the devices using the full pairing process again
+- The browser will warn you if you try to refresh while connected
+- During pairing, you'll see yellow warning boxes reminding you not to refresh
+
+**Best Practice:** Once paired, keep both scorekeeper pages open for the entire quiz event.
+
 ## Overview
 
 The pairing process uses **2 files** to establish a secure connection:
@@ -26,8 +37,9 @@ You transfer these files using a USB stick (no internet required!).
 1. Open the scorekeeper on the **Display Station** laptop
 2. Click **"Setup Network Sync"**
 3. Click **"Display Mode"** (📺 Display Mode button)
-4. Click **"Download Pairing File"**
-5. The file `scorekeeper.pair` will be downloaded to your Downloads folder
+4. **⚠️ You'll see a yellow warning box - DO NOT refresh during pairing!**
+5. Click **"Download Pairing File"**
+6. The file `scorekeeper.pair` will be downloaded to your Downloads folder
 
 ### Step 2: Transfer to Entry Station
 
@@ -44,11 +56,13 @@ You transfer these files using a USB stick (no internet required!).
 1. Open the scorekeeper on the **Entry Station** laptop
 2. Click **"Setup Network Sync"**
 3. Click **"Entry Mode"** (✏️ Entry Mode button)
-4. Click **"Upload Pairing File"**
-5. Select the `scorekeeper.pair` file from your USB stick
-6. Wait a moment for processing...
-7. Click **"Download Response File"**
-8. The file `scorekeeper.pair2` will be downloaded to your Downloads folder
+4. **⚠️ You'll see a yellow warning box - DO NOT refresh during pairing!**
+5. Click **"Upload Pairing File"**
+6. Select the `scorekeeper.pair` file from your USB stick
+7. Wait a moment for processing...
+8. **⚠️ Another yellow warning appears - Keep this page open!**
+9. Click **"Download Response File"**
+10. The file `scorekeeper.pair2` will be downloaded to your Downloads folder
 
 ### Step 4: Transfer Back to Display Station
 
@@ -105,7 +119,9 @@ You transfer these files using a USB stick (no internet required!).
 
 ## Tips for Success
 
-✓ **Keep dialogs open:** Don't close the browser or scorekeeper while pairing
+✓ **Keep pages open:** Don't close the browser, refresh, or navigate away during pairing or while connected
+
+✓ **Browser will warn you:** If you try to refresh while connected, your browser will show a warning dialog
 
 ✓ **Use the same USB stick:** This makes it easier to find your files
 
@@ -128,10 +144,11 @@ Once connected:
 The connection stays active until:
 - You click "Disconnect"
 - You close the browser
+- You refresh the page (⚠️ Don't do this during the quiz!)
 - You restart the laptop
 - Network connection is lost
 
-If you need to reconnect, just repeat the pairing process!
+**If you accidentally refresh or lose connection:** Just repeat the pairing process from Step 1. Your teams and scores are saved locally and won't be lost.
 
 ---
 
