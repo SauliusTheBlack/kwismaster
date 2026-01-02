@@ -391,6 +391,28 @@ header h1 {
     border-radius: var(--radius-md);
 }
 
+/* ========================================
+   Presentation Controls
+   ======================================== */
+.presentation-control {
+    background-color: #f0fdf4;
+    border-left: 4px solid var(--color-secondary);
+}
+
+.presentation-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.presentation-info {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    padding: var(--spacing-sm);
+    background-color: rgba(16, 185, 129, 0.05);
+    border-radius: var(--radius-md);
+}
+
 .connection-indicator {
     display: inline-block;
     padding: var(--spacing-xs) var(--spacing-md);
@@ -560,4 +582,41 @@ header h1 {
         padding: var(--spacing-sm) var(--spacing-md);
         font-size: 0.875rem;
     }
+}
+
+/* ========================================
+   Presentation Mode Styles
+   ======================================== */
+.presentation-table tbody tr.even-row {
+    background-color: var(--color-bg);
+}
+
+.presentation-table tbody tr.odd-row {
+    background-color: var(--color-surface);
+}
+
+.presentation-table tbody tr:hover {
+    background-color: rgba(37, 99, 235, 0.08) !important;
+}
+
+.presentation-table th {
+    background-color: var(--color-primary);
+    color: white;
+    padding: var(--spacing-lg);
+    font-size: 1.1rem;
+}
+
+.presentation-table td {
+    padding: var(--spacing-lg);
+}
+
+#presentation-view {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+    z-index: 2000;
+    overflow-y: auto;
 }
